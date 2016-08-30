@@ -1,4 +1,4 @@
-[[https://api.travis-ci.org/andyscott/case-classy.svg?branch=master]]
+[[https://travis-ci.org/andyscott/case-classy][file:https://api.travis-ci.org/andyscott/case-classy.svg?branch=master]]
 * Case Classy
 
 This is a work in progress for automatic/easy type safe mappings of
