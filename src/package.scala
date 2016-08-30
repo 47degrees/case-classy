@@ -83,7 +83,7 @@ package object classy extends ClassyDerivation with ClassyDefaultInstances {
     implicit val showDecodeError: Show[DecodeError] = Show.show[DecodeError] {
       case MissingKey(key)          ⇒ s"Missing value for $key"
       case WrongType(key, expected) ⇒ s"Wrong type for $key, expected $expected"
-      case AtPath(key, errors)      ⇒ s"$errors at key"
+      case AtPath(key, errors)      ⇒ s"$errors at $key"
       case BadFormat(key, message)  ⇒ s"Bad value format for $key: $message"
       case Underlying(key, t)       ⇒ s"Underlying exception for key $key: $t"
     }
