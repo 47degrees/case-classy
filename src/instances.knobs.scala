@@ -13,6 +13,9 @@ object knobs {
   import DecodeError._
 
   type KnobsDecoder[A] = Decoder[Config, A]
+  object KnobsDecoder {
+    def apply[A](implicit ev: KnobsDecoder[A]): KnobsDecoder[A] = ev
+  }
 
   def deriveKnobsDecoder[A: KnobsDecoder] = Decoder[Config, A]
 
