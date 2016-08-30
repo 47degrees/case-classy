@@ -7,7 +7,7 @@ package classy
 import scala.concurrent.duration._
 import cats.data._
 
-private[classy] trait DefaultInstances { self: Singleton ⇒
+trait ClassyDefaultInstances {
   import DecodeError._
 
   implicit def yyzReadFiniteDuration[C: ReadValue[?, Duration]]: ReadValue[C, FiniteDuration] =

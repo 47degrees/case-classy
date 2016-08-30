@@ -1,16 +1,19 @@
 //
 
-lazy val root = (project in file(".")).aggregate(
-   tests,
-  `case-classy`,
-  `case-classy-typesafe`,
-  `case-classy-knobs`)
+lazy val root = (project in file("."))
+  .aggregate(allClassy: _*)
+  .aggregate(tests)
+  .aggregate(tuts)
 
 lazy val catsVersion       = "0.6.1"
+lazy val specs2Version     = "3.8.4"
 lazy val scalacheckVersion = "1.13.2"
 
 lazy val useRootForSrc =
   scalaSource in Compile := baseDirectory.value.getParentFile.getParentFile / "src"
+
+lazy val allClassy: Seq[ProjectReference] =
+  Seq(`case-classy`, `case-classy-typesafe`, `case-classy-knobs`)
 
 lazy val `case-classy` = (project in file("target/.case-classy"))
   .settings(name := "case-classy", useRootForSrc,
@@ -40,11 +43,19 @@ lazy val `case-classy-knobs` = (project in file("target/.case-classy-knobs"))
       "oncue.knobs"       %% "core"                   % "3.8.107"
     ))
 
-lazy val tests = (project in file("tests"))
+lazy val tests = (project in file("target/.tests"))
   .settings(name := "tests",
-    scalaSource in Test := baseDirectory.value)
-  .dependsOn(`case-classy`, `case-classy-typesafe`, `case-classy-knobs`)
+    scalaSource in Test := baseDirectory.value.getParentFile.getParentFile / "tests")
+  .dependsOn(allClassy.map(_ % "compile"): _*)
   .settings(libraryDependencies ++=
     Seq(
+      "org.specs2"        %% "specs2-core"            % specs2Version,
+      "org.specs2"        %% "specs2-cats"            % specs2Version,
       "org.scalacheck"    %% "scalacheck"             % scalacheckVersion
     ).map(_ % "test"))
+
+lazy val tuts = (project in file("target/.tuts"))
+  .settings(name := "tuts")
+  .settings(tutSettings)
+  .settings(tutSourceDirectory := baseDirectory.value.getParentFile.getParentFile / "tuts")
+  .dependsOn(allClassy.map(_ % "compile"): _*)
