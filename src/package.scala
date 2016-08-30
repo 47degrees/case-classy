@@ -56,6 +56,7 @@ package object classy extends ClassyDerivation with ClassyDefaultInstances {
 
   sealed abstract class DecodeError extends Throwable {
     final override def fillInStackTrace(): Throwable = this
+    def key: String
     def show: String = DecodeError.show(this)
     def flatten(): NonEmptyList[DecodeError] = NonEmptyList(this)
     override def toString(): String =
@@ -73,15 +74,18 @@ package object classy extends ClassyDerivation with ClassyDefaultInstances {
           case e: WrongType  ⇒ e.copy(key = s"${parent.key}.${e.key}").flatten()
           case e: AtPath     ⇒ e.copy(key = s"${parent.key}.${e.key}").flatten()
           case e: BadFormat  ⇒ e.copy(key = s"${parent.key}.${e.key}").flatten()
+          case e: Underlying ⇒ e.copy(key = s"${parent.key}.${e.key}").flatten()
         }
     }
     case class BadFormat(key: String, message: String) extends DecodeError
+    case class Underlying(key: String, underlying: Throwable) extends DecodeError
 
     implicit val showDecodeError: Show[DecodeError] = Show.show[DecodeError] {
       case MissingKey(key)          ⇒ s"Missing value for $key"
       case WrongType(key, expected) ⇒ s"Wrong type for $key, expected $expected"
       case AtPath(key, errors)      ⇒ s"$errors at key"
       case BadFormat(key, message)  ⇒ s"Bad value format for $key: $message"
+      case Underlying(key, t)       ⇒ s"Underlying exception for key $key: $t"
     }
 
     def show(error: DecodeError): String = showDecodeError.show(error)
