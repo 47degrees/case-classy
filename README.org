@@ -1,7 +1,7 @@
 * Case Classy
 
 This is a work in progress for automatic/easy type safe mappings of
-untyped data, such as configuration data or a `Map[String, Any]`, to
+untyped data, such as configuration data or a ~Map[String, Any]~, to
 case classes and other custom data types.
 
 * License
