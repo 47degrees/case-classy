@@ -3,7 +3,6 @@
  */
 
 import cats.data._
-import cats.std.list._
 import cats.Monad
 import cats.Show
 
@@ -51,7 +50,7 @@ package object classy extends ClassyDerivation with ClassyDefaultInstances {
   }
   object RootDecodeError {
     implicit def showRootDecodeError: Show[RootDecodeError] = Show.show(z ⇒
-      Monad[NonEmptyList].flatMap(z.errors)(_.flatten).map(_.show).unwrap.mkString(", "))
+      Monad[NonEmptyList].flatMap(z.errors)(_.flatten).map(_.show).toList.mkString(", "))
     //_.errors.unwrap.map(_.show).mkString(", "))
   }
 
@@ -59,7 +58,7 @@ package object classy extends ClassyDerivation with ClassyDefaultInstances {
     final override def fillInStackTrace(): Throwable = this
     def key: String
     def show: String = DecodeError.show(this)
-    def flatten(): NonEmptyList[DecodeError] = NonEmptyList(this)
+    def flatten(): NonEmptyList[DecodeError] = NonEmptyList(this, Nil)
     override def toString(): String =
       s"${getClass.getName}($show)"
   }

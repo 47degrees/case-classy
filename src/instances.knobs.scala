@@ -30,5 +30,5 @@ object knobs {
   implicit def yyzKnobsNestedReadSupport[A: DecoderV[Config, ?]]: ReadValue[Config, A] =
     ReadValue((config, key) ⇒
       DecoderV[Config, A].apply(config.subconfig(key))
-        .leftMap(errors ⇒ NonEmptyList(AtPath(key, errors))))
+        .leftMap(errors ⇒ NonEmptyList(AtPath(key, errors), Nil)))
 }

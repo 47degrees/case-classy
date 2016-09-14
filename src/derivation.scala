@@ -9,7 +9,6 @@ import shapeless.labelled.{ field, FieldType }
 
 import cats._
 import cats.data._
-import cats.implicits._
 
 /** Semi-automatic derivation of case class "readers" for configuration data.
   *
