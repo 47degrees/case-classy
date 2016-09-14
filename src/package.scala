@@ -45,7 +45,8 @@ package object classy extends ClassyDerivation with ClassyDefaultInstances {
     def apply[C, A](implicit ev: ReadValue[C, A]): ReadValue[C, A] = ev
   }
 
-  final case class RootDecodeError(errors: NonEmptyList[DecodeError]) {
+  final case class RootDecodeError(errors: NonEmptyList[DecodeError]) extends Throwable {
+    final override def fillInStackTrace(): Throwable = this
     def show: String = Show[RootDecodeError].show(this)
   }
   object RootDecodeError {
