@@ -5,7 +5,7 @@ lazy val root = (project in file("."))
   .aggregate(tests)
   .aggregate(tuts)
 
-lazy val catsVersion       = "0.6.1"
+lazy val catsVersion       = "0.7.0"
 lazy val specs2Version     = "3.8.4"
 lazy val scalacheckVersion = "1.13.2"
 

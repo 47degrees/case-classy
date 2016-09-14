@@ -4,8 +4,6 @@
 
 package classytests
 
-import classy.map._
-
 object TestData {
 
   case class FooBar(

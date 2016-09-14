@@ -24,9 +24,9 @@ object typesafe {
 
   private[this] def guard[A: ClassTag](f: ⇒ A, key: String): ResV[A] =
     Validated.catchNonFatal(f).leftMap {
-      case e: ConfigException.Missing   ⇒ NonEmptyList(MissingKey(key))
-      case e: ConfigException.WrongType ⇒ NonEmptyList(WrongType(key, classTag[A].toString))
-      case other                        ⇒ NonEmptyList(Underlying(key, other))
+      case e: ConfigException.Missing   ⇒ NonEmptyList(MissingKey(key), Nil)
+      case e: ConfigException.WrongType ⇒ NonEmptyList(WrongType(key, classTag[A].toString), Nil)
+      case other                        ⇒ NonEmptyList(Underlying(key, other), Nil)
     }
 
   implicit val yyzReadTypesafeString: ReadValue[Config, String] =
@@ -39,6 +39,6 @@ object typesafe {
     ReadValue((config, key) ⇒
       guard(config.getConfig(key), key).andThen(subconfig ⇒
         DecoderV[Config, A].apply(subconfig)
-          .leftMap(errors ⇒ NonEmptyList(AtPath(key, errors)))))
+          .leftMap(errors ⇒ NonEmptyList(AtPath(key, errors), Nil))))
 
 }

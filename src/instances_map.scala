@@ -31,7 +31,7 @@ sealed trait MapImplicits0 extends MapImplicits1 {
     ReadValue((map, key) ⇒ map.get(key) match {
       case Some(`Map[String, Any]`(submap)) ⇒
         DecoderV[Map[String, Any], A].apply(submap)
-          .leftMap(errors ⇒ NonEmptyList(AtPath(key, errors)))
+          .leftMap(errors ⇒ NonEmptyList(AtPath(key, errors), Nil))
       case None ⇒ Validated.invalidNel(MissingKey(key))
     })
 }
