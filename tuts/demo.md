@@ -37,7 +37,6 @@ val lynneTruss: Xor[RootDecodeError, Person] = loadPerson(data0)
 
 
 ```tut:book
-import cats.std.list._
 lynneTruss.leftMap(_.show).swap.foreach(println)
 ```
 
