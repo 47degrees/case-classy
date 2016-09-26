@@ -12,6 +12,7 @@ import de.heikoseeberger.sbtheader.AutomateHeaderPlugin
 import de.heikoseeberger.sbtheader.HeaderPattern
 import de.heikoseeberger.sbtheader.HeaderPlugin
 import de.heikoseeberger.sbtheader.HeaderKey.headers
+import com.typesafe.sbt.SbtPgp.autoImport._
 
 import scala.{ Console ⇒ C }
 
@@ -20,12 +21,20 @@ object BuildCommon extends AutoPlugin {
   override def requires = plugins.JvmPlugin && SbtScalariform && HeaderPlugin
   override def trigger = allRequirements
 
+  object autoImport {
+    lazy val noPublishSettings = Seq(
+      publish := (),
+      publishLocal := (),
+      publishArtifact := false)
+  }
+
   override def projectSettings =
     baseSettings ++
-      formatSettings ++
-      enhancingScalaSettings ++
-      miscSettings ++
-      AutomateHeaderPlugin.projectSettings
+    formatSettings ++
+    enhancingScalaSettings ++
+    miscSettings ++
+    publishSettings ++
+    AutomateHeaderPlugin.projectSettings
 
   private[this] def baseSettings = Seq(
     scalaVersion := "2.11.8",
@@ -85,6 +94,40 @@ object BuildCommon extends AutoPlugin {
   private[this] def miscSettings = Seq(
     shellPrompt := (s ⇒
       s"${C.BLUE}${Project.extract(s).currentProject.id}🤖 ${C.RESET} ")
+  )
+
+  private[this] lazy val gpgFolder = sys.env.getOrElse("GPG_FOLDER", ".")
+
+  private[this] lazy val publishSettings = Seq(
+    pgpPassphrase := Some(sys.env.getOrElse("GPG_PASSPHRASE", "").toCharArray),
+    pgpPublicRing := file(s"$gpgFolder/pubring.gpg"),
+    pgpSecretRing := file(s"$gpgFolder/secring.gpg"),
+    credentials += Credentials("Sonatype Nexus Repository Manager",
+      "oss.sonatype.org",
+      sys.env.getOrElse("PUBLISH_USERNAME", ""),
+      sys.env.getOrElse("PUBLISH_PASSWORD", "")),
+    scmInfo := Some(ScmInfo(
+      url("https://github.com/47deg/case-classy"),
+      "https://github.com/47deg/case-classy.git")),
+    licenses := Seq("Apache License, Version 2.0" ->
+      url("http://www.apache.org/licenses/LICENSE-2.0.txt")),
+    publishMavenStyle := true,
+    publishArtifact in Test := false,
+    pomIncludeRepository := Function.const(false),
+    publishTo := {
+      val nexus = "https://oss.sonatype.org/"
+      if (isSnapshot.value)
+        Some("Snapshots" at nexus + "content/repositories/snapshots")
+      else
+        Some("Releases" at nexus + "service/local/staging/deploy/maven2")
+    },
+    pomExtra :=
+      <developers>
+        <developer>
+          <name>Andy Scott</name>
+          <email>andy.s@47deg.com</email>
+        </developer>
+      </developers>
   )
 
 }

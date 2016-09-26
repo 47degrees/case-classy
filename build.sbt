@@ -46,6 +46,7 @@ lazy val `case-classy-knobs` = (project in file("target/.case-classy-knobs"))
 lazy val tests = (project in file("target/.tests"))
   .settings(name := "tests",
     scalaSource in Test := baseDirectory.value.getParentFile.getParentFile / "tests")
+  .settings(noPublishSettings)
   .dependsOn(allClassy.map(_ % "compile"): _*)
   .settings(libraryDependencies ++=
     Seq(
@@ -56,6 +57,7 @@ lazy val tests = (project in file("target/.tests"))
 
 lazy val tuts = (project in file("target/.tuts"))
   .settings(name := "tuts")
+  .settings(noPublishSettings)
   .settings(tutSettings)
   .settings(tutSourceDirectory := baseDirectory.value.getParentFile.getParentFile / "tuts")
   .dependsOn(allClassy.map(_ % "compile"): _*)
