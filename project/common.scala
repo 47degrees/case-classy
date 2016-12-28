@@ -32,12 +32,13 @@ object BuildCommon extends AutoPlugin {
     baseSettings ++
     formatSettings ++
     enhancingScalaSettings ++
-    miscSettings ++
     publishSettings ++
     AutomateHeaderPlugin.projectSettings
 
   private[this] def baseSettings = Seq(
-    scalaVersion := "2.11.8",
+    scalaVersion := "2.12.0",
+    scalaOrganization := "org.typelevel",
+    crossScalaVersions := Seq("2.11.8", "2.12.0"),
 
     organization := "com.47deg",
 
@@ -48,33 +49,54 @@ object BuildCommon extends AutoPlugin {
     cancelable in Global := true,
 
     scalacOptions ++= Seq(
-      "-deprecation", "-feature", "-unchecked", "-encoding", "utf8"),
-    scalacOptions ++= Seq(
-      "-Ywarn-unused-import"),
-    scalacOptions ++= Seq(
+      "-deprecation",
+      "-encoding", "UTF-8",
+      "-feature",
+      "-language:existentials",
+      "-language:higherKinds",
       "-language:implicitConversions",
-      "-language:higherKinds"),
+      "-language:experimental.macros",
+      "-unchecked",
+      "-Xfatal-warnings",
+      "-Xlint",
+      "-Yno-adapted-args",
+      "-Ywarn-dead-code",
+      "-Ywarn-numeric-widen",
+      "-Ywarn-value-discard",
+      "-Ywarn-unused-import",
+      "-Xfuture",
+      "-Yno-predef",
+      "-Ypartial-unification"),
 
-    javacOptions ++= Seq("-encoding", "UTF-8", "-Xlint:-options"),
-    headers <<= (name, version) { (name, version) ⇒
-      Map(
-        "scala" → (
-          HeaderPattern.cStyleBlockComment,
-          s"""|/* -
-           | * Case Classy [$name]
-           | */
-           |
-           |""".stripMargin)
-      )
-    }
+    scalacOptions ++= (CrossVersion.partialVersion(scalaVersion.value) match {
+      case Some((2, 11)) => Nil
+      case Some((2, 12)) => Seq("-Yliteral-types")
+      case _             => Nil
+    }),
+
+    libraryDependencies ++= (CrossVersion.partialVersion(scalaVersion.value) match {
+      case Some((2, 11)) => Seq(
+        compilerPlugin("com.milessabin" % "si2712fix-plugin" % "1.2.0" cross CrossVersion.full))
+      case Some((2, 12)) => Nil
+      case _             => Nil
+    }),
+
+
+    headers := Map(
+      "scala" → (
+        HeaderPattern.cStyleBlockComment,
+        s"""|/* -
+         | * Case Classy [${name.value}]
+         | */
+         |
+         |""".stripMargin))
   )
 
   private[this] def enhancingScalaSettings = Seq(
     resolvers += Resolver.sonatypeRepo("releases"),
     libraryDependencies ++= Seq(
-      // kind projector
       compilerPlugin(
-        "org.spire-math" %% "kind-projector" % "0.8.0" cross CrossVersion.binary)
+        "org.spire-math" %% "kind-projector" % "0.9.3" cross CrossVersion.binary)
     )
   )
 
@@ -85,15 +107,9 @@ object BuildCommon extends AutoPlugin {
       .setPreference(DanglingCloseParenthesis, Preserve)
       .setPreference(AlignArguments, true)
       .setPreference(AlignSingleLineCaseStatements, true)
-      //.setPreference(DoubleIndentMethodDeclaration, true)
       .setPreference(MultilineScaladocCommentsStartOnFirstLine, true)
       .setPreference(PlaceScaladocAsterisksBeneathSecondAsterisk, true)
       .setPreference(RewriteArrowSymbols, true)
-  )
-
-  private[this] def miscSettings = Seq(
-    shellPrompt := (s ⇒
-      s"${C.BLUE}${Project.extract(s).currentProject.id}🤖 ${C.RESET} ")
   )
 
   private[this] lazy val gpgFolder = sys.env.getOrElse("GPG_FOLDER", ".")
