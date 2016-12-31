@@ -30,7 +30,7 @@ object Example1 extends App {
     import classy.typesafe._
     import classy.generic.auto._
 
-    val res = TypesafeDecoder[Foo].decode(typesafeConfig)
+    val res = ConfigDecoder[Foo].decode(typesafeConfig)
     println("Zed: " + res)
   }
 
@@ -43,14 +43,14 @@ object Example1 extends App {
     implicit val decodeBar = deriveDecoder[Config, Bar]
     implicit val decodeFoo = deriveDecoder[Config, Foo]
 
-    val res = TypesafeDecoder[Foo].decode(typesafeConfig)
+    val res = ConfigDecoder[Foo].decode(typesafeConfig)
     println("Yax: " + res)
   }
 
   {
     // Level Xan: Has No Magic
     import classy.typesafe._
-    import TypesafeDecoders.std._
+    import ConfigDecoders.std._
 
     val decodeA = string("a")
     val decodeB = int("b").option
@@ -62,7 +62,7 @@ object Example1 extends App {
       case (((a, b), c), bar) ⇒ Foo(a, b, c, bar)
     }
 
-    val res = TypesafeDecoder[Foo].decode(typesafeConfig)
+    val res = ConfigDecoder[Foo].decode(typesafeConfig)
     println("Xan: " + res)
   }
 

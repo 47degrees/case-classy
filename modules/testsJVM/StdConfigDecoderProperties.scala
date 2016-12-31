@@ -12,7 +12,7 @@ import scala.Predef._
 import org.scalacheck._
 import org.scalacheck.Prop._
 
-object TypesafeDecoderProperties {
+object StdConfigDecoderProperties {
   case class Key(value: String) extends AnyVal
   implicit val arbitraryKey: Arbitrary[Key] = Arbitrary(
     Gen.alphaStr.map(value ⇒ Key(value)) suchThat (_.value.length > 0))
@@ -27,9 +27,9 @@ object TypesafeDecoderProperties {
     ConfigFactory parseString s""" ${kv._1.value} = "${kv._2.toString}" """
 }
 
-class StdTypesafeDecoderProperties extends Properties("TypesafeDecoders.std") {
-  import TypesafeDecoderProperties._
-  import TypesafeDecoders.std._
+class StdConfigDecoderProperties extends Properties("ConfigDecoders.std") {
+  import StdConfigDecoderProperties._
+  import ConfigDecoders.std._
 
   // TODO: just figure out how to escape strings before sticking them into
   // the config (before parsing)
