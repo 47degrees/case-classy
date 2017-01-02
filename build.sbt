@@ -78,9 +78,14 @@ lazy val testsJVM    = tests.jvm
 
 
 lazy val docsJVM     = module("docs")
+  .dependsOn(core)
+  .dependsOn(generic)
   .settings(noPublishSettings)
   .settings(tutSettings)
+  .settings(tutScalacOptions ~= (_.filterNot(Set("-Yno-predef"))))
+  .settings(tutSourceDirectory := baseDirectory.value.getParentFile.getParentFile / "docs")
   .jvm
+  .dependsOn(typesafeJVM)
 
 //
 

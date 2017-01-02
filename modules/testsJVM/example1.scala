@@ -2,8 +2,7 @@
  * Case Classy [case-classy-tests]
  */
 
-package classy
-package generic_test_
+package classy_generic_examples
 
 import com.typesafe.config.ConfigFactory
 import scala.Predef._

@@ -31,7 +31,7 @@ object DecodeError extends DecodeErrorInstances {
   case class MissingKey(key: String) extends LeafDecodeError
   case class WrongType(key: String, expected: String, got: Option[String] = None) extends LeafDecodeError
   case class Truncated(key: String, raw: String, result: String) extends LeafDecodeError
-  case class Underlying(key: String, underlying: Throwable) extends LeafDecodeError
+  case class Underlying(underlying: Throwable) extends LeafDecodeError
 
 }
 

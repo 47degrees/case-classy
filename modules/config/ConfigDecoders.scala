@@ -44,7 +44,7 @@ object ConfigDecoders {
         } catch {
           case e: ConfigException.Missing   ⇒ DecodeError.MissingKey(key).left
           case e: ConfigException.WrongType ⇒ DecodeError.WrongType(key, classTag[A].toString).left //#=typesafe
-          case other: Throwable             ⇒ DecodeError.Underlying(key, other).left
+          case other: Throwable             ⇒ DecodeError.AtPath(key, DecodeError.Underlying(other)).left
         }
       )
 

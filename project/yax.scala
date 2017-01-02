@@ -9,7 +9,9 @@ import scala.io.Source
 
 object yax {
 
-  val lineGuard = """(\s*).*\/\/#=([^\s]+)\s*$""".r
+  val lineGuard = """(\s*)(.*)\/\/#=([^\s]+)\s*$""".r
+  val startGuard = """(\s*)\/\/#\+([^\s]+)\s*$""".r
+  val stopGuard = """(\s*)\/\/#-([^\s]+)\s*$""".r
 
   private def process(file: File, lines: List[String], flags: Set[String]): List[String] = {
     def go(lines: List[(String, Int)], out: List[String], stack: List[String]): List[String] =
@@ -21,15 +23,23 @@ object yax {
           else sys.error(s"$file: EOF: expected ${stack.map(s => s"#-$s").mkString(", ")}")
 
         // Push a token.
-        case (s, _) :: ss if s.trim.startsWith("//#+") =>
-          go(ss, out, s.trim.drop(2) :: stack)
+        case (s @ startGuard(leading, tok), _) :: ss =>
+          val stack0 = tok :: stack
+          val open =
+            if (!flags(tok)) s"$leading/*[$tok]"
+            else s
+
+          go(ss, open :: out, stack0)
 
         // Pop a token.
-        case (s, n) :: ss if s.trim.startsWith("//#-") =>
-          val tok  = s.trim.drop(2)
+        case (s @ stopGuard(leading, tok), n) :: ss =>
           val line = n + 1
           stack match {
-            case `tok` :: ts => go(ss, out, ts)
+            case `tok` :: ts =>
+              val close =
+                if (!flags(tok)) s"$leading[$tok]*/"
+                else s
+              go(ss, close :: out, ts)
             case t :: _      => sys.error(s"$file: $line: expected #-$t, found #-$tok")
             case _           => sys.error(s"$file: $line: unexpected #-$tok")
           }
@@ -37,12 +47,11 @@ object yax {
         // Add a line, or not, depending on tokens.
         case (s, _) :: ss =>
           s match {
-            case lineGuard(leading, flag) if !flags(flag) =>
-              val guarded = leading + "// " + s.drop(leading.length)
+            case lineGuard(leading, content, tok) if !flags(tok) =>
+              val guarded = s"$leading//[$tok] $content"
               go(ss, guarded :: out, stack)
             case _ =>
-              if (stack.forall(flags))  go(ss, s :: out, stack)
-              else                      go(ss,      out, stack)
+              go(ss, s :: out, stack)
           }
       }
     go(lines.zipWithIndex, Nil, Nil)

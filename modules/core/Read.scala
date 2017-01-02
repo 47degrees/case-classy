@@ -5,10 +5,13 @@
 package classy
 package core
 
-private[classy] final class Read[A, B](f: String ⇒ Decoder[A, B]) extends Serializable {
+import wheel._
+
+final class Read[A, B](f: String ⇒ Decoder[A, B]) extends Serializable {
   def apply(key: String): Decoder[A, B] = f(key)
 }
-private[classy] object Read {
+
+object Read {
   def instance[A, B](f: (String) ⇒ Decoder[A, B]): Read[A, B] = new Read(f)
 
   implicit def defaultReadNested[A, B](
@@ -18,11 +21,11 @@ private[classy] object Read {
   ): Read[A, B] = instance(key ⇒
     read(key) andThen decoder leftMap (_.atPath(key)))
 
-  implicit def defaultReadNestedSequenced[A, B](
+  implicit def defaultReadNestedSequenced[F[_]: Traversable, A, B](
     implicit
-    read: Read[A, List[A]],
+    read: Read[A, F[A]],
     decoder: Decoder[A, B]
-  ): Read[A, List[B]] = instance(key ⇒
+  ): Read[A, F[B]] = instance(key ⇒
     read(key) andThen decoder.sequence leftMap (_.atPath(key)))
 
   implicit def defaultReadOption[A, B](
