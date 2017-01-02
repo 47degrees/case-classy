@@ -3,7 +3,7 @@
  */
 
 package classy
-package generic_
+package generic_test_
 
 import com.typesafe.config.ConfigFactory
 import scala.Predef._
@@ -27,7 +27,7 @@ object Example1 extends App {
 
   {
     // Level Zed: Full Black Magic
-    import classy.typesafe._
+    import classy.config._
     import classy.generic.auto._
 
     val res = ConfigDecoder[Foo].decode(typesafeConfig)
@@ -36,7 +36,7 @@ object Example1 extends App {
 
   {
     // Level Yax: Partial Black Magic
-    import classy.typesafe._
+    import classy.config._
     import classy.generic.deriveDecoder
     import com.typesafe.config.Config
 
@@ -49,7 +49,7 @@ object Example1 extends App {
 
   {
     // Level Xan: Has No Magic
-    import classy.typesafe._
+    import classy.config._
     import ConfigDecoders.std._
 
     val decodeA = string("a")

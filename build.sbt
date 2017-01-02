@@ -32,19 +32,22 @@ lazy val genericJS   = generic.js
 lazy val genericJVM  = generic.jvm
 
 
-lazy val typesafeJVM = module("typesafe")
+lazy val typesafeJVM = module("config-typesafe")
   .dependsOn(core)
   .settings(libraryDependencies ++= Seq(
     "com.typesafe"  % "config"    % V.typesafeConfig
   ))
+  .settings(yax(file("modules/config"), "typesafe"))
   .jvm
 
 
-lazy val shocon      = module("shocon")
+lazy val shocon      = module("config-shocon")
   .dependsOn(core)
   .settings(libraryDependencies ++= Seq(
     "eu.unicredit" %%% "shocon" % V.shocon
   ))
+  .settings(yax(file("modules/config"), "shocon"))
+
 lazy val shoconJS    = shocon.js
 lazy val shoconJVM   = shocon.jvm
 

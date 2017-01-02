@@ -1,15 +1,16 @@
 /* -
- * Case Classy [case-classy-typesafe]
+ * Case Classy [case-classy-config-typesafe]
  */
 
 package classy
-package typesafe
+package config
 
 import com.typesafe.config.Config
 import com.typesafe.config.ConfigException
 
 import scala.collection.JavaConverters._
-import scala.reflect.{ ClassTag, classTag }
+import scala.reflect.{ ClassTag, classTag } //#=typesafe
+import scala.reflect.ClassTag               //#=shocon
 
 import core._
 
@@ -20,19 +21,19 @@ object ConfigDecoders {
     // format: OFF
     def config     (key: String): ConfigDecoder[Config]        = instance(key)(_ getConfig _)
     def string     (key: String): ConfigDecoder[String]        = instance(key)(_ getString _)
-    def number     (key: String): ConfigDecoder[Number]        = instance(key)(_ getNumber _)
+    def number     (key: String): ConfigDecoder[Number]        = instance(key)(_ getNumber _)      //#=typesafe
     def boolean    (key: String): ConfigDecoder[Boolean]       = instance(key)(_ getBoolean _)
     def int        (key: String): ConfigDecoder[Int]           = instance(key)(_ getInt _)
-    def long       (key: String): ConfigDecoder[Long]          = instance(key)(_ getLong _)
+    def long       (key: String): ConfigDecoder[Long]          = instance(key)(_ getLong _)        //#=typesafe
     def double     (key: String): ConfigDecoder[Double]        = instance(key)(_ getDouble _)
 
-    def configList (key: String): ConfigDecoder[List[Config]]  = instance(key)(_ getConfigList _)
+    def configList (key: String): ConfigDecoder[List[Config]]  = instance(key)(_ getConfigList _)  //#=typesafe
     def stringList (key: String): ConfigDecoder[List[String]]  = instance(key)(_ getStringList _)
-    def numberList (key: String): ConfigDecoder[List[Number]]  = instance(key)(_ getNumberList _)
-    def booleanList(key: String): ConfigDecoder[List[Boolean]] = instance(key)(_ getBooleanList _)
-    def intList    (key: String): ConfigDecoder[List[Int]]     = instance(key)(_ getIntList _)
-    def longList   (key: String): ConfigDecoder[List[Long]]    = instance(key)(_ getLongList _)
-    def doubleList (key: String): ConfigDecoder[List[Double]]  = instance(key)(_ getDoubleList _)
+    def numberList (key: String): ConfigDecoder[List[Number]]  = instance(key)(_ getNumberList _)  //#=typesafe
+    def booleanList(key: String): ConfigDecoder[List[Boolean]] = instance(key)(_ getBooleanList _) //#=typesafe
+    def intList    (key: String): ConfigDecoder[List[Int]]     = instance(key)(_ getIntList _)     //#=typesafe
+    def longList   (key: String): ConfigDecoder[List[Long]]    = instance(key)(_ getLongList _)    //#=typesafe
+    def doubleList (key: String): ConfigDecoder[List[Double]]  = instance(key)(_ getDoubleList _)  //#=typesafe
     // format: ON
 
     @inline private[this] def instance[A: ClassTag](
@@ -42,7 +43,7 @@ object ConfigDecoders {
           f(config, key).right
         } catch {
           case e: ConfigException.Missing   ⇒ DecodeError.MissingKey(key).left
-          case e: ConfigException.WrongType ⇒ DecodeError.WrongType(key, classTag[A].toString).left
+          case e: ConfigException.WrongType ⇒ DecodeError.WrongType(key, classTag[A].toString).left //#=typesafe
           case other: Throwable             ⇒ DecodeError.Underlying(key, other).left
         }
       )

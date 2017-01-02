@@ -3,7 +3,7 @@
  */
 
 package classy
-package typesafe
+package config
 
 import com.typesafe.config._
 
