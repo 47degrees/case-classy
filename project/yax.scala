@@ -9,7 +9,7 @@ import scala.io.Source
 
 object yax {
 
-  val lineGuard = """(\s*).*\/\/#=(\w+)\s*$""".r
+  val lineGuard = """(\s*).*\/\/#=([^\s]+)\s*$""".r
 
   private def process(file: File, lines: List[String], flags: Set[String]): List[String] = {
     def go(lines: List[(String, Int)], out: List[String], stack: List[String]): List[String] =
@@ -21,11 +21,11 @@ object yax {
           else sys.error(s"$file: EOF: expected ${stack.map(s => s"#-$s").mkString(", ")}")
 
         // Push a token.
-        case (s, _) :: ss if s.trim.startsWith("#+") =>
+        case (s, _) :: ss if s.trim.startsWith("//#+") =>
           go(ss, out, s.trim.drop(2) :: stack)
 
         // Pop a token.
-        case (s, n) :: ss if s.trim.startsWith("#-") =>
+        case (s, n) :: ss if s.trim.startsWith("//#-") =>
           val tok  = s.trim.drop(2)
           val line = n + 1
           stack match {
@@ -82,6 +82,17 @@ object yax {
     srcs.flatMap(walk(_, dest, flags.toSet))
   }
 
+  private def bar(root: File) = Def.task {
+    val flags = CrossVersion.partialVersion(scalaVersion.value) match {
+      case Some((x, y))  => List(s"$x.$y")
+      case _             => Nil
+    }
+    val dest = sourceManaged.value
+    val sbv = scalaBinaryVersion.value
+    val srcs = List(root)
+    srcs.flatMap(walk(_, dest, flags.toSet))
+  }
+
   // all non-hidden files
   private def closure(src: File): List[File] =
     if (src.isFile) {
@@ -93,6 +104,11 @@ object yax {
   def apply(root: File, flags: String*): Seq[Setting[_]] =
     inConfig(Compile)(Seq(sourceGenerators += foo(root, flags: _*).taskValue)) ++
     inConfig(Test)(Seq(sourceGenerators += foo(root, flags: _*).taskValue)) ++
+    Seq(watchSources := watchSources.value ++ closure(root))
+
+  def scala(root: File): Seq[Setting[_]] =
+    inConfig(Compile)(Seq(sourceGenerators += bar(root).taskValue)) ++
+    inConfig(Test)(Seq(sourceGenerators += bar(root).taskValue)) ++
     Seq(watchSources := watchSources.value ++ closure(root))
 
 }

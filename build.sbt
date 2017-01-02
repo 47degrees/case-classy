@@ -19,7 +19,8 @@ lazy val root = (project in file("."))
   .aggregate(docsJVM)
 
 
-lazy val core        = module("core", crossScala = true)
+lazy val core        = module("core")
+  .settings(yax.scala(file("modules/core_compat")))
 lazy val coreJS      = core.js
 lazy val coreJVM     = core.jvm
 
@@ -83,23 +84,11 @@ lazy val docsJVM     = module("docs")
 
 //
 
-def crossScalaPaths(paths: SettingKey[Seq[File]]): Setting[Seq[File]] =
-  paths ++= paths.value.flatMap(path =>
-    CrossVersion.partialVersion(scalaVersion.value) match {
-      case Some((2, 11)) => Some(new File(path.getPath + "_2.11"))
-      case Some((2, 12)) => Some(new File(path.getPath + "_2.12"))
-      case _             => None
-    })
-
-def crossPaths(paths: SettingKey[Seq[File]], suffix: String): Setting[Seq[File]] =
-  paths ++= paths.value.map(path => new File(path.getPath + suffix))
-
 import org.scalajs.sbtplugin.cross.{ CrossProject, CrossType }
 
 def module(
   modName: String,
   sourceConfig: Configuration = Compile,
-  crossScala: Boolean = false,
   crossJS: Boolean = false
 ): CrossProject = {
 
@@ -110,6 +99,9 @@ def module(
     .settings(unmanagedSourceDirectories in Test         := Nil)
     .settings(unmanagedSourceDirectories in sourceConfig := Seq((scalaSource in sourceConfig).value))
 
+  def crossPaths(paths: SettingKey[Seq[File]], suffix: String): Setting[Seq[File]] =
+    paths ++= paths.value.map(path => new File(path.getPath + suffix))
+
   val project1 =
     if (crossJS)
       project0
@@ -117,10 +109,5 @@ def module(
         .jvmSettings(crossPaths(unmanagedSourceDirectories in sourceConfig, "JVM"))
     else project0
 
-  val project2 =
-    if (crossScala)
-      project1.settings(crossScalaPaths(unmanagedSourceDirectories in sourceConfig))
-    else project1
-
-  project2
+  project1
 }
