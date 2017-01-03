@@ -9,13 +9,25 @@ import com.typesafe.config.ConfigFactory
 
 import core.DecodeError
 import core.Decoder
-import core.Read.{ instance ⇒ read }
+import core.Read
+import core.Read.{ instance => read }
 
 package object config {
+
   type ConfigDecoder[A] = Decoder[Config, A]
   object ConfigDecoder {
     def apply[A](implicit ev: ConfigDecoder[A]): ConfigDecoder[A] = ev
   }
+
+
+  type ReadConfig[A] = Read[Config, A]
+  object ReadConfig {
+    def apply[A](path: String)(
+      implicit read: ReadConfig[A]): ConfigDecoder[A] = read(path)
+  }
+  def readConfig[A](path: String)(
+    implicit read: ReadConfig[A]): ConfigDecoder[A] = read(path)
+
 
   implicit class ConfigDecoderOps[A](val decoder: ConfigDecoder[A]) extends AnyVal {
     /** Converts this decoder to a decoder that parses a string instead of
@@ -47,14 +59,14 @@ package object config {
   implicit val defaultConfigReadNumber      = read(number)      //#=typesafe
   implicit val defaultConfigReadBoolean     = read(boolean)
   implicit val defaultConfigReadInt         = read(int)
-  implicit val defaultConfigReadLong        = read(long)        //#=typesafe
+  implicit val defaultConfigReadLong        = read(long)
   implicit val defaultConfigReadDouble      = read(double)
 
-  implicit val defaultConfigReadConfigList  = read(configList)  //#=typesafe
+  implicit val defaultConfigReadConfigList  = read(configList)
   implicit val defaultConfigReadStringList  = read(stringList)
   implicit val defaultConfigReadNumberList  = read(numberList)  //#=typesafe
-  implicit val defaultConfigReadBooleanList = read(booleanList) //#=typesafe
-  implicit val defaultConfigReadIntList     = read(intList)     //#=typesafe
-  implicit val defaultConfigReadLongList    = read(longList)    //#=typesafe
-  implicit val defaultConfigReadDoubleList  = read(doubleList)  //#=typesafe
+  implicit val defaultConfigReadBooleanList = read(booleanList)
+  implicit val defaultConfigReadIntList     = read(intList)
+  implicit val defaultConfigReadLongList    = read(longList)
+  implicit val defaultConfigReadDoubleList  = read(doubleList)
 }

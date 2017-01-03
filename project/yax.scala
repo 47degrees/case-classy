@@ -110,14 +110,12 @@ object yax {
       src.listFiles.toList.flatMap(closure)
     }
 
-  def apply(root: File, flags: String*): Seq[Setting[_]] =
-    inConfig(Compile)(Seq(sourceGenerators += foo(root, flags: _*).taskValue)) ++
-    inConfig(Test)(Seq(sourceGenerators += foo(root, flags: _*).taskValue)) ++
+  def apply(root: File, config: Configuration, flags: String*): Seq[Setting[_]] =
+    inConfig(config)(Seq(sourceGenerators += foo(root, flags: _*).taskValue)) ++
     Seq(watchSources := watchSources.value ++ closure(root))
 
-  def scala(root: File): Seq[Setting[_]] =
-    inConfig(Compile)(Seq(sourceGenerators += bar(root).taskValue)) ++
-    inConfig(Test)(Seq(sourceGenerators += bar(root).taskValue)) ++
+  def scala(root: File, config: Configuration): Seq[Setting[_]] =
+    inConfig(config)(Seq(sourceGenerators += bar(root).taskValue)) ++
     Seq(watchSources := watchSources.value ++ closure(root))
 
 }
