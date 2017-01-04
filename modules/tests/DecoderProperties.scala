@@ -5,27 +5,31 @@
 package classy
 package core
 
-import scala.Predef._
-
+import _root_.cats.instances.all._
+import _root_.cats.laws.discipline._
 import org.scalacheck._
-import org.scalacheck.Prop._
 
-object DecoderProperties extends {
+import testing._
+import cats._
 
-  def checkAnd[A, B, C](
-    implicit
-    evA: Arbitrary[A],
-    evAB: Arbitrary[Decoder[A, B]],
-    evAC: Arbitrary[Decoder[A, C]]
-  ): Prop = forAll { (a: A, dab: Decoder[A, B], dac: Decoder[A, C]) ⇒
+class DecoderProperties extends Properties("Decoder") {
 
-    (dab and dac).decode(a) match {
-      case Right((b, c)) ⇒
-        (dab.decode(a) ?= b.right) && (dac.decode(a) ?= c.right)
-      case Left(e) ⇒
-        ???
-    }
+  implicit def decoder[A, B](implicit
+    ArbF: Arbitrary[A => Either[DecodeError, B]],
+    ArbDecodeError: Arbitrary[DecodeError],
+    ArbDAB: Arbitrary[B]): Arbitrary[Decoder[A, B]] = Arbitrary(
+    Gen.oneOf(
+      ArbF.arbitrary.map(f => Decoder.instance(f)),
+      ArbDAB.arbitrary.map(value => Decoder.const[A, B](value)),
+      ArbDecodeError.arbitrary.map(value => Decoder.fail[A, B](value))))
 
-  }
+  include(
+    DecoderChecks.positive(Decoder.instance[String, String](v => v.right))(v => v),
+    "identity ")
+
+  include(DecoderChecks.positive(
+    (result: String) => ("", Decoder.const[String, String](result))))
+
+  include(MonadTests[Decoder[String, ?]].stackUnsafeMonad[String, String, String].all)
 
 }

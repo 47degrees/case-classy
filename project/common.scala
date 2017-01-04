@@ -13,8 +13,9 @@ import de.heikoseeberger.sbtheader.HeaderPattern
 import de.heikoseeberger.sbtheader.HeaderPlugin
 import de.heikoseeberger.sbtheader.HeaderKey.headers
 import com.typesafe.sbt.SbtPgp.autoImport._
+import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
 
-import scala.{ Console ⇒ C }
+import scala.{ Console => C }
 
 object BuildCommon extends AutoPlugin {
 
@@ -43,7 +44,8 @@ object BuildCommon extends AutoPlugin {
     organization := "com.47deg",
 
     fork in run := true,
-    fork in Test := false,
+    fork in Test := !isScalaJSProject.value,
+    parallelExecution in Test := false,
     outputStrategy := Some(StdoutOutput),
     connectInput in run := true,
     cancelable in Global := true,
@@ -109,7 +111,6 @@ object BuildCommon extends AutoPlugin {
       .setPreference(AlignSingleLineCaseStatements, true)
       .setPreference(MultilineScaladocCommentsStartOnFirstLine, true)
       .setPreference(PlaceScaladocAsterisksBeneathSecondAsterisk, true)
-      .setPreference(RewriteArrowSymbols, true)
   )
 
   private[this] lazy val gpgFolder = sys.env.getOrElse("GPG_FOLDER", ".")

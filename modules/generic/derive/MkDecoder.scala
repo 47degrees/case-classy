@@ -32,7 +32,7 @@ object MkDecoder {
     mkT: Lazy[MkDecoder[A, T]]
   ): MkDecoder[A, FieldType[K, H] :: T] =
     instance((readH.value(key.value.name) and mkT.value.decoder).map {
-      case (h, t) ⇒ field[K](h) :: t
+      case (h, t) => field[K](h) :: t
     })
 
   implicit def mkDecoderGeneric[A, B, L <: HList](

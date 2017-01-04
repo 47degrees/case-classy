@@ -12,13 +12,13 @@ sealed abstract class DecodeError extends Product with Serializable {
 object DecodeError extends DecodeErrorInstances {
 
   def combine(a: DecodeError, b: DecodeError): Aggregate = (a, b) match {
-    case (manyA: Aggregate, manyB: Aggregate) ⇒
+    case (manyA: Aggregate, manyB: Aggregate) =>
       Aggregate(manyA.head, manyA.tail ::: manyB.head :: manyB.tail)
-    case (manyA: Aggregate, oneB) ⇒
+    case (manyA: Aggregate, oneB) =>
       Aggregate(manyA.head, manyA.tail ::: oneB :: Nil)
-    case (oneA, manyB: Aggregate) ⇒
+    case (oneA, manyB: Aggregate) =>
       Aggregate(oneA, manyB.head :: manyB.tail)
-    case (oneA, oneB) ⇒
+    case (oneA, oneB) =>
       Aggregate(oneA, oneB :: Nil)
   }
 
@@ -31,7 +31,16 @@ object DecodeError extends DecodeErrorInstances {
   case class MissingKey(key: String) extends LeafDecodeError
   case class WrongType(key: String, expected: String, got: Option[String] = None) extends LeafDecodeError
   case class Truncated(key: String, raw: String, result: String) extends LeafDecodeError
-  case class Underlying(underlying: Throwable) extends LeafDecodeError
+  case class Underlying(underlying: Throwable) extends LeafDecodeError {
+    def canEqual(a: Any) = a.isInstanceOf[Underlying]
+    override def equals(that: Any): Boolean =
+      that match {
+        case that: Underlying => that.canEqual(this) && this.hashCode == that.hashCode
+        case _                => false
+      }
+    override def hashCode: Int =
+      Option(underlying.getMessage).hashCode
+  }
 
 }
 
@@ -43,12 +52,12 @@ sealed trait DecodeErrorInstances {
       override def map2[A, B, C](
         fa: Either[DecodeError, A],
         fb: Either[DecodeError, B])(
-        f: (A, B) ⇒ C
+        f: (A, B) => C
       ): Either[DecodeError, C] = (fa, fb) match {
-        case (Right(a), Right(b)) ⇒ f(a, b).right
-        case (Left(za), Left(zb)) ⇒ (za && zb).left
-        case (Left(za), _)        ⇒ za.left
-        case (_, Left(zb))        ⇒ zb.left
+        case (Right(a), Right(b)) => f(a, b).right
+        case (Left(za), Left(zb)) => (za && zb).left
+        case (Left(za), _)        => za.left
+        case (_, Left(zb))        => zb.left
       }
     }
 }

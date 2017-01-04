@@ -12,14 +12,14 @@ object Example1 extends App {
   case class Bar(value: String)
 
   case class Foo(
-    a: String,
+    a: String = "a's default value",
     b: Option[Int],
     c: List[String],
     bars: List[Bar]
   )
 
   val typesafeConfig = ConfigFactory parseString """
-   | a = 1
+   |
    | c = ["hello", "world"]
    | bars = [{ value: hello }]
    |""".stripMargin
@@ -48,17 +48,17 @@ object Example1 extends App {
 
   {
     // Level Xan: Has No Magic
+    import com.typesafe.config.Config
     import classy.config._
-    import ConfigDecoders.std._
 
-    val decodeA = string("a")
-    val decodeB = int("b").option
-    val decodeC = stringList("c")
-    val decodeBar = string("value").map(value ⇒ Bar(value))
-    val decodeBars = configList("bars") andThen decodeBar.sequence
+    val decodeA    = readConfig[String]("a").withDefault("a's default value")
+    val decodeB    = readConfig[Int]("b").optional
+    val decodeC    = readConfig[List[String]]("c")
+    val decodeBar  = readConfig[String]("value").map(value => Bar(value))
+    val decodeBars = readConfig[List[Config]]("bars") andThen decodeBar.sequence
 
     implicit val decodeFoo = (decodeA and decodeB and decodeC and decodeBars).map {
-      case (((a, b), c), bar) ⇒ Foo(a, b, c, bar)
+      case (((a, b), c), bar) => Foo(a, b, c, bar)
     }
 
     val res = ConfigDecoder[Foo].decode(typesafeConfig)
