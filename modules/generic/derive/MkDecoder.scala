@@ -35,7 +35,24 @@ object MkDecoder {
       case (h, t) => field[K](h) :: t
     })
 
-  implicit def mkDecoderGeneric[A, B, L <: HList](
+  implicit def mkDecoderCNil[A]: MkDecoder[A, CNil] =
+    instance(Decoder.fail(DecodeError.Identity))
+
+  implicit def mkDecoderCoproduct[A, K <: Symbol, H, T <: Coproduct](
+    implicit
+    key: Witness.Aux[K],
+    decodeH: Lazy[Decoder[A, H]],
+    nest: Read[A, A],
+    strategy: CoproductStrategy,
+    naming: CoproductNaming,
+    mkT: Lazy[MkDecoder[A, T]]
+  ): MkDecoder[A, FieldType[K, H] :+: T] =
+    instance(
+      strategy.decoder(decodeH.value, key.value.name).map(h => Inl(field[K](h)))
+        or
+        mkT.value.decoder.map(t => Inr(t)))
+
+  implicit def mkDecoderGeneric[A, B, L](
     implicit
     gen: LabelledGeneric.Aux[B, L],
     mkL: Lazy[MkDecoder[A, L]]
@@ -44,32 +61,33 @@ object MkDecoder {
 
 }
 
-/*
-sealed abstract class UnconfiguredMkDecoder[A, B] extends Serializable {
-  def configure: MkDecoder[A, B]
+trait CoproductNaming {
+  def renameCoproduct(in: String): String
 }
 
-object UnconfiguredMkDecoder {
-  def apply[A, B](implicit ev: UnconfiguredMkDecoder[A, B]): UnconfiguredMkDecoder[A, B] = ev
-
-  implicit def unconfiguredMkDecoderHNil[A]: UnconfiguredMkDecoder[A, HNil] =
-    new UnconfiguredMkDecoder[A, HNil] {
-      def configure: MkDecoder[A, HNil] = MkDecoder.mkDecoderHNil
-    }
-
-  implicit def unconfiguredMkDecoderHList[A, K <: Symbol, H, T <: HList](
-    implicit
-    key: Witness.Aux[K],
-    readH: Read[A, H],
-    uMkT: UnconfiguredMkDecoder[A, T]
-  ): UnconfiguredMkDecoder[A, FieldType[K, H] :: T] =
-
-    new UnconfiguredMkDecoder[A, FieldType[K, H] :: T] {
-      def configure: MkDecoder[A, FieldType[K, H] :: T] = {
-        implicit val mkT: MkDecoder[A, T] = uMkT.configure
-        MkDecoder.mkDecoderHList
-      }
-    }
-
+object CoproductNaming {
+  implicit object DefaultCoproductNaming extends CoproductNaming {
+    // TODO: make this a robust CamelCase -> snakeCase
+    override def renameCoproduct(in: String): String =
+      if (in.length > 0) in.substring(0, 1).toLowerCase + in.substring(1)
+      else in
+  }
 }
-*/
+
+abstract class CoproductStrategy extends Serializable {
+  def decoder[A, B](
+    decoder: Decoder[A, B],
+    name: String
+  )(implicit nest: Read[A, A], naming: CoproductNaming): Decoder[A, B]
+}
+
+object CoproductStrategy {
+
+  implicit object DefaultCoproductStrategy extends CoproductStrategy {
+    override def decoder[A, B](
+      decoder: Decoder[A, B],
+      name: String
+    )(implicit nest: Read[A, A], naming: CoproductNaming): Decoder[A, B] =
+      decoder.atPath(naming.renameCoproduct(name))
+  }
+}

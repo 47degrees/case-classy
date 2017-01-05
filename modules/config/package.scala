@@ -17,8 +17,9 @@ package object config {
   type ConfigDecoder[A] = Decoder[Config, A]
   object ConfigDecoder {
     def apply[A](implicit ev: ConfigDecoder[A]): ConfigDecoder[A] = ev
+    def instance[A](f: Config => Either[DecodeError, A]): ConfigDecoder[A] =
+      Decoder.instance(f)
   }
-
 
   type ReadConfig[A] = Read[Config, A]
   object ReadConfig {

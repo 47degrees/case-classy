@@ -23,6 +23,7 @@ lazy val root = (project in file("."))
   .settings(unidocProjectFilter in (ScalaUnidoc, unidoc) :=
     inProjects(coreJVM, genericJVM, catsJVM, typesafeJVM))
 
+addCommandAlias("validate", ";validateJS;validateJVM")
 addCommandAlias("validateJVM", ";" + List(
   "coreJVM/compile",
   "genericJVM/compile",
@@ -32,7 +33,6 @@ addCommandAlias("validateJVM", ";" + List(
   "testsJVM/test",
   "tests-config-typesafeJVM/test",
   "tests-config-shoconJVM/test").mkString(";"))
-
 addCommandAlias("validateJS", ";" + List(
   "coreJS/compile",
   "genericJS/compile",
