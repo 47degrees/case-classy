@@ -11,6 +11,7 @@ lazy val V = new {
 }
 
 lazy val root = (project in file("."))
+  .settings(noPublishSettings)
   .aggregate(coreJVM, coreJS)
   .aggregate(genericJVM, genericJS)
   .aggregate(typesafeJVM)
@@ -98,13 +99,14 @@ lazy val testsSettings = Seq(
   ).map(_ % "test"))
 
 lazy val allTests = (project in file(".all-tests"))
+  .settings(noPublishSettings)
   .aggregate(testsJS, testsJVM)
   .aggregate(testsTypesafeJVM)
   .aggregate(testsShoconJS, testsShoconJVM)
 
 lazy val testing =
   module("testing")
-    .settings(testsSettings: _*)
+    .settings(noPublishSettings)
     .settings(libraryDependencies ++= Seq(
       "org.scalacheck"             %%% "scalacheck"                % V.scalacheck,
       "com.github.alexarchambault" %%% "scalacheck-shapeless_1.13" % V.scalacheckShapeless,
@@ -116,6 +118,7 @@ lazy val testingJVM = testing.jvm
 
 lazy val tests =
   module("tests", sourceConfig = Test)
+    .settings(noPublishSettings)
     .settings(testsSettings: _*)
     .dependsOn(testing)
     .dependsOn(core, generic, cats)
@@ -124,6 +127,7 @@ lazy val testsJVM = tests.jvm
 
 lazy val testsTypesafeJVM =
   module("tests-config-typesafe", sourceConfig = Test).jvm
+    .settings(noPublishSettings)
     .settings(testsSettings: _*)
     .dependsOn(testingJVM)
     .dependsOn(coreJVM, genericJVM)
@@ -132,6 +136,7 @@ lazy val testsTypesafeJVM =
 
 lazy val testsShocon =
   module("tests-config-shocon", sourceConfig = Test)
+    .settings(noPublishSettings)
     .settings(testsSettings: _*)
     .dependsOn(testing)
     .dependsOn(core, generic)
@@ -163,7 +168,7 @@ def module(
   sourceConfig: Configuration = Compile
 ): CrossProject =
   CrossProject(modName, file(s"modules/.$modName"), CrossType.Dummy)
-    .settings(name := s"case-classy-$modName")
+    .settings(name := s"classy-$modName")
     .settings(scalaSource in sourceConfig := baseDirectory.value.getParentFile.getParentFile / modName)
     .settings(unmanagedSourceDirectories in Compile      := Nil)
     .settings(unmanagedSourceDirectories in Test         := Nil)

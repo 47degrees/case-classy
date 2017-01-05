@@ -1,5 +1,5 @@
 /* -
- * Case Classy [case-classy-generic]
+ * Case Classy [classy-generic]
  */
 
 package classy
