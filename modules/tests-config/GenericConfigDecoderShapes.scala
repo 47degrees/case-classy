@@ -52,7 +52,7 @@ object GenericConfigDecoderShapes1 {
 
 }
 
-object GenericConfigDecoderShapes extends Properties("ConfigDecoder generic shapes") {
+class GenericConfigDecoderShapes extends Properties("ConfigDecoder generic shapes") {
 
   // tests that we can organize our ADT a few different ways and we
   // can still derive decoders that are consistent with eachother (in
