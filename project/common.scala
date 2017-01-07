@@ -95,6 +95,9 @@ object BuildCommon extends AutoPlugin {
   )
 
   private[this] def enhancingScalaSettings = Seq(
+    //resolvers += Resolver.bintrayRepo("tek", "maven"),
+    //libraryDependencies ++= Seq(
+      //compilerPlugin("tryp" %% "splain" % "0.1.11")),
     resolvers += Resolver.sonatypeRepo("releases"),
     libraryDependencies ++= Seq(
       compilerPlugin(

@@ -58,8 +58,8 @@ trait Decoder[A, B] extends Serializable {
   final def andThen[C](next: Decoder[B, C]): Decoder[A, C] =
     instance(input => decode(input).flatMap(next.decode))
 
-  /** Construct a new decober by joining this decoder with another,
-    * tupling the results
+  /** Construct a new decoder by joining this decoder with another,
+    * tupling the results. Errors accumulate.
     */
   final def and[C](that: Decoder[A, C]): Decoder[A, (B, C)] =
     instance { input =>
@@ -74,20 +74,28 @@ trait Decoder[A, B] extends Serializable {
     }
 
   /** Construct a new decoder using this decoder first. If it fails, use
-    * the other.
+    * the other. Errors accumulate.
     */
   final def or[BB >: B](that: Decoder[A, BB]): Decoder[A, BB] =
     instance(input => decode(input) match {
-      case right @ Right(_) => right
-      case _                => that.decode(input)
+      case b @ Right(_) => b
+      case Left(eb) => that.decode(input) match {
+        case bb @ Right(_) => bb
+        case Left(ebb)     => (eb || ebb).left
+      }
     })
 
   /** Constructs a new decoder that decodes a sequence of inputs. The
     * result is sequenced so that any errors cause the overall decoder
-    * to fail.
+    * to fail. Errors accumulate and are marked with their index if
+    * they fail.
     */
-  final def sequence[F[_]](implicit F: Traversable[F]): Decoder[F[A], F[B]] =
-    instance(fa => F.sequence(F.map(fa)(decode)))
+  final def sequence[F[_]](implicit Ft: Traversable[F], Fi: Indexed[F]): Decoder[F[A], F[B]] =
+    instance { fa =>
+      val ifa = Fi.indexed(fa)
+      val res = Ft.map(ifa)(ia => leftMap(_.atIndex(ia._1)).decode(ia._2))
+      Ft.sequence(res)
+    }
 
   /** Constructs a new decoder that optionally decodes a value. Errors
     * other than a missing value still cause the resulting decoder to
@@ -115,21 +123,34 @@ trait Decoder[A, B] extends Serializable {
     instance(input => (decode(input) getOrElse fallback).right)
 
   /** Construct a new decoder that first reads a path. The value read
-    * is then passed to this decoder
+    * is then passed to this decoder. Errors are adjusted to reflect
+    * that they occurred at a nested path.
     */
   final def atPath(path: String)(implicit read: Read[A, A]): Decoder[A, B] =
-    this compose read(path)
+    read(path) andThen leftMap(_.atPath(path))
+
+  /** Construct a new decoder that traces the result to stdout
+    */
+  final def trace(prefix: String = "> "): Decoder[A, B] =
+    instance { input =>
+      scala.Predef.println(prefix + input)
+      val output = decode(input)
+      scala.Predef.println(prefix + output)
+      output
+    }
 
 }
 
 object Decoder {
-
   /** Implicitly summon a decoder */
   def apply[A, B](implicit ev: Decoder[A, B]): Decoder[A, B] = ev
 
   /** Construct a new decoder using function `f` for decoding */
-  def instance[A, B](f: A => Either[DecodeError, B]): Decoder[A, B] = new Decoder[A, B] {
-    override def decode(a: A): Either[DecodeError, B] = f(a)
+  def instance[A, B](
+    run: A => Either[DecodeError, B]): Decoder[A, B] = Instance(run)
+
+  case class Instance[A, B](run: A => Either[DecodeError, B]) extends Decoder[A, B] {
+    override def decode(a: A): Either[DecodeError, B] = run(a)
   }
 
   /** Construct a decoder that always succeeds with a given value */

@@ -8,7 +8,7 @@ package wheel
 
 // occasionally you reinvent the wheel
 
-abstract class Functor[F[_]] {
+abstract class Functor[F[_]] extends Serializable {
   def map[A, B](fa: F[A])(f: A => B): F[B]
 }
 
@@ -41,8 +41,14 @@ object Applicative {
   // this instance isn't used but is provided for thoroughness
   implicit def eitherApplicative[Z]: Applicative[Either[Z, ?]] =
     new EitherInstance[Z]
-}
 
+  implicit val listApplicative: Applicative[List] = new Applicative[List] {
+    def pure[A](a: A): List[A] = List(a)
+    def map2[A, B, C](fa: List[A], fb: List[B])(f: (A, B) => C): List[C] =
+      fa.flatMap(a => fb.map(b => f(a, b)))
+    def map[A, B](fa: List[A])(f: A => B): List[B] = fa.map(f)
+  }
+}
 abstract class Traversable[F[_]] extends Functor[F] {
   def traverse[G[_]: Applicative, A, B](fa: F[A])(f: A => G[B]): G[F[B]]
   def sequence[G[_]: Applicative, A](fga: F[G[A]]): G[F[A]] = traverse(fga)(ga => ga)
@@ -55,6 +61,16 @@ object Traversable {
   implicit val listTraversable: Traversable[List] = new Traversable[List] {
     def map[A, B](fa: List[A])(f: A => B): List[B] = fa.map(f)
     def traverse[G[_], A, B](fa: List[A])(f: A => G[B])(implicit G: Applicative[G]): G[List[B]] =
-      fa.foldLeft(G.pure(List.empty[B]))((acc, a) => G.map2(f(a), acc)(_ :: _))
+      fa.foldRight(G.pure(List.empty[B]))((a, acc) => G.map2(f(a), acc)(_ :: _))
+  }
+}
+
+abstract class Indexed[F[_]] extends Serializable {
+  def indexed[A](fa: F[A]): F[(Int, A)]
+}
+
+object Indexed {
+  implicit val listIndexed: Indexed[List] = new Indexed[List] {
+    def indexed[A](fa: List[A]): List[(Int, A)] = fa.zipWithIndex.map(_.swap)
   }
 }

@@ -5,6 +5,8 @@
 package classy
 package generic
 
+import shapeless.Lazy
+
 import core._
 import derive._
 
@@ -12,5 +14,5 @@ package object auto {
 
   implicit def automaticallyMaterializeDecoder[A, B](
     implicit
-    ev: MkDecoder[A, B]): Decoder[A, B] = ev.decoder
+    ev: Lazy[MkDecoder[A, B]]): Decoder[A, B] = ev.value.decoder
 }

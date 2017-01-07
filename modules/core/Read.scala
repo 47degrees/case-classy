@@ -16,17 +16,17 @@ object Read {
 
   implicit def defaultReadNested[A, B](
     implicit
-    read: Read[A, A],
+    nest: Read[A, A],
     decoder: Decoder[A, B]
   ): Read[A, B] = instance(key =>
-    read(key) andThen decoder leftMap (_.atPath(key)))
+    nest(key) andThen decoder.leftMap(_.atPath(key)))
 
-  implicit def defaultReadNestedSequenced[F[_]: Traversable, A, B](
+  implicit def defaultReadNestedSequenced[F[_]: Traversable: Indexed, A, B](
     implicit
     read: Read[A, F[A]],
     decoder: Decoder[A, B]
   ): Read[A, F[B]] = instance(key =>
-    read(key) andThen decoder.sequence leftMap (_.atPath(key)))
+    read(key) andThen decoder.sequence.leftMap(_.atPath(key)))
 
   implicit def defaultReadOption[A, B](
     implicit

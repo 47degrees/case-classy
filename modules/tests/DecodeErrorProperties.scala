@@ -1,5 +1,5 @@
 /* -
- * Case Classy [case-classy-tests]
+ * Case Classy [classy-tests]
  */
 
 package classy
@@ -8,6 +8,7 @@ package core
 import scala.Predef._
 
 import org.scalacheck._
+import org.scalacheck.Gen.listOf
 import org.scalacheck.Prop._
 
 import org.scalacheck.derive._
@@ -16,21 +17,37 @@ import org.scalacheck.{ Shapeless => blackMagic }
 class DecodeErrorProperties extends Properties("DecodeError") {
   import DecodeError._
 
-  // TODO: This needs work. Maybe just use Cat's laws and some type class instances
-  // to prove good behavior
-
-  implicit val arbitraryLeafDecodeError: Arbitrary[LeafDecodeError] = {
+  implicit val genLeaf: Gen[DecodeError] = {
     import blackMagic._
-    MkArbitrary[LeafDecodeError].arbitrary
+    MkArbitrary[LeafDecodeError].arbitrary.arbitrary
   }
 
-  property("combine two leaf errors") = forAll { (a: LeafDecodeError, b: LeafDecodeError) =>
-    DecodeError.combine(a, b) ?= Aggregate(a, b :: Nil)
-  }
+  property("and two leaf errors") =
+    forAll(genLeaf, genLeaf)((a, b) => DecodeError.and(a, b) ?= And(a, b))
 
-  val atLeast2Leafs = Gen.listOf(arbitraryLeafDecodeError.arbitrary) suchThat (_.length >= 2)
-  property("combine many leaf errors") = forAll(atLeast2Leafs) { errors =>
-    (errors: List[DecodeError]).reduce(_ && _) ?= Aggregate(errors.head, errors.tail)
-  }
+  property("&& two leaf errors") =
+    forAll(genLeaf, genLeaf)((a, b) => a && b ?= And(a, b))
+
+  property("or two leaf errors") =
+    forAll(genLeaf, genLeaf)((a, b) => DecodeError.or(a, b) ?= Or(a, b))
+
+  property("|| two leaf errors") =
+    forAll(genLeaf, genLeaf)((a, b) => a || b ?= Or(a, b))
+
+  property("and many leaf errors") =
+    forAll(listOf(genLeaf))(errors => errors.length >= 2 ==> (
+      errors.reduce(DecodeError.and) ?= And(errors.head, errors.tail)))
+
+  property("&& many leaf errors") =
+    forAll(listOf(genLeaf))(errors => errors.length >= 2 ==> (
+      errors.reduce(_ && _) ?= And(errors.head, errors.tail)))
+
+  property("or many leaf errors") =
+    forAll(listOf(genLeaf))(errors => errors.length >= 2 ==> (
+      errors.reduce(DecodeError.or) ?= Or(errors.head, errors.tail)))
+
+  property("|| many leaf errors") =
+    forAll(listOf(genLeaf))(errors => errors.length >= 2 ==> (
+      errors.reduce(_ || _) ?= Or(errors.head, errors.tail)))
 
 }

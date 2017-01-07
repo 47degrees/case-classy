@@ -19,13 +19,13 @@ object Example1 extends App {
   )
 
   val typesafeConfig = ConfigFactory parseString """
-   |
+   | a : okay
    | c = ["hello", "world"]
    | bars = [{ value: hello }]
    |""".stripMargin
 
   {
-    // Level Zed: Full Black Magic
+    // Automatically derive decoders
     import classy.config._
     import classy.generic.auto._
 
@@ -34,7 +34,7 @@ object Example1 extends App {
   }
 
   {
-    // Level Yax: Partial Black Magic
+    // Assemble a decoder with some help
     import classy.config._
     import classy.generic.deriveDecoder
     import com.typesafe.config.Config
@@ -47,7 +47,7 @@ object Example1 extends App {
   }
 
   {
-    // Level Xan: Has No Magic
+    // Assemble a decoder by hand
     import com.typesafe.config.Config
     import classy.config._
 
@@ -55,7 +55,7 @@ object Example1 extends App {
     val decodeB    = readConfig[Int]("b").optional
     val decodeC    = readConfig[List[String]]("c")
     val decodeBar  = readConfig[String]("value").map(value => Bar(value))
-    val decodeBars = readConfig[List[Config]]("bars") andThen decodeBar.sequence
+    val decodeBars = readConfig[List[Config]]("bars") andThen decodeBar.sequence[List]
 
     implicit val decodeFoo = (decodeA and decodeB and decodeC and decodeBars).map {
       case (((a, b), c), bar) => Foo(a, b, c, bar)
@@ -64,5 +64,29 @@ object Example1 extends App {
     val res = ConfigDecoder[Foo].decode(typesafeConfig)
     println("Xan: " + res)
   }
+
+
+
+  {
+    // Configuring your generic decoders
+
+    import com.typesafe.config.Config
+    import classy.config._
+    import classy.generic._
+
+    val res = makeDecoder[Config, Foo]
+      .renameFields(_.toUpperCase)
+      .decoder
+      .fromString
+      .decode("""
+        A = OKAY
+        B = 1235
+        C = [ZZZ]
+        BARS = [{ VALUE: hi }]
+        """)
+
+    println("Zoof: " + res)
+  }
+
 
 }

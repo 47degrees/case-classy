@@ -6,26 +6,58 @@ package classy
 package core
 
 sealed abstract class DecodeError extends Product with Serializable {
-  def &&(other: DecodeError): DecodeError.Aggregate = DecodeError.combine(this, other)
+  def &&(other: DecodeError): DecodeError = DecodeError.and(this, other)
+  def ||(other: DecodeError): DecodeError = DecodeError.or(this, other)
+
   def atPath(key: String): DecodeError.AtPath = DecodeError.AtPath(key, this)
+  def atIndex(index: Int): DecodeError.AtIndex = DecodeError.AtIndex(index, this)
 }
 object DecodeError extends DecodeErrorInstances {
 
-  def combine(a: DecodeError, b: DecodeError): Aggregate = (a, b) match {
-    case (manyA: Aggregate, manyB: Aggregate) =>
-      Aggregate(manyA.head, manyA.tail ::: manyB.head :: manyB.tail)
-    case (manyA: Aggregate, oneB) =>
-      Aggregate(manyA.head, manyA.tail ::: oneB :: Nil)
-    case (oneA, manyB: Aggregate) =>
-      Aggregate(oneA, manyB.head :: manyB.tail)
+  def and(a: DecodeError, b: DecodeError): DecodeError = (a, b) match {
+    case (anyA, Identity) => anyA
+    case (Identity, anyB) => anyB
+    case (manyA: And, manyB: And) =>
+      And(manyA.head, manyA.tail ::: manyB.head :: manyB.tail)
+    case (manyA: And, oneB) =>
+      And(manyA.head, manyA.tail ::: oneB :: Nil)
+    case (oneA, manyB: And) =>
+      And(oneA, manyB.head :: manyB.tail)
     case (oneA, oneB) =>
-      Aggregate(oneA, oneB :: Nil)
+      And(oneA, oneB :: Nil)
   }
 
-  case class Aggregate(head: DecodeError, tail: List[DecodeError]) extends DecodeError {
-    override def toString: String = s"""Aggregate(${(head :: tail).mkString(", ")})"""
+  def or(a: DecodeError, b: DecodeError): DecodeError = (a, b) match {
+    case (anyA, Identity) => anyA
+    case (Identity, anyB) => anyB
+    case (manyA: Or, manyB: Or) =>
+      Or(manyA.head, manyA.tail ::: manyB.head :: manyB.tail)
+    case (manyA: Or, oneB) =>
+      Or(manyA.head, manyA.tail ::: oneB :: Nil)
+    case (oneA, manyB: Or) =>
+      Or(oneA, manyB.head :: manyB.tail)
+    case (oneA, oneB) =>
+      Or(oneA, oneB :: Nil)
   }
+
+  case class And(head: DecodeError, tail: List[DecodeError]) extends DecodeError {
+    override def toString: String = s"""And(${(head :: tail).mkString(", ")})"""
+  }
+
+  object And {
+    def apply(head: DecodeError, tail: DecodeError*): And = And(head, tail.toList)
+  }
+
+  case class Or(head: DecodeError, tail: List[DecodeError]) extends DecodeError {
+    override def toString: String = s"""Or(${(head :: tail).mkString(", ")})"""
+  }
+
+  object Or {
+    def apply(head: DecodeError, tail: DecodeError*): Or = Or(head, tail.toList)
+  }
+
   case class AtPath(key: String, error: DecodeError) extends DecodeError
+  case class AtIndex(index: Int, error: DecodeError) extends DecodeError
 
   sealed trait LeafDecodeError extends DecodeError
   case class MissingKey(key: String) extends LeafDecodeError
@@ -41,6 +73,7 @@ object DecodeError extends DecodeErrorInstances {
     override def hashCode: Int =
       Option(underlying.getMessage).hashCode
   }
+  private[classy] case object Identity extends DecodeError
 
 }
 

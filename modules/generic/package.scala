@@ -9,4 +9,5 @@ import generic.derive.MkDecoder
 
 package object generic {
   def deriveDecoder[A, B](implicit ev: MkDecoder[A, B]): Decoder[A, B] = ev.decoder
+  def makeDecoder[A, B](implicit ev: MkDecoder[A, B]): MkDecoder[A, B] = ev
 }
