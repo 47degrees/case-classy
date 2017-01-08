@@ -52,25 +52,25 @@ class GenericConfigDecoderErrorProperties extends Properties("generic ConfigDeco
 
   property("decode foo error 1") =
     fooDecoder.decode("wrong { }") ?=
-      MissingKey("foo").left
+      MissingPath("foo").left
 
   property("decode foo error 1") =
     fooDecoder.decode("foo { }") ?=
       AtPath("foo",
-        MissingKey("bar")).left
+        MissingPath("bar")).left
 
   property("decode foo error 1") =
     fooDecoder.decode("foo { bar {} }") ?=
       AtPath("foo",
         AtPath("bar",
-           MissingKey("baz"))).left
+           MissingPath("baz"))).left
 
   property("decode foo error 1") =
     fooDecoder.decode("foo { bar { baz {} } }") ?=
       AtPath("foo",
         AtPath("bar",
           AtPath("baz",
-            MissingKey("zip")))).left
+            MissingPath("zip")))).left
 
   import ShapeADT._
   val shapeDecoder = ConfigDecoder[Shape].fromString
@@ -79,41 +79,41 @@ class GenericConfigDecoderErrorProperties extends Properties("generic ConfigDeco
   property("decode shape errors") =
     shapeDecoder.decode("wrong {}") ?=
       Or(
-        MissingKey("circle"),
-        MissingKey("rectangle"),
-        MissingKey("regularPolygon"),
-        MissingKey("square"),
-        MissingKey("triangle")).left
+        MissingPath("circle"),
+        MissingPath("rectangle"),
+        MissingPath("regularPolygon"),
+        MissingPath("square"),
+        MissingPath("triangle")).left
 
   property("decode shape errors with nested error") =
     shapeDecoder.decode("circle { stillWrong: {} }") ?=
       Or(
         AtPath("circle",
-          MissingKey("radius")),
-        MissingKey("rectangle"),
-        MissingKey("regularPolygon"),
-        MissingKey("square"),
-        MissingKey("triangle")).left
+          MissingPath("radius")),
+        MissingPath("rectangle"),
+        MissingPath("regularPolygon"),
+        MissingPath("square"),
+        MissingPath("triangle")).left
 
   property("decode shapes error") =
     shapesDecoder.decode("wrong {}") ?=
-      MissingKey("shapes").left
+      MissingPath("shapes").left
 
   property("decode shapes errors with nested errors 1") =
     shapesDecoder.decode("shapes: [{}, {}]") ?=
       AtPath("shapes", And(
         AtIndex(0, Or(
-          MissingKey("circle"),
-          MissingKey("rectangle"),
-          MissingKey("regularPolygon"),
-          MissingKey("square"),
-          MissingKey("triangle"))),
+          MissingPath("circle"),
+          MissingPath("rectangle"),
+          MissingPath("regularPolygon"),
+          MissingPath("square"),
+          MissingPath("triangle"))),
         AtIndex(1, Or(
-          MissingKey("circle"),
-          MissingKey("rectangle"),
-          MissingKey("regularPolygon"),
-          MissingKey("square"),
-          MissingKey("triangle"))))).left
+          MissingPath("circle"),
+          MissingPath("rectangle"),
+          MissingPath("regularPolygon"),
+          MissingPath("square"),
+          MissingPath("triangle"))))).left
 
   property("decode shapes errors with nested errors 2") =
     shapesDecoder.decode("""
@@ -127,21 +127,20 @@ class GenericConfigDecoderErrorProperties extends Properties("generic ConfigDeco
       AtPath("shapes",
         And(
           AtIndex(1, Or(
-            MissingKey("circle"),
+            MissingPath("circle"),
             AtPath("rectangle", And(
-              MissingKey("length"),
-              MissingKey("width"))),
-            MissingKey("regularPolygon"),
-            MissingKey("square"),
-            MissingKey("triangle"))),
+              MissingPath("length"),
+              MissingPath("width"))),
+            MissingPath("regularPolygon"),
+            MissingPath("square"),
+            MissingPath("triangle"))),
           AtIndex(3, Or(
-            MissingKey("circle"),
-            MissingKey("rectangle"),
-            MissingKey("regularPolygon"),
+            MissingPath("circle"),
+            MissingPath("rectangle"),
+            MissingPath("regularPolygon"),
             AtPath("square",
-              MissingKey("dimension")),
-            MissingKey("triangle")))
+              MissingPath("dimension")),
+            MissingPath("triangle")))
         )).left
-
 
 }

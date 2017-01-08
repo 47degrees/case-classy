@@ -8,7 +8,7 @@ package core
 import wheel._
 
 final class Read[A, B](f: String => Decoder[A, B]) extends Serializable {
-  def apply(key: String): Decoder[A, B] = f(key)
+  def apply(path: String): Decoder[A, B] = f(path)
 }
 
 object Read {
@@ -18,19 +18,19 @@ object Read {
     implicit
     nest: Read[A, A],
     decoder: Decoder[A, B]
-  ): Read[A, B] = instance(key =>
-    nest(key) andThen decoder.leftMap(_.atPath(key)))
+  ): Read[A, B] = instance(path =>
+    nest(path) andThen decoder.leftMap(_.atPath(path)))
 
   implicit def defaultReadNestedSequenced[F[_]: Traversable: Indexed, A, B](
     implicit
     read: Read[A, F[A]],
     decoder: Decoder[A, B]
-  ): Read[A, F[B]] = instance(key =>
-    read(key) andThen decoder.sequence.leftMap(_.atPath(key)))
+  ): Read[A, F[B]] = instance(path =>
+    read(path) andThen decoder.sequence.leftMap(_.atPath(path)))
 
   implicit def defaultReadOption[A, B](
     implicit
     read: Read[A, B]
-  ): Read[A, Option[B]] = instance(key => read(key).optional)
+  ): Read[A, Option[B]] = instance(path => read(path).optional)
 
 }

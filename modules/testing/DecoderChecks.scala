@@ -35,9 +35,9 @@ object DecoderChecks {
     a: A
   ): Prop =
     dab.decode(a) match {
-      case Left(_: MissingKey) => dab.optional.decode(a) ?= None.right
-      case Left(e)             => dab.optional.decode(a) ?= e.left
-      case Right(b)            => dab.optional.decode(a) ?= b.some.right
+      case Left(_: MissingPath) => dab.optional.decode(a) ?= None.right
+      case Left(e)              => dab.optional.decode(a) ?= e.left
+      case Right(b)             => dab.optional.decode(a) ?= b.some.right
     }
 
   def checkWithDefault[A, B](
@@ -46,9 +46,9 @@ object DecoderChecks {
     b0: B
   ): Prop =
     dab.decode(a) match {
-      case Left(_: MissingKey) => dab.withDefault(b0).decode(a) ?= b0.right
-      case Left(e)             => dab.withDefault(b0).decode(a) ?= e.left
-      case Right(b)            => dab.withDefault(b0).decode(a) ?= b.right
+      case Left(_: MissingPath) => dab.withDefault(b0).decode(a) ?= b0.right
+      case Left(e)              => dab.withDefault(b0).decode(a) ?= e.left
+      case Right(b)             => dab.withDefault(b0).decode(a) ?= b.right
     }
 
   def checkOptionalDefaultConsistency[A, B](
