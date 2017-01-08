@@ -8,6 +8,7 @@ package core
 import scala.Predef._
 
 import org.scalacheck._
+import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.Gen.listOf
 import org.scalacheck.Prop._
 
@@ -50,4 +51,19 @@ class DecodeErrorProperties extends Properties("DecodeError") {
     forAll(listOf(genLeaf))(errors => errors.length >= 2 ==> (
       errors.reduce(_ || _) ?= Or(errors.head, errors.tail)))
 
+  property("atPath") =
+    forAll(
+      arbitrary[String] :| "path",
+      arbitrary[String] :| "missing path"
+    )((path, missingPath) =>
+        MissingPath(missingPath).atPath(path) ?=
+          AtPath(path, MissingPath(missingPath)))
+
+  property("atIndex") =
+    forAll(
+      arbitrary[Int] :| "index",
+      arbitrary[String] :| "missing path"
+    )((index, missingPath) =>
+        MissingPath(missingPath).atIndex(index) ?=
+          AtIndex(index, MissingPath(missingPath)))
 }
