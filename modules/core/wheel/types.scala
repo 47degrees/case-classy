@@ -5,15 +5,10 @@
 package classy
 package core.wheel
 
-/*
- * A small set of type classes (with partial implementations) needed
- * for some of the internal operations of this library.
- *
- * These aren't intended to be used as foundations for any code
- * outside of this library.
- */
-
+/** Covariant functor */
 trait Functor[F[_]] extends Serializable {
+
+  /** Applies function `f` to value `fa` */
   def map[A, B](fa: F[A])(f: A => B): F[B]
 }
 
@@ -21,8 +16,13 @@ object Functor {
   def apply[F[_]](implicit ev: Functor[F]): Functor[F] = ev
 }
 
+/** Applicative functor */
 trait Applicative[F[_]] extends Functor[F] {
+
+  /** Lift a value into the applicative functor */
   def pure[A](a: A): F[A]
+
+  /** Applies binary function `f` to values `fa` and `fb` */
   def map2[A, B, C](fa: F[A], fb: F[B])(f: (A, B) => C): F[C]
 }
 
@@ -31,9 +31,17 @@ object Applicative {
   implicit val listApplicative: Applicative[List] = instances.ListInstance
 }
 
+/** Captures the ability to traverse a structure from left to right
+  * while applying an effect
+  */
 trait Traversable[F[_]] extends Functor[F] {
+
+  /** Thread an effect `f` through `fa` */
   def traverse[G[_]: Applicative, A, B](fa: F[A])(f: A => G[B]): G[F[B]]
-  def sequence[G[_]: Applicative, A](fga: F[G[A]]): G[F[A]] = traverse(fga)(ga => ga)
+
+  /** Thread effects `G` through `F`, returning `G` on the outside of `F` */
+  def sequence[G[_]: Applicative, A](fga: F[G[A]]): G[F[A]] =
+    traverse(fga)(ga => ga)
 }
 
 object Traversable {
@@ -41,7 +49,10 @@ object Traversable {
   implicit val listTraversable: Traversable[List] = instances.ListInstance
 }
 
+/** Captures the ability to assign indicies to a structure */
 trait Indexed[F[_]] extends Serializable {
+
+  /** Assign indicies to elements of `fa` */
   def indexed[A](fa: F[A]): F[(Int, A)]
 }
 
@@ -49,7 +60,7 @@ object Indexed {
   implicit val listIndexed: Indexed[List] = instances.ListInstance
 }
 
-object instances {
+private[core] object instances {
 
   final class EitherApplicative[Z] private[core] (fz: (Z, Z) => Z) extends Applicative[Either[Z, ?]] {
     def pure[A](a: A): Either[Z, A] = a.right

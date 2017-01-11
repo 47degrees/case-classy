@@ -12,6 +12,9 @@ import shapeless.labelled.{ field, FieldType }
 import core._
 import core.wheel._
 
+/** Captures the ability to automatically create a decoder, configured
+  * with [[Options]]
+  */
 sealed abstract class MkDecoder[A, B] extends Serializable {
 
   def decoder: Decoder[A, B]
@@ -45,7 +48,7 @@ object MkDecoder extends MkDecoderInstances2 {
 
 }
 
-sealed trait MkDecoderInstances2 extends MkDecoderInstances1 { self: MkDecoder.type =>
+private[derive] sealed trait MkDecoderInstances2 extends MkDecoderInstances1 { self: MkDecoder.type =>
 
   implicit def mkDecoderGeneric[A, B, L](
     implicit
@@ -62,7 +65,7 @@ sealed trait MkDecoderInstances2 extends MkDecoderInstances1 { self: MkDecoder.t
 
 }
 
-sealed trait MkDecoderInstances1 extends MkDecoderInstances0 { self: MkDecoder.type =>
+private[derive] sealed trait MkDecoderInstances1 extends MkDecoderInstances0 { self: MkDecoder.type =>
 
   implicit def mkDecoderHList[A, K <: Symbol, H, T <: HList](
     implicit
@@ -91,7 +94,7 @@ sealed trait MkDecoderInstances1 extends MkDecoderInstances0 { self: MkDecoder.t
     ))
 }
 
-sealed trait MkDecoderInstances0 { self: MkDecoder.type =>
+private[derive] sealed trait MkDecoderInstances0 { self: MkDecoder.type =>
 
   implicit def mkDecoderHListDerived[A, K <: Symbol, H, T <: HList](
     implicit
@@ -129,7 +132,7 @@ object MkRead extends MkReadInstances0 {
     f: (Options) => Read[A, B]): MkRead[A, B] = new MkRead(f)
 }
 
-sealed trait MkReadInstances0 { self: MkRead.type =>
+private[derive] sealed trait MkReadInstances0 { self: MkRead.type =>
 
   implicit def mkReadNested[A, B](
     implicit
@@ -154,6 +157,11 @@ sealed trait MkReadInstances0 { self: MkRead.type =>
     Read.defaultReadOption(read))
 }
 
+/** Options for the behavior of automatically derived decoders
+  *
+  * @param renameField a function applied to all paths before reading
+  * with a [[core.Read Read]]
+  */
 case class Options(
   renameField: String => String = (s => s),
   coproduct: CoproductStrategy = CoproductStrategy.default)
@@ -161,6 +169,9 @@ object Options {
   val default = Options()
 }
 
+/** An option that configures the behavior for automatically derived
+  * decoders of coproduct types (sealed trait hierarchies).
+  */
 abstract class CoproductStrategy extends Serializable {
   def decoder[A, B](
     decoder: Decoder[A, B],
