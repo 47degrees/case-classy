@@ -1,4 +1,13 @@
-### _Usage for typesafe config_ ###
+---
+layout: page
+title:  "Examples"
+section: "examples"
+position: 3
+---
+
+## Examples
+
+More examples/explanations coming soon.
 
 ```tut:silent
 case class Person(
@@ -8,10 +17,9 @@ case class Person(
 
 case class MyConfig(
   people: List[Person])
-
 ```
 
-Here we have a case class hierarchy that models a list of people. We'd like
+We have a case class hierarchy that models a list of people. We'd like
 to load the following configuration using Typesafe's Config library:
 
 ```

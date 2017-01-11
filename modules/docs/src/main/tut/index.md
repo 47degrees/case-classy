@@ -1,7 +1,13 @@
-# Case Classy
-[![Build Status](https://api.travis-ci.org/47deg/case-classy.png?branch=master)](https://travis-ci.org/47deg/case-classy)
+---
+layout: home
+title:  "Home"
+section: "home"
 
-## Introduction
+technologies:
+ - config: ["Typesafe Config", "Full support for Typesafe Config with the typesafe module"]
+ - fp: ["Functional Programming", "Case classy follows functional programming paradigms with an emphasis on ease of use for beginners"]
+ - scala: ["ScalaJS Ready", "Case classy fully supports ScalaJS when used with the Shocon module"]
+---
 
 Case classy is a tiny framework to make it easy to decode untyped
 structured data into case class hierarchies of your choosing. It's
@@ -33,40 +39,11 @@ The modules provide the following support:
 
 All module support ScalaJS except `classy-config-typesafe`.
 
-# Usage
+### License
+The license can be found in [COPYING].
 
-Usage is straightforward. You can use the generic facilities to derive
-config decoders automatically, you can write decoders by hand, or you
-can combine approaches.
+[config tests]: /modules/tests-config/
+[COPYING]: COPYING
 
-**Deriving decoders automatically:**
-
-```tut:silent
-import classy.core.DecodeError
-import classy.generic.auto._
-
-// use typesafe/shocon bindings
-import classy.config._
-
-// Our configuration class hierarchy
-sealed trait Shape
-case class Circle(radius: Double) extends Shape
-case class Rectangle(length: Double, width: Double) extends Shape
-
-case class MyConfig(
-  someString: Option[String],
-  shapes: List[Shape])
-
-val decoder1 = ConfigDecoder[MyConfig]
-
-val res: Either[DecodeError, MyConfig] =
-  decoder1.load() // alias for decoder1.decode(ConfigFactory.load())
-```
-
-**Writing decoders by hand:**
-
-_Readme example coming soon. See the [config tests](modules/tests-config/) for
-the time being._
-
-# License
-The license can be found in [COPYING](COPYING).
+[config tests]: https://github.com/47deg/case-classy/blob/master/modules/tests-config/
+[COPYING]: https://github.com/47deg/case-classy/blob/master/COPYING

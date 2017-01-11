@@ -42,7 +42,7 @@ object BuildCommon extends AutoPlugin {
     crossScalaVersions := Seq("2.11.8", "2.12.0"),
 
     organization := "com.fortysevendeg",
-    description := "Type safe configurations for Scala",
+    description := "configuration with less hassle",
 
     fork in run := true,
     fork in Test := !isScalaJSProject.value,
