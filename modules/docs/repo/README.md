@@ -41,7 +41,7 @@ can combine approaches.
 
 **Deriving decoders automatically:**
 
-```scala
+```tut:silent
 import classy.core.DecodeError
 import classy.generic.auto._
 

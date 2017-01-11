@@ -41,7 +41,7 @@ object BuildCommon extends AutoPlugin {
     scalaOrganization := "org.typelevel",
     crossScalaVersions := Seq("2.11.8", "2.12.0"),
 
-    organization := "com.47deg",
+    organization := "com.fortysevendeg",
 
     fork in run := true,
     fork in Test := !isScalaJSProject.value,
