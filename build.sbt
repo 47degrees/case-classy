@@ -22,6 +22,15 @@ lazy val root = (project in file("."))
   .settings(unidocSettings: _*)
   .settings(unidocProjectFilter in (ScalaUnidoc, unidoc) :=
     inProjects(coreJVM, genericJVM, catsJVM, typesafeJVM))
+  .settings(TaskKey[Unit]("copyReadme") := {
+    new File((tutTargetDirectory in docsJVM).value, "repo").listFiles().foreach(file =>
+      IO.copyFile(file, new File((baseDirectory in ThisBuild).value, file.name)))
+  })
+  .settings(TaskKey[Unit]("checkDiff") := {
+    val diff = "git diff".!!
+    if (diff.nonEmpty)
+      sys.error("Working directory is dirty!\n" + diff)
+  })
 
 addCommandAlias("validate", ";validateJS;validateJVM")
 addCommandAlias("validateJVM", ";" + List(
@@ -30,6 +39,8 @@ addCommandAlias("validateJVM", ";" + List(
   "config-typesafeJVM/compile",
   "config-shoconJVM/compile",
   "catsJVM/compile",
+  "docsJVM/tut",
+  "copyReadme", "checkDiff",
   "testsJVM/test",
   "tests-config-typesafeJVM/test",
   "tests-config-shoconJVM/test").mkString(";"))
@@ -144,8 +155,6 @@ lazy val testsShocon =
     .settings(yax(file("modules/tests-config"), Test, "shocon"))
 lazy val testsShoconJS = testsShocon.js
 lazy val testsShoconJVM = testsShocon.jvm
-
-
 
 lazy val docsJVM =
   module("docs")

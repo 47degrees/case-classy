@@ -16,17 +16,17 @@ import core._
 import testing._
 
 object StdConfigDecoderProperties {
-  case class Key(value: String) extends AnyVal
-  implicit val arbitraryKey: Arbitrary[Key] = Arbitrary(
-    Gen.alphaStr.map(value => Key(value + "_")))
-  implicit def keyToString(key: Key): String = key.value
+  case class Path(value: String) extends AnyVal
+  implicit val arbitraryPath: Arbitrary[Path] = Arbitrary(
+    Gen.alphaStr.map(value => Path(value + "_")))
+  implicit def pathToString(path: Path): String = path.value
 
-  implicit def keyValueConfigList(kv: (Key, List[Any])) = {
+  implicit def pathValueConfigList(kv: (Path, List[Any])) = {
     val values = kv._2.map(v => s""""$v"""").mkString(",")
     ConfigFactory parseString s""" ${kv._1.value} = [$values] """
   }
 
-  implicit def keyValueConfig(kv: (Key, Any)) =
+  implicit def pathValueConfig(kv: (Path, Any)) =
     ConfigFactory parseString s""" ${kv._1.value} = "${kv._2.toString}" """
 }
 
@@ -38,23 +38,23 @@ class StdConfigDecoderProperties extends Properties(s"${ConfigDecoders.BACKEND} 
   implicit val arbitraryString: Arbitrary[String] = Arbitrary(Gen.alphaNumStr)
   implicit val arbConfig: Arbitrary[Config] = Arbitrary(
     for {
-      key <- arbitrary[Key]
+      path <- arbitrary[Path]
       value <- arbitrary[String]
-    } yield keyValueConfig(key -> value)
+    } yield pathValueConfig(path -> value)
   )
 
 
   def reading[A](mash: (A, A) => A)(implicit
     read: Read[Config, A],
-    toConfig: ((Key, A)) => Config
+    toConfig: ((Path, A)) => Config
   ): (A) => (Config, ConfigDecoder[A]) = { result =>
-    val key = arbitrary[Key].sample.get
-    (toConfig(key -> result), read(key).map(a => mash(a, result)))
+    val path = arbitrary[Path].sample.get
+    (toConfig(path -> result), read(path).map(a => mash(a, result)))
   }
 
   def reading[A](implicit
     read: core.Read[Config, A],
-    toConfig: ((Key, A)) => Config
+    toConfig: ((Path, A)) => Config
   ): (A) => (Config, ConfigDecoder[A]) = reading[A]((a: A, r: A) => a)
 
 

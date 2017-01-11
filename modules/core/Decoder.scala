@@ -103,8 +103,8 @@ trait Decoder[A, B] extends Serializable {
     */
   final def optional: Decoder[A, Option[B]] =
     instance(input => decode(input).fold(_ match {
-      case _: DecodeError.MissingKey => None.right
-      case other                     => other.left
+      case _: DecodeError.MissingPath => None.right
+      case other                      => other.left
     }, _.some.right))
 
   /** Constructs a new decoder that falls back to a default

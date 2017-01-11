@@ -23,36 +23,36 @@ object ConfigDecoders {
     */
   object std {
     // format: OFF
-    def config     (key: String): ConfigDecoder[Config]        = instance(key)(_ getConfig _)
-    def string     (key: String): ConfigDecoder[String]        = instance(key)(_ getString _)
-    def number     (key: String): ConfigDecoder[Number]        = instance(key)(_ getNumber _)      //#=typesafe
-    def boolean    (key: String): ConfigDecoder[Boolean]       = instance(key)(_ getBoolean _)
-    def int        (key: String): ConfigDecoder[Int]           = instance(key)(_ getInt _)
-    def long       (key: String): ConfigDecoder[Long]          = instance(key)(_ getLong _)
-    def double     (key: String): ConfigDecoder[Double]        = instance(key)(_ getDouble _)
+    def config     (path: String): ConfigDecoder[Config]        = instance(path)(_ getConfig _)
+    def string     (path: String): ConfigDecoder[String]        = instance(path)(_ getString _)
+    def number     (path: String): ConfigDecoder[Number]        = instance(path)(_ getNumber _)      //#=typesafe
+    def boolean    (path: String): ConfigDecoder[Boolean]       = instance(path)(_ getBoolean _)
+    def int        (path: String): ConfigDecoder[Int]           = instance(path)(_ getInt _)
+    def long       (path: String): ConfigDecoder[Long]          = instance(path)(_ getLong _)
+    def double     (path: String): ConfigDecoder[Double]        = instance(path)(_ getDouble _)
 
-    def configList (key: String): ConfigDecoder[List[Config]]  = instance(key)(_ getConfigList _)
-    def stringList (key: String): ConfigDecoder[List[String]]  = instance(key)(_ getStringList _)
-    def numberList (key: String): ConfigDecoder[List[Number]]  = instance(key)(_ getNumberList _)  //#=typesafe
-    def booleanList(key: String): ConfigDecoder[List[Boolean]] = instance(key)(_ getBooleanList _)
-    def intList    (key: String): ConfigDecoder[List[Int]]     = instance(key)(_ getIntList _)
-    def longList   (key: String): ConfigDecoder[List[Long]]    = instance(key)(_ getLongList _)
-    def doubleList (key: String): ConfigDecoder[List[Double]]  = instance(key)(_ getDoubleList _)
+    def configList (path: String): ConfigDecoder[List[Config]]  = instance(path)(_ getConfigList _)
+    def stringList (path: String): ConfigDecoder[List[String]]  = instance(path)(_ getStringList _)
+    def numberList (path: String): ConfigDecoder[List[Number]]  = instance(path)(_ getNumberList _)  //#=typesafe
+    def booleanList(path: String): ConfigDecoder[List[Boolean]] = instance(path)(_ getBooleanList _)
+    def intList    (path: String): ConfigDecoder[List[Int]]     = instance(path)(_ getIntList _)
+    def longList   (path: String): ConfigDecoder[List[Long]]    = instance(path)(_ getLongList _)
+    def doubleList (path: String): ConfigDecoder[List[Double]]  = instance(path)(_ getDoubleList _)
     // format: ON
 
     @inline private[this] def instance[A: ClassTag](
-      key: String)(f: (Config, String) => A): ConfigDecoder[A] =
+      path: String)(f: (Config, String) => A): ConfigDecoder[A] =
       Decoder.instance(config =>
         try {
-          f(config, key).right
+          f(config, path).right
         } catch {
-          case e: ConfigException.Missing   => DecodeError.MissingKey(key).left
-          case e: ConfigException.WrongType => DecodeError.WrongType(key, classTag[A].toString).left //#=typesafe
+          case e: ConfigException.Missing   => DecodeError.MissingPath(path).left
+          case e: ConfigException.WrongType => DecodeError.WrongType(path, classTag[A].toString).left //#=typesafe
           //#+shocon
           case e: MatchError if e.getMessage == "null" =>
-            DecodeError.MissingKey(key).left
+            DecodeError.MissingPath(path).left
           //#-shocon
-          case other: Throwable             => DecodeError.AtPath(key, DecodeError.Underlying(other)).left
+          case other: Throwable             => DecodeError.AtPath(path, DecodeError.Underlying(other)).left
         }
       )
 
@@ -74,9 +74,9 @@ object ConfigDecoders {
   final val BACKEND: String = "shocon"                             //#=shocon
 }
 
+//#+shocon
 // Compatibility for missing Shocon methods
 // TODO: Contribute these back to Shocon?
-//#+shocon
 private[config] object ShoconCompat {
   import eu.unicredit.shocon.{ Config => SConfig, Extractors }
   import scala.collection.generic.CanBuildFrom
@@ -91,7 +91,8 @@ private[config] object ShoconCompat {
   }
 
   implicit class ShoconConfigCompatOps(val config: Config) extends AnyVal {
-    // Note: it's safe to return Scala's List in here here instead of Java's List
+    // Note: it's okay to return Scala's List in here here instead of
+    // Java's List
 
     def getConfigList(path: String): List[Config] =
       config.getOrReturnNull[List[SConfig.Value]](path).map(Config.apply)
