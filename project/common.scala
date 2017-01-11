@@ -42,6 +42,7 @@ object BuildCommon extends AutoPlugin {
     crossScalaVersions := Seq("2.11.8", "2.12.0"),
 
     organization := "com.fortysevendeg",
+    description := "Type safe configurations for Scala",
 
     fork in run := true,
     fork in Test := !isScalaJSProject.value,
@@ -129,6 +130,9 @@ object BuildCommon extends AutoPlugin {
     scmInfo := Some(ScmInfo(
       url("https://github.com/47deg/case-classy"),
       "https://github.com/47deg/case-classy.git")),
+    startYear := Some(2016),
+    homepage := Option(url("https://github.com/47deg/case-classy")),
+    organizationHomepage := Option(new URL("http://47deg.com")),
     licenses := Seq("Apache License, Version 2.0" ->
       url("http://www.apache.org/licenses/LICENSE-2.0.txt")),
     publishMavenStyle := true,
