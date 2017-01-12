@@ -1,0 +1,46 @@
+<html><head><meta charset="utf-8" /><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><title>Case Classy</title><meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="configuration with less hassle" /><meta name="author" content="the contributors" /><meta name="og:image" content="/img/poster.png" /><meta name="og:title" content="Case Classy" /><meta name="og:site_name" content="Case Classy" /><meta name="og:url" content="https://github.com/47deg/case-classy" /><meta name="og:type" content="website" /><meta name="og:description" content="configuration with less hassle" /><meta name="twitter:image" content="/img/poster.png" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:site" content="" /><link rel="icon" type="image/png" href="/img/favicon.png" /><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" /><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" /><link rel="stylesheet" href="/highlight/styles/atom-one-light.css" /><link rel="stylesheet" href="/css/style.css" /><link rel="stylesheet" href="/css/palette.css" /><link rel="stylesheet" href="/css/overrides.css" /></head><body><header id="site-header"><div class="navbar-wrapper"><div class="container"><div class="row"><div class="col-xs-6"><a href="/" class="brand"><div class="icon-wrapper"><span>Case Classy</span></div></a></div><div class="col-xs-6"><nav class="text-right"><ul class=""><li><a href="https://github.com/47deg/case-classy"><i class="fa fa-github"></i><span class="hidden-xs">GitHub</span></a></li></ul></nav></div></div></div></div><div class="jumbotron"><div class="container"><h1 class="text-center">configuration with less hassle</h1><h2></h2><p class="text-center"><a href="https://github.com/47deg/case-classy" class="btn btn-outline-inverse">View on GitHub</a></p></div></div><div><ul class="horizontalNav">       <li><a class="" href="/getting-started.html">Getting Started</a></li>  <li><a class="" href="/magic.html">Automagic</a></li>  <li><a class="" href="/examples.html">Examples</a></li>  <li><a class="" href="/scaladoc.html">Scaladoc</a></li> </ul></div></header><main id="site-main"><section class="use"><div class="container"><div id="content"><p>Case classy is a tiny framework to make it easy to decode untyped
+structured data into case class hierarchies of your choosing. It’s
+completely modular, support Scala 2.11 and
+2.12, <a href="https://www.scala-js.org">ScalaJS</a> ready, and the core library
+has <em>zero</em> external dependencies.</p>
+
+<div class="language-scala highlighter-rouge"><pre class="highlight"><code><span class="c1">// required
+</span><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">"com.fortysevendeg"</span> <span class="o">%%</span> <span class="s">"classy-core"</span>            <span class="o">%</span> <span class="s">"0.2.0"</span>
+
+<span class="c1">// at least one required
+</span><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">"com.fortysevendeg"</span> <span class="o">%%</span> <span class="s">"classy-config-typesafe"</span> <span class="o">%</span> <span class="s">"0.2.0"</span>
+<span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">"com.fortysevendeg"</span> <span class="o">%%</span> <span class="s">"classy-config-shocon"</span>   <span class="o">%</span> <span class="s">"0.2.0"</span>
+
+<span class="c1">// optional
+</span><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">"com.fortysevendeg"</span> <span class="o">%%</span> <span class="s">"classy-generic"</span>         <span class="o">%</span> <span class="s">"0.2.0"</span>
+<span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">"com.fortysevendeg"</span> <span class="o">%%</span> <span class="s">"classy-cats"</span>            <span class="o">%</span> <span class="s">"0.2.0"</span>
+</code></pre>
+</div>
+
+<p>The modules provide the following support:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">classy-core</code>: Basic set of configuration decoders and combinators. <em>required</em></li>
+  <li><code class="highlighter-rouge">classy-generic</code>: Automatic derivation for your case class
+hierarchies. <em>depends on <a href="https://github.com/milessabin/shapeless">shapeless</a></em></li>
+  <li><code class="highlighter-rouge">classy-config-typesafe</code>: Support for <a href="https://github.com/typesafehub/config">Typesafe’s Config</a> library.</li>
+  <li><code class="highlighter-rouge">classy-config-shocon</code>: Support for the <a href="https://github.com/unicredit/shocon">Shocon</a> config library.</li>
+  <li><code class="highlighter-rouge">classy-cats</code>: Instances for <a href="https://github.com/typelevel/cats">Cats</a>.</li>
+</ul>
+
+<p>All module support ScalaJS except <code class="highlighter-rouge">classy-config-typesafe</code>.</p>
+
+<h3 id="license">License</h3>
+<p>The license can be found in <a href="https://github.com/47deg/case-classy/blob/master/COPYING">COPYING</a>.</p>
+
+</div></div></section><section class="technologies"><div class="container"><div class="row">
+            <div class="col-md-4"><div class="config-icon-wrapper"></div><h3>Typesafe Config</h3><p>Full support for Typesafe Config with the typesafe module</p></div>
+          
+            <div class="col-md-4"><div class="fp-icon-wrapper"></div><h3>Functional Programming</h3><p>Case classy follows functional programming paradigms with an emphasis on ease of use for beginners</p></div>
+          
+            <div class="col-md-4"><div class="scala-icon-wrapper"></div><h3>ScalaJS Ready</h3><p>Case classy fully supports ScalaJS when used with the Shocon module</p></div>
+          </div></div></section></main><footer id="site-footer"><div class="container"><div class="row"><div class="col-xs-6"><p>Case Classy is designed and developed by <a href="https://github.com/47deg/case-classy" target="_blank">the contributors</a></p></div><div class="col-xs-6"><p class="text-right"><a href="https://github.com/47deg/case-classy"><span class="fa fa-github"></span>View on Github</a></p></div></div></div></footer><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script><script src="/highlight/highlight.pack.js"></script><script>hljs.configure({
+languages:['scala','java','bash']
+});
+hljs.initHighlighting();
+             </script></body></html>
