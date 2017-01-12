@@ -40,7 +40,7 @@ Documentation is available on the [website](https://47deg.github.io/case-classy/
 
 ### Quick Example
 
-```scala
+```tut:silent
 import classy.generic._
 import classy.config._
 
@@ -57,9 +57,8 @@ import com.typesafe.config.Config
 val decoder1 = deriveDecoder[Config, MyConfig]
 ```
 
-```scala
+```tut:book
 decoder1.fromString.decode("shapes = []")
-// res4: scala.util.Either[classy.core.DecodeError,MyConfig] = Right(MyConfig(None,List()))
 ```
 
 ### License

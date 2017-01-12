@@ -152,7 +152,7 @@ object DecodeError extends DecodeErrorInstances {
   }
 }
 
-sealed trait DecodeErrorInstances {
+private[core] sealed trait DecodeErrorInstances {
   import wheel._
 
   implicit def eitherDecodeErrorApplicative: Applicative[Either[DecodeError, ?]] =

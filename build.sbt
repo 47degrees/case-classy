@@ -18,12 +18,9 @@ lazy val root = (project in file("."))
   .aggregate(shoconJS, shoconJVM)
   .aggregate(catsJVM, catsJS)
   .aggregate(allTests)
-  .aggregate(docsJVM)
-  .settings(unidocSettings: _*)
-  .settings(unidocProjectFilter in (ScalaUnidoc, unidoc) :=
-    inProjects(coreJVM, genericJVM, catsJVM, typesafeJVM))
+  .aggregate(docs)
   .settings(TaskKey[Unit]("copyReadme") := {
-    new File((tutTargetDirectory in docsJVM).value, "repo").listFiles().foreach(file =>
+    (tutTargetDirectory in readme).value.listFiles().foreach(file =>
       IO.copyFile(file, new File((baseDirectory in ThisBuild).value, file.name)))
   })
   .settings(TaskKey[Unit]("checkDiff") := {
@@ -39,8 +36,8 @@ addCommandAlias("validateJVM", ";" + List(
   "config-typesafeJVM/compile",
   "config-shoconJVM/compile",
   "catsJVM/compile",
-  "docsJVM/tut",
-  "copyReadme", "checkDiff",
+  "docs/tut",
+  "readme/tut", "copyReadme", "checkDiff",
   "testsJVM/test",
   "tests-config-typesafeJVM/test",
   "tests-config-shoconJVM/test").mkString(";"))
@@ -156,16 +153,55 @@ lazy val testsShocon =
 lazy val testsShoconJS = testsShocon.js
 lazy val testsShoconJVM = testsShocon.jvm
 
-lazy val docsJVM =
-  module("docs")
-    .dependsOn(core)
-    .dependsOn(generic)
+lazy val docs =
+  (project in file("modules/docs"))
+    .enablePlugins(MicrositesPlugin)
+    .dependsOn(coreJVM)
+    .dependsOn(catsJVM)
+    .dependsOn(genericJVM)
+    .dependsOn(typesafeJVM)
+    .settings(noPublishSettings)
+    .settings(unidocSettings)
+    .settings(ghpages.settings)
+    .settings(
+      tutScalacOptions ~= (_.filterNot(Set("-Yno-predef"))),
+      micrositeName := "Case Classy",
+      micrositeAuthor := "the contributors",
+      micrositeHighlightTheme := "atom-one-light",
+      micrositeBaseUrl := "/case-classy",
+      micrositeGithubRepo := "case-classy",
+      micrositePalette := Map(
+        "brand-primary"   -> "#023131",
+        "brand-secondary" -> "#010d10",
+        "brand-tertiary"  -> "#010a18",
+        "gray-dark"       -> "#49494B",
+        "gray"            -> "#7B7B7E",
+        "gray-light"      -> "#E5E5E6",
+        "gray-lighter"    -> "#F4F3F4",
+        "white-color"     -> "#FFFFFF"),
+      unidocProjectFilter in (ScalaUnidoc, unidoc) :=
+        inProjects(coreJVM, genericJVM, catsJVM, typesafeJVM),
+      autoAPIMappings := true,
+      docsMappingsAPIDir := "api",
+      addMappingsToSiteDir(mappings in (ScalaUnidoc, packageDoc), docsMappingsAPIDir),
+      git.remoteRepo := "https://github.com/47deg/case-classy",
+      includeFilter in makeSite := "*.html" | "*.css" | "*.png" | "*.jpg" | "*.gif" | "*.js" | "*.swf" | "*.yml" | "*.md"
+    )
+
+lazy val docsMappingsAPIDir = settingKey[String](
+  "Name of subdirectory in site target directory for api docs")
+
+
+lazy val readme =
+  (project in file("modules/readme"))
+    .dependsOn(coreJVM)
+    .dependsOn(catsJVM)
+    .dependsOn(genericJVM)
+    .dependsOn(typesafeJVM)
     .settings(noPublishSettings)
     .settings(tutSettings)
-    .settings(tutScalacOptions ~= (_.filterNot(Set("-Yno-predef"))))
-    .settings(tutSourceDirectory := baseDirectory.value.getParentFile.getParentFile / "docs")
-    .jvm
-    .dependsOn(typesafeJVM)
+    .settings(
+      tutScalacOptions ~= (_.filterNot(Set("-Yno-predef"))))
 
 //
 //

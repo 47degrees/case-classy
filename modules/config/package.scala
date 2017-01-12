@@ -11,6 +11,33 @@ import core.DecodeError
 import core.Decoder
 import core.Read
 
+/** Provides support for [[https://github.com/typesafehub/config
+  * Typesafe Config]]/[[https://github.com/unicredit/shocon Shocon
+  * Config]].
+  *
+  * Available with the `"classy-config-typesafe"` and
+  * `"classy-config-shocon"` modules. These modules and their
+  * dependencies share the same classpath and cannot be used
+  * simultaneously.
+  *
+  * ==Usage==
+  *
+  * Read instances are available with a wildcard import:
+  * {{{
+  *  import classy.config._
+  * }}}
+  *
+  * This enables automatically derived decoders with
+  * [[classy.generic]] as well as manual decoders:
+  * {{{
+  *  // decode a String from a Config at path "foo"
+  *  val decodeFoo = readConfig[String]("foo")
+  *
+  *  // decode a List[Int] from a Config path "bar"
+  *  val decodeBar = readConfig[List[Int]]("bar")
+  * }}}
+  *
+  */
 package object config {
 
   type ConfigDecoder[A] = Decoder[Config, A]
