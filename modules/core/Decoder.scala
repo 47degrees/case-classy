@@ -19,6 +19,7 @@ trait Decoder[A, B] extends Serializable {
   def decode(a: A): Either[DecodeError, B]
 
   import Decoder.instance
+  import DecodeError._
 
   /** Construct a new decoder by mapping the output of this decoder
     */
@@ -103,8 +104,8 @@ trait Decoder[A, B] extends Serializable {
     */
   final def optional: Decoder[A, Option[B]] =
     instance(input => decode(input).fold(_ match {
-      case _: DecodeError.MissingPath => None.right
-      case other                      => other.left
+      case AtPath(_, Missing) => None.right
+      case other              => other.left
     }, _.some.right))
 
   /** Constructs a new decoder that falls back to a default

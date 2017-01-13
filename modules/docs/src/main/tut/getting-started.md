@@ -64,7 +64,7 @@ a `Map` or a `Config` object.
 
 ```tut:silent
 def decodeString(path: String): Decoder[Map[String, String], String] =
-  Decoder.instance(_.get(path).toRight(DecodeError.MissingPath(path)))
+  Decoder.instance(_.get(path).toRight(DecodeError.Missing.atPath(path)))
 
 val decodeA = decodeString("a")
 val decodeB = decodeString("b")
