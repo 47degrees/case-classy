@@ -108,11 +108,31 @@ trait Decoder[A, B] extends Serializable {
       case other              => other.left
     }, _.some.right))
 
+  /** Constructs a new decoder that optionally decodes a value. Deep
+    * errors other than a missing value still cause the resulting
+    * decoder to fail.
+    *
+    * @see [[DecodeError.AtPath.deepError]]
+    */
+  final def deepOptional: Decoder[A, Option[B]] =
+    instance(input => decode(input).fold(_ match {
+      case e: AtPath if e.deepError == Missing => None.right
+      case other                               => other.left
+    }, _.some.right))
+
   /** Constructs a new decoder that falls back to a default
     * value if a missing value error occurs.
     */
   final def withDefault(default: B): Decoder[A, B] =
     optional.map(_ getOrElse default)
+
+  /** Constructs a new decoder that falls back to a default
+    * value if a deep missing value error occurs.
+    *
+    * @see [[DecodeError.AtPath.deepError]]
+    */
+  final def withDeepDefault(default: B): Decoder[A, B] =
+    deepOptional.map(_ getOrElse default)
 
   /** Constructs a new decoder that falls back to a value if _any_ error
     * occurs.

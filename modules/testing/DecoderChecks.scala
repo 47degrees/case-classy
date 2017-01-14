@@ -40,6 +40,16 @@ object DecoderChecks {
       case Right(b)                 => dab.optional.decode(a) ?= b.some.right
     }
 
+  def checkDeepOptional[A, B](
+    dab: Decoder[A, B],
+    a: A
+  ): Prop =
+    dab.decode(a) match {
+      case Left(e: AtPath) if e.deepError == Missing => dab.deepOptional.decode(a) ?= None.right
+      case Left(e)                                   => dab.deepOptional.decode(a) ?= e.left
+      case Right(b)                                  => dab.deepOptional.decode(a) ?= b.some.right
+    }
+
   def checkWithDefault[A, B](
     dab: Decoder[A, B],
     a: A,
@@ -51,11 +61,28 @@ object DecoderChecks {
       case Right(b)                 => dab.withDefault(b0).decode(a) ?= b.right
     }
 
+  def checkWithDeepDefault[A, B](
+    dab: Decoder[A, B],
+    a: A,
+    b0: B
+  ): Prop =
+    dab.decode(a) match {
+      case Left(e: AtPath) if e.deepError == Missing => dab.withDeepDefault(b0).decode(a) ?= b0.right
+      case Left(e)                                   => dab.withDeepDefault(b0).decode(a) ?= e.left
+      case Right(b)                                  => dab.withDeepDefault(b0).decode(a) ?= b.right
+    }
+
   def checkOptionalDefaultConsistency[A, B](
     dab: Decoder[A, B],
     a: A,
     b0: B
   ): Prop = dab.optional.decode(a).map(_ getOrElse b0) ?= dab.withDefault(b0).decode(a)
+
+  def checkDeepOptionalDeepDefaultConsistency[A, B](
+    dab: Decoder[A, B],
+    a: A,
+    b0: B
+  ): Prop = dab.deepOptional.decode(a).map(_ getOrElse b0) ?= dab.withDeepDefault(b0).decode(a)
 
   def checkAnd[A, B, C](
     dab: Decoder[A, B],
@@ -76,12 +103,12 @@ object DecoderChecks {
   }
 
   def positive[A: Arbitrary, B: Arbitrary](
-    decoder: Decoder[A, B])(fba: B => A)(implicit ArbBtoB: Arbitrary[B => B]): Properties =
+    decoder: Decoder[A, B])(fba: B => A)(implicit ArbBtoB: Arbitrary[B => B], readAtoA: Read[A, A]): Properties =
     positive[A, B]((b: B) => (fba(b), decoder))
 
   def positive[A: Arbitrary, B: Arbitrary](
     make: B => (A, Decoder[A, B])
-  )(implicit ArbBtoB: Arbitrary[B => B]): Properties = properties("operations") { self =>
+  )(implicit ArbBtoB: Arbitrary[B => B], readAtoA: Read[A, A]): Properties = properties("operations") { self =>
     import self._
 
     // format: OFF
@@ -109,6 +136,15 @@ object DecoderChecks {
       a != na ==> checkOptional(dab, na)
     }
 
+    property("deepOptional") = forAll(
+      "decoder seed" |: arbitrary[B],
+      "bad input"    |: arbitrary[A],
+      "paths"        |: arbitrary[List[String]]
+    ) { (b, na, paths) =>
+      val (a, dab) = make(b)
+      a != na ==> checkDeepOptional(paths.foldLeft(dab)(_ atPath _), na)
+    }
+
     property("withDefault") = forAll(
       "decoder seed" |: arbitrary[B],
       "bad input"    |: arbitrary[A],
@@ -118,6 +154,16 @@ object DecoderChecks {
       a != na ==> checkWithDefault(dab, na, db)
     }
 
+    property("withDeepDefault") = forAll(
+      "decoder seed" |: arbitrary[B],
+      "bad input"    |: arbitrary[A],
+      "default"      |: arbitrary[B],
+      "paths"        |: arbitrary[List[String]]
+    ) { (sb, na, db, paths) =>
+      val (a, dab) = make(sb)
+      a != na ==> checkWithDeepDefault(paths.foldLeft(dab)(_ atPath _), na, db)
+    }
+
     property("optional/withDefault consistency") =forAll(
       "result"    |: arbitrary[B],
       "bad input" |: arbitrary[A],
@@ -125,6 +171,17 @@ object DecoderChecks {
     ) { (b, na, db) =>
       val (a, dab) = make(b)
       a != na ==> checkOptionalDefaultConsistency(dab, a, b)
+    }
+
+    property("deepOptional/withDeepDefault consistency") =forAll(
+      "result"    |: arbitrary[B],
+      "bad input" |: arbitrary[A],
+      "default"   |: arbitrary[B],
+      "paths"     |: arbitrary[List[String]]
+    ) { (b, na, db, paths) =>
+      val (a, dab) = make(b)
+      a != na ==> checkDeepOptionalDeepDefaultConsistency(
+        paths.foldLeft(dab)(_ atPath _), a, b)
     }
 
     property("and") = forAll(

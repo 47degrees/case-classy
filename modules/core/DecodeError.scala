@@ -5,6 +5,8 @@
 package classy
 package core
 
+import scala.annotation.tailrec
+
 /** An error that occurred while decoding data
   */
 sealed abstract class DecodeError extends Product with Serializable {
@@ -52,7 +54,18 @@ object DecodeError extends DecodeErrorInstances {
   /** Qualifies a nested error indicating that it occured while decoding
     * a particular path within the source data structure
     */
-  final case class AtPath(path: String, error: DecodeError) extends DecodeError
+  final case class AtPath(path: String, error: DecodeError) extends DecodeError {
+
+    /** Finds the deepest non-`AtPath` error by checking the type of
+      * `error` and repeatedly calling this method on the `error` if
+      * needed
+      */
+    @tailrec def deepError: DecodeError =
+      error match {
+        case error0: AtPath => error0.deepError
+        case _              => error
+      }
+  }
 
   /** Qualifies a nested error indicating that it occurred while decoding
     * a particular index within the source traversable data structure
@@ -150,6 +163,7 @@ object DecodeError extends DecodeErrorInstances {
     case (oneA, oneB) =>
       Or(oneA, oneB :: Nil)
   }
+
 }
 
 private[core] sealed trait DecodeErrorInstances {

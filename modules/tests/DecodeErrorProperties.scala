@@ -66,4 +66,14 @@ class DecodeErrorProperties extends Properties("DecodeError") {
     )((index, missingPath) =>
         Missing.atPath(missingPath).atIndex(index) ?=
           AtIndex(index, AtPath(missingPath, Missing)))
+
+  property("AtPath.deepError") =
+    forAll(
+      genLeaf :| "deep error",
+      arbitrary[String] :| "paths head",
+      arbitrary[List[String]] :| "paths tail"
+    )((error, pathHead, pathTail) =>
+        pathTail.foldLeft(
+          error.atPath(pathHead)
+        )(_ atPath _).deepError ?= error)
 }

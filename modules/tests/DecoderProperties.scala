@@ -23,6 +23,11 @@ class DecoderProperties extends Properties("Decoder") {
       ArbDAB.arbitrary.map(value => Decoder.const[A, B](value)),
       ArbDecodeError.arbitrary.map(value => Decoder.fail[A, B](value))))
 
+  // a hack to make the "deep" DecoderChecks compile and pass for
+  // primitive decoders
+  implicit val timeToCheat: Read[String, String] =
+    Read.instance(_ => Decoder.instance(_.right))
+
   include(
     DecoderChecks.positive(Decoder.instance[String, String](v => v.right))(v => v),
     "identity ")
