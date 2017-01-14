@@ -66,8 +66,8 @@ class GenericConfigDecoderShapes extends Properties("ConfigDecoder generic shape
   val nestNest = "nn" -> ConfigDecoder[NestNest.Paddywhack].fromString.map(_ => ())
 
   val ios: List[(String, DecodeError)] = List(
-    "          " -> MissingPath("zapZip"),
-    "zapZip: {}" -> AtPath("zapZip", Or(MissingPath("zap"), MissingPath("zip")))
+    "          " -> AtPath("zapZip", Missing),
+    "zapZip: {}" -> AtPath("zapZip", Or(AtPath("zap", Missing), AtPath("zip", Missing)))
   )
 
   def check(

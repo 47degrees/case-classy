@@ -5,6 +5,8 @@
 package classy
 package core
 
+import scala.annotation.tailrec
+
 /** An error that occurred while decoding data
   */
 sealed abstract class DecodeError extends Product with Serializable {
@@ -31,28 +33,39 @@ object DecodeError extends DecodeErrorInstances {
     */
   sealed trait LeafDecodeError extends DecodeError
 
-  /** A value at a `path` was required but not found in the source data
-    * structure
+  /** A value was required but not found in the source data structure
     */
-  final case class MissingPath(path: String) extends LeafDecodeError
+  final case object Missing extends LeafDecodeError
 
-  /** A value was found at `path` but was the type was incorrect
+  /** A value was present but was the type was incorrect
     */
-  final case class WrongType(path: String, expected: String, got: Option[String] = None) extends LeafDecodeError
+  final case class WrongType(expected: String, got: Option[String] = None)
+    extends LeafDecodeError
 
-  /** A value was found at `path` but was truncated during strict
-    * decoding.
+  /** A value was present and decoded but was truncated during the
+    * decoding process.
     *
     * This error typically occurs when strict decoding is used against
     * a backend implementation that normally defaults to lossy decoding
     * that truncates values (generally numeric).
     */
-  final case class Truncated(path: String, raw: String, result: String) extends LeafDecodeError
+  final case class Truncated(raw: String, result: String) extends LeafDecodeError
 
   /** Qualifies a nested error indicating that it occured while decoding
     * a particular path within the source data structure
     */
-  final case class AtPath(path: String, error: DecodeError) extends DecodeError
+  final case class AtPath(path: String, error: DecodeError) extends DecodeError {
+
+    /** Finds the deepest non-`AtPath` error by checking the type of
+      * `error` and repeatedly calling this method on the `error` if
+      * needed
+      */
+    @tailrec def deepError: DecodeError =
+      error match {
+        case error0: AtPath => error0.deepError
+        case _              => error
+      }
+  }
 
   /** Qualifies a nested error indicating that it occurred while decoding
     * a particular index within the source traversable data structure
@@ -150,6 +163,7 @@ object DecodeError extends DecodeErrorInstances {
     case (oneA, oneB) =>
       Or(oneA, oneB :: Nil)
   }
+
 }
 
 private[core] sealed trait DecodeErrorInstances {

@@ -52,25 +52,29 @@ class GenericConfigDecoderErrorProperties extends Properties("generic ConfigDeco
 
   property("decode foo error 1") =
     fooDecoder.decode("wrong { }") ?=
-      MissingPath("foo").left
+      AtPath("foo",
+        Missing).left
 
   property("decode foo error 1") =
     fooDecoder.decode("foo { }") ?=
       AtPath("foo",
-        MissingPath("bar")).left
+        AtPath("bar",
+          Missing)).left
 
   property("decode foo error 1") =
     fooDecoder.decode("foo { bar {} }") ?=
       AtPath("foo",
         AtPath("bar",
-           MissingPath("baz"))).left
+          AtPath("baz",
+            Missing))).left
 
   property("decode foo error 1") =
     fooDecoder.decode("foo { bar { baz {} } }") ?=
       AtPath("foo",
         AtPath("bar",
           AtPath("baz",
-            MissingPath("zip")))).left
+            AtPath("zip",
+              Missing)))).left
 
   import ShapeADT._
   val shapeDecoder = ConfigDecoder[Shape].fromString
@@ -79,41 +83,41 @@ class GenericConfigDecoderErrorProperties extends Properties("generic ConfigDeco
   property("decode shape errors") =
     shapeDecoder.decode("wrong {}") ?=
       Or(
-        MissingPath("circle"),
-        MissingPath("rectangle"),
-        MissingPath("regularPolygon"),
-        MissingPath("square"),
-        MissingPath("triangle")).left
+        AtPath("circle", Missing),
+        AtPath("rectangle", Missing),
+        AtPath("regularPolygon", Missing),
+        AtPath("square", Missing),
+        AtPath("triangle", Missing)).left
 
   property("decode shape errors with nested error") =
     shapeDecoder.decode("circle { stillWrong: {} }") ?=
       Or(
         AtPath("circle",
-          MissingPath("radius")),
-        MissingPath("rectangle"),
-        MissingPath("regularPolygon"),
-        MissingPath("square"),
-        MissingPath("triangle")).left
+          AtPath("radius", Missing)),
+        AtPath("rectangle", Missing),
+        AtPath("regularPolygon", Missing),
+        AtPath("square", Missing),
+        AtPath("triangle", Missing)).left
 
   property("decode shapes error") =
     shapesDecoder.decode("wrong {}") ?=
-      MissingPath("shapes").left
+      AtPath("shapes", Missing).left
 
   property("decode shapes errors with nested errors 1") =
     shapesDecoder.decode("shapes: [{}, {}]") ?=
       AtPath("shapes", And(
         AtIndex(0, Or(
-          MissingPath("circle"),
-          MissingPath("rectangle"),
-          MissingPath("regularPolygon"),
-          MissingPath("square"),
-          MissingPath("triangle"))),
+          AtPath("circle", Missing),
+          AtPath("rectangle", Missing),
+          AtPath("regularPolygon", Missing),
+          AtPath("square", Missing),
+          AtPath("triangle", Missing))),
         AtIndex(1, Or(
-          MissingPath("circle"),
-          MissingPath("rectangle"),
-          MissingPath("regularPolygon"),
-          MissingPath("square"),
-          MissingPath("triangle"))))).left
+          AtPath("circle", Missing),
+          AtPath("rectangle", Missing),
+          AtPath("regularPolygon", Missing),
+          AtPath("square", Missing),
+          AtPath("triangle", Missing))))).left
 
   property("decode shapes errors with nested errors 2") =
     shapesDecoder.decode("""
@@ -127,20 +131,20 @@ class GenericConfigDecoderErrorProperties extends Properties("generic ConfigDeco
       AtPath("shapes",
         And(
           AtIndex(1, Or(
-            MissingPath("circle"),
+            AtPath("circle", Missing),
             AtPath("rectangle", And(
-              MissingPath("length"),
-              MissingPath("width"))),
-            MissingPath("regularPolygon"),
-            MissingPath("square"),
-            MissingPath("triangle"))),
+              AtPath("length", Missing),
+              AtPath("width", Missing))),
+            AtPath("regularPolygon", Missing),
+            AtPath("square", Missing),
+            AtPath("triangle", Missing))),
           AtIndex(3, Or(
-            MissingPath("circle"),
-            MissingPath("rectangle"),
-            MissingPath("regularPolygon"),
+            AtPath("circle", Missing),
+            AtPath("rectangle", Missing),
+            AtPath("regularPolygon", Missing),
             AtPath("square",
-              MissingPath("dimension")),
-            MissingPath("triangle")))
+              AtPath("dimension", Missing)),
+            AtPath("triangle", Missing)))
         )).left
 
 }
