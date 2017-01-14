@@ -70,10 +70,10 @@ package object config {
 
     //#+typesafe
     def load(): Either[DecodeError, A] =
-      decoder.decode(ConfigFactory.load())
+      decoder(ConfigFactory.load())
 
     def load(loader: ClassLoader): Either[DecodeError, A] =
-      decoder.decode(ConfigFactory.load(loader))
+      decoder(ConfigFactory.load(loader))
     //#-typesafe
 
   }

@@ -58,7 +58,7 @@ val decoder1 = deriveDecoder[Config, MyConfig]
 ```
 
 ```scala
-decoder1.fromString.decode("shapes = []")
+decoder1.fromString("shapes = []")
 // res4: scala.util.Either[classy.core.DecodeError,MyConfig] = Right(MyConfig(None,List()))
 ```
 

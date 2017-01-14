@@ -58,7 +58,7 @@ val decoder1 = deriveDecoder[Config, MyConfig]
 ```
 
 ```tut:book
-decoder1.fromString.decode("shapes = []")
+decoder1.fromString("shapes = []")
 ```
 
 ### License

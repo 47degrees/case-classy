@@ -21,33 +21,33 @@ object DecoderChecks {
     a: A,
     b: B
   ): Prop =
-    dab.decode(a) ?= b.right
+    dab(a) ?= b.right
 
   def checkMap[A, B, C](
     dab: Decoder[A, B],
     a: A,
     fbc: B => C
   ): Prop =
-    dab.decode(a).map(fbc) ?= dab.map(fbc).decode(a)
+    dab(a).map(fbc) ?= dab.map(fbc)(a)
 
   def checkOptional[A, B](
     dab: Decoder[A, B],
     a: A
   ): Prop =
-    dab.decode(a) match {
-      case Left(AtPath(_, Missing)) => dab.optional.decode(a) ?= None.right
-      case Left(e)                  => dab.optional.decode(a) ?= e.left
-      case Right(b)                 => dab.optional.decode(a) ?= b.some.right
+    dab(a) match {
+      case Left(AtPath(_, Missing)) => dab.optional(a) ?= None.right
+      case Left(e)                  => dab.optional(a) ?= e.left
+      case Right(b)                 => dab.optional(a) ?= b.some.right
     }
 
   def checkDeepOptional[A, B](
     dab: Decoder[A, B],
     a: A
   ): Prop =
-    dab.decode(a) match {
-      case Left(e: AtPath) if e.deepError == Missing => dab.deepOptional.decode(a) ?= None.right
-      case Left(e)                                   => dab.deepOptional.decode(a) ?= e.left
-      case Right(b)                                  => dab.deepOptional.decode(a) ?= b.some.right
+    dab(a) match {
+      case Left(e: AtPath) if e.deepError == Missing => dab.deepOptional(a) ?= None.right
+      case Left(e)                                   => dab.deepOptional(a) ?= e.left
+      case Right(b)                                  => dab.deepOptional(a) ?= b.some.right
     }
 
   def checkWithDefault[A, B](
@@ -55,10 +55,10 @@ object DecoderChecks {
     a: A,
     b0: B
   ): Prop =
-    dab.decode(a) match {
-      case Left(AtPath(_, Missing)) => dab.withDefault(b0).decode(a) ?= b0.right
-      case Left(e)                  => dab.withDefault(b0).decode(a) ?= e.left
-      case Right(b)                 => dab.withDefault(b0).decode(a) ?= b.right
+    dab(a) match {
+      case Left(AtPath(_, Missing)) => dab.withDefault(b0)(a) ?= b0.right
+      case Left(e)                  => dab.withDefault(b0)(a) ?= e.left
+      case Right(b)                 => dab.withDefault(b0)(a) ?= b.right
     }
 
   def checkWithDeepDefault[A, B](
@@ -66,29 +66,29 @@ object DecoderChecks {
     a: A,
     b0: B
   ): Prop =
-    dab.decode(a) match {
-      case Left(e: AtPath) if e.deepError == Missing => dab.withDeepDefault(b0).decode(a) ?= b0.right
-      case Left(e)                                   => dab.withDeepDefault(b0).decode(a) ?= e.left
-      case Right(b)                                  => dab.withDeepDefault(b0).decode(a) ?= b.right
+    dab(a) match {
+      case Left(e: AtPath) if e.deepError == Missing => dab.withDeepDefault(b0)(a) ?= b0.right
+      case Left(e)                                   => dab.withDeepDefault(b0)(a) ?= e.left
+      case Right(b)                                  => dab.withDeepDefault(b0)(a) ?= b.right
     }
 
   def checkOptionalDefaultConsistency[A, B](
     dab: Decoder[A, B],
     a: A,
     b0: B
-  ): Prop = dab.optional.decode(a).map(_ getOrElse b0) ?= dab.withDefault(b0).decode(a)
+  ): Prop = dab.optional(a).map(_ getOrElse b0) ?= dab.withDefault(b0)(a)
 
   def checkDeepOptionalDeepDefaultConsistency[A, B](
     dab: Decoder[A, B],
     a: A,
     b0: B
-  ): Prop = dab.deepOptional.decode(a).map(_ getOrElse b0) ?= dab.withDeepDefault(b0).decode(a)
+  ): Prop = dab.deepOptional(a).map(_ getOrElse b0) ?= dab.withDeepDefault(b0)(a)
 
   def checkAnd[A, B, C](
     dab: Decoder[A, B],
     dac: Decoder[A, C],
     a: A
-  ): Prop = ((dab and dac).decode(a), dab.decode(a), dac.decode(a)) match {
+  ): Prop = ((dab and dac)(a), dab(a), dac(a)) match {
     case (Right((b, c)), db, dc)       => (b.right ?= db) && (c.right ?= dc)
     case (Left(e), Left(eb), Left(ec)) => e ?= (eb && ec)
     case (Left(e), _, Left(ec))        => e ?= ec

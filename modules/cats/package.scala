@@ -14,7 +14,7 @@ package object cats {
   implicit class DecoderCatsOps[A, B](val decoder: Decoder[A, B]) extends AnyVal {
 
     /** A Kleisli arrow for this decoder's decode function */
-    def kleisli: Kleisli[Either[DecodeError, ?], A, B] = Kleisli(decoder.decode)
+    def kleisli: Kleisli[Either[DecodeError, ?], A, B] = Kleisli(decoder.apply)
   }
 
   implicit def decoderStdInstance[Z]: Monad[Decoder[Z, ?]] =

@@ -43,13 +43,13 @@ val decoder1 = deriveDecoder[Config, MyConfig]
 Now we can decode our configs!
 
 ```tut:book
-decoder1.decode(ConfigFactory.load()) // shortcut: decoder1.load()
+decoder1(ConfigFactory.load()) // shortcut: decoder1.load()
 
-decoder1.decode(ConfigFactory.parseString("""
+decoder1(ConfigFactory.parseString("""
   |someString = "hello"
   |shapes = [
   | { circle    : { radius: 5 } },
   | { rectangle : { length: 10, width: 10 } }
   |]
-  """.stripMargin)) // shortcut: Decoder1.fromString.decode(...)
+  """.stripMargin)) // shortcut: Decoder1.fromString(...)
 ```

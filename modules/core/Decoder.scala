@@ -16,56 +16,62 @@ import wheel._
 trait Decoder[A, B] extends Serializable {
 
   /** Decode a value of type `A` as type `B` */
-  def decode(a: A): Either[DecodeError, B]
+  def apply(a: A): Either[DecodeError, B]
 
   import Decoder.instance
   import DecodeError._
 
+  /** Decode a value of type `A` as type `B`.
+    *
+    * This is an alias for [[apply]].
+    */
+  final def decode(a: A): Either[DecodeError, B] = apply(a)
+
   /** Construct a new decoder by mapping the output of this decoder
     */
   final def map[C](f: B => C): Decoder[A, C] =
-    instance(input => decode(input).map(f))
+    instance(input => apply(input).map(f))
 
   /** Construct a new decoder by mapping the output of this decoder
     * to either a `DecodeError` or a new result type
     */
   final def emap[C](f: B => Either[DecodeError, C]): Decoder[A, C] =
-    instance(input => decode(input).flatMap(f))
+    instance(input => apply(input).flatMap(f))
 
   /** Construct a new decoder by mapping the error output of this decoder
     * to a new error
     */
   final def leftMap(f: DecodeError => DecodeError): Decoder[A, B] =
-    instance(input => decode(input).leftMap(f))
+    instance(input => apply(input).leftMap(f))
 
   /** Construct a new decoder by mapping the input to this decoder
     */
   final def mapInput[Z](f: Z => A): Decoder[Z, B] =
-    instance(input => decode(f(input)))
+    instance(input => apply(f(input)))
 
   /** Construct a new decoder through a monadic bind */
   final def flatMap[C](f: B => Decoder[A, C]): Decoder[A, C] =
-    instance(input => decode(input).flatMap(b => f(b).decode(input)))
+    instance(input => apply(input).flatMap(b => f(b).apply(input)))
 
   /** Construct a new decoder by using the result of another decoder as
     * the input to this decoder
     */
   final def compose[Z](previous: Decoder[Z, A]): Decoder[Z, B] =
-    instance(input => previous.decode(input).flatMap(decode))
+    instance(input => previous.apply(input).flatMap(apply))
 
   /** Construct a new decoder by using the output of this decoder as
     * the input of another
     */
   final def andThen[C](next: Decoder[B, C]): Decoder[A, C] =
-    instance(input => decode(input).flatMap(next.decode))
+    instance(input => apply(input).flatMap(next.apply))
 
   /** Construct a new decoder by joining this decoder with another,
     * tupling the results. Errors accumulate.
     */
   final def and[C](that: Decoder[A, C]): Decoder[A, (B, C)] =
     instance { input =>
-      val rb = decode(input)
-      val rc = that.decode(input)
+      val rb = apply(input)
+      val rc = that.apply(input)
       (rb, rc) match {
         case (Right(b), Right(c)) => (b, c).right
         case (Left(eb), Left(ec)) => (eb && ec).left
@@ -78,9 +84,9 @@ trait Decoder[A, B] extends Serializable {
     * the other. Errors accumulate.
     */
   final def or[BB >: B](that: Decoder[A, BB]): Decoder[A, BB] =
-    instance(input => decode(input) match {
+    instance(input => apply(input) match {
       case b @ Right(_) => b
-      case Left(eb) => that.decode(input) match {
+      case Left(eb) => that.apply(input) match {
         case bb @ Right(_) => bb
         case Left(ebb)     => (eb || ebb).left
       }
@@ -94,7 +100,7 @@ trait Decoder[A, B] extends Serializable {
   final def sequence[F[_]](implicit Ft: Traversable[F], Fi: Indexed[F]): Decoder[F[A], F[B]] =
     instance { fa =>
       val ifa = Fi.indexed(fa)
-      val res = Ft.map(ifa)(ia => leftMap(_.atIndex(ia._1)).decode(ia._2))
+      val res = Ft.map(ifa)(ia => leftMap(_.atIndex(ia._1)).apply(ia._2))
       Ft.sequence(res)
     }
 
@@ -103,7 +109,7 @@ trait Decoder[A, B] extends Serializable {
     * fail.
     */
   final def optional: Decoder[A, Option[B]] =
-    instance(input => decode(input).fold(_ match {
+    instance(input => apply(input).fold(_ match {
       case AtPath(_, Missing) => None.right
       case other              => other.left
     }, _.some.right))
@@ -115,7 +121,7 @@ trait Decoder[A, B] extends Serializable {
     * @see [[DecodeError.AtPath.deepError]]
     */
   final def deepOptional: Decoder[A, Option[B]] =
-    instance(input => decode(input).fold(_ match {
+    instance(input => apply(input).fold(_ match {
       case e: AtPath if e.deepError == Missing => None.right
       case other                               => other.left
     }, _.some.right))
@@ -141,7 +147,7 @@ trait Decoder[A, B] extends Serializable {
     * [[withDefault]].
     */
   final def withFallback(fallback: B): Decoder[A, B] =
-    instance(input => (decode(input) getOrElse fallback).right)
+    instance(input => (apply(input) getOrElse fallback).right)
 
   /** Construct a new decoder that first reads a path. The value read
     * is then passed to this decoder. Errors are adjusted to reflect
@@ -155,7 +161,7 @@ trait Decoder[A, B] extends Serializable {
   final def trace(prefix: String = "> "): Decoder[A, B] =
     instance { input =>
       scala.Predef.println(prefix + input)
-      val output = decode(input)
+      val output = apply(input)
       scala.Predef.println(prefix + output)
       output
     }
@@ -171,7 +177,7 @@ object Decoder {
     run: A => Either[DecodeError, B]): Decoder[A, B] = Instance(run)
 
   case class Instance[A, B](run: A => Either[DecodeError, B]) extends Decoder[A, B] {
-    override def decode(a: A): Either[DecodeError, B] = run(a)
+    override def apply(a: A): Either[DecodeError, B] = run(a)
   }
 
   /** Construct a decoder that always succeeds with a given value */
