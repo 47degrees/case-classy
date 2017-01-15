@@ -169,20 +169,43 @@ trait Decoder[A, B] extends Serializable {
 }
 
 object Decoder {
+
   /** Implicitly summon a decoder */
   def apply[A, B](implicit ev: Decoder[A, B]): Decoder[A, B] = ev
 
-  /** Construct a new decoder using function `f` for decoding */
-  def instance[A, B](
-    run: A => Either[DecodeError, B]): Decoder[A, B] = Instance(run)
+  /** Construct a new decoder using function `run` for decoding */
+  def instance[A, B](run: A => Either[DecodeError, B]): Decoder[A, B] = Instance(run)
 
-  case class Instance[A, B](run: A => Either[DecodeError, B]) extends Decoder[A, B] {
+  /** The default implementation of [[Decoder]] backed by a function
+    * `A => Either[DecodeError, B]`
+    *
+    * @param run the backing function
+    */
+  final case class Instance[A, B](run: A => Either[DecodeError, B]) extends Decoder[A, B] {
     override def apply(a: A): Either[DecodeError, B] = run(a)
   }
 
   /** Construct a decoder that always succeeds with a given value */
-  def const[A, B](value: B): Decoder[A, B] = instance(_ => value.right)
+  def const[A, B](value: B): Decoder[A, B] = Const(value)
+
+  /** An implementation of [[Decoder]] that decodes a constant
+    * succesful value
+    *
+    * @param value the successful value
+    */
+  final case class Const[A, B](value: B) extends Decoder[A, B] {
+    override def apply(a: A): Either[DecodeError, B] = value.right
+  }
 
   /** Construct a decoder that always fails with the given error */
-  def fail[A, B](error: DecodeError): Decoder[A, B] = instance(_ => error.left)
+  def fail[A, B](error: DecodeError): Decoder[A, B] = Fail(error)
+
+  /** An implementation of [[Decoder]] that always fails with constant
+    * error
+    *
+    * @param error the constant error to decode
+    */
+  final case class Fail[A, B](error: DecodeError) extends Decoder[A, B] {
+    override def apply(a: A): Either[DecodeError, B] = error.left
+  }
 }

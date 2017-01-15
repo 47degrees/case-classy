@@ -21,7 +21,7 @@ object DecoderChecks {
     a: A,
     b: B
   ): Prop =
-    dab(a) ?= b.right
+    (dab(a) ?= b.right) && (dab.decode(a) ?= b.right)
 
   def checkMap[A, B, C](
     dab: Decoder[A, B],

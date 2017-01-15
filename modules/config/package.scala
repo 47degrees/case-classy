@@ -57,6 +57,7 @@ package object config {
 
 
   implicit class ConfigDecoderOps[A](val decoder: ConfigDecoder[A]) extends AnyVal {
+
     /** Converts this decoder to a decoder that parses a string instead of
       * a config object */
     def fromString: Decoder[String, A] =
