@@ -120,6 +120,8 @@ lazy val testing =
       "com.github.alexarchambault" %%% "scalacheck-shapeless_1.13" % V.scalacheckShapeless,
       "org.typelevel"              %%% "cats-laws"                 % V.cats
     ))
+    .settings(
+      coverageExcludedPackages := "classy\\.testing\\..*")
     .dependsOn(core, generic, cats)
 lazy val testingJS = testing.js
 lazy val testingJVM = testing.jvm
