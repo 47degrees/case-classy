@@ -21,12 +21,12 @@ import classy.core._
 
 The main Classy type is [`Decoder`](api/classy/core/Decoder.html), which
 captures the ability to decode data of type `A` to type `B`. It has a
-single unimplemented method `decode` that either returns an error or
+single unimplemented method `apply` that either returns an error or
 the result.
 
 ```tut:silent
 trait Decoder[A, B] {
-  def decode(a: A): Either[DecodeError, B]
+  def apply(a: A): Either[DecodeError, B]
 }
 ```
 
@@ -81,9 +81,9 @@ val decodeRes: Decoder[Map[String, String], Res] =
 Now we can decode some values and see what happens:
 
 ```tut
-decodeRes.decode(Map("hello" -> "world"))
-decodeRes.decode(Map("a" -> "foo"))
-decodeRes.decode(Map("a" -> "foo", "b" -> "bar"))
+decodeRes(Map("hello" -> "world"))
+decodeRes(Map("a" -> "foo"))
+decodeRes(Map("a" -> "foo", "b" -> "bar"))
 ```
 
 Above we created a helper method `decodeString` that let us easily create

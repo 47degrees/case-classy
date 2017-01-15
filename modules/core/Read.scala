@@ -9,20 +9,38 @@ import wheel._
 
 /** Read captures the ability to create a [[Decoder]] given a path string.
   *
-  * @tparam A type A of created decoders
-  * @tparam B type B of created decoders
+  * @tparam A type `A` of created decoders
+  * @tparam B type `B` of created decoders
   */
-final class Read[A, B] private[Read] (f: String => Decoder[A, B]) extends Serializable {
-  def apply(path: String): Decoder[A, B] = f(path)
+trait Read[A, B] extends Serializable {
+
+  /** Create a decoder for the given `path`
+    */
+  def apply(path: String): Decoder[A, B]
+
+  /** Create a decoder for the given `path`.
+    *
+    * This is an alias for [[apply]].
+    */
+  final def read(path: String): Decoder[A, B] = apply(path)
 }
 
 object Read {
 
-  /** Creates a Read instance given a backing function `f`
+  /** Creates a Read instance given a backing function `run`
     *
     * @param f the function from a path string to a decoder
     */
-  def instance[A, B](f: (String) => Decoder[A, B]): Read[A, B] = new Read(f)
+  def instance[A, B](run: (String) => Decoder[A, B]): Read[A, B] = Instance(run)
+
+  /** The default implementation of [[Read]] backed by a function
+    * `(String) => Decoder[A, B]`
+    *
+    * @param run the backing function
+    */
+  final case class Instance[A, B](run: (String) => Decoder[A, B]) extends Read[A, B] {
+    override def apply(path: String): Decoder[A, B] = run(path)
+  }
 
   /** Provides read instances for nested decoder input types. Typically
     * this supports decoding of nested structures or data types.
