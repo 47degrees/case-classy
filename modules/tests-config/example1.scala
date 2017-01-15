@@ -75,6 +75,7 @@ object Example1 extends App {
     import classy.generic._
 
     val res = makeDecoder[Config, Foo]
+      .withOptions
       .renameFields(_.toUpperCase)
       .decoder
       .fromString
