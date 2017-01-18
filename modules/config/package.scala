@@ -81,19 +81,20 @@ package object config {
   // implicit proxies for the defaults for generic derivation
   // format: OFF
   import ConfigDecoders.std._
-  implicit val defaultConfigReadConfig      = Read.instance(config)
-  implicit val defaultConfigReadString      = Read.instance(string)
-  implicit val defaultConfigReadNumber      = Read.instance(number)      //#=typesafe
-  implicit val defaultConfigReadBoolean     = Read.instance(boolean)
-  implicit val defaultConfigReadInt         = Read.instance(int)
-  implicit val defaultConfigReadLong        = Read.instance(long)
-  implicit val defaultConfigReadDouble      = Read.instance(double)
+  implicit val defaultConfigReadConfig         = Read.instance(config)
+  implicit val defaultConfigReadString         = Read.instance(string)
+  implicit val defaultConfigReadNumber         = Read.instance(number)      //#=typesafe
+  implicit val defaultConfigReadBoolean        = Read.instance(boolean)
+  implicit val defaultConfigReadFiniteDuration = Read.instance(finiteDuration)
+  implicit val defaultConfigReadInt            = Read.instance(int)
+  implicit val defaultConfigReadLong           = Read.instance(long)
+  implicit val defaultConfigReadDouble         = Read.instance(double)
 
-  implicit val defaultConfigReadConfigList  = Read.instance(configList)
-  implicit val defaultConfigReadStringList  = Read.instance(stringList)
-  implicit val defaultConfigReadNumberList  = Read.instance(numberList)  //#=typesafe
-  implicit val defaultConfigReadBooleanList = Read.instance(booleanList)
-  implicit val defaultConfigReadIntList     = Read.instance(intList)
-  implicit val defaultConfigReadLongList    = Read.instance(longList)
-  implicit val defaultConfigReadDoubleList  = Read.instance(doubleList)
+  implicit val defaultConfigReadConfigList     = Read.instance(configList)
+  implicit val defaultConfigReadStringList     = Read.instance(stringList)
+  implicit val defaultConfigReadNumberList     = Read.instance(numberList)  //#=typesafe
+  implicit val defaultConfigReadBooleanList    = Read.instance(booleanList)
+  implicit val defaultConfigReadIntList        = Read.instance(intList)
+  implicit val defaultConfigReadLongList       = Read.instance(longList)
+  implicit val defaultConfigReadDoubleList     = Read.instance(doubleList)
 }

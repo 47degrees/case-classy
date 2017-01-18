@@ -6,7 +6,9 @@ package classy
 package config
 
 import com.typesafe.config._
+import java.util.concurrent.TimeUnit
 
+import scala.concurrent.duration.FiniteDuration
 import scala.Predef._
 
 import org.scalacheck._
@@ -28,6 +30,16 @@ object StdConfigDecoderProperties {
 
   implicit def pathValueConfig(kv: (Path, Any)) =
     ConfigFactory parseString s""" ${kv._1.value} = "${kv._2.toString}" """
+
+  implicit val arbitraryFiniteDuration: Arbitrary[FiniteDuration] = Arbitrary(
+    for {
+      length <- Gen.posNum[Long]
+      unit <- Gen.oneOf(TimeUnit.values()) //#=typesafe
+      unit <- Gen.oneOf(TimeUnit.values().filterNot(_ == TimeUnit.NANOSECONDS)) //#=shocon
+    } yield FiniteDuration(length, unit)
+  )
+
+  implicit val cogenFiniteDuration = Cogen((_: FiniteDuration).hashCode.toLong)
 }
 
 class StdConfigDecoderProperties extends Properties(s"${ConfigDecoders.BACKEND} ConfigDecoder.std") {
@@ -68,8 +80,7 @@ class StdConfigDecoderProperties extends Properties(s"${ConfigDecoders.BACKEND} 
   include(DecoderChecks.positive(reading[List[Long]]), "List[Long] ")
   include(DecoderChecks.positive(reading[Double]), "Double ")
   include(DecoderChecks.positive(reading[List[Double]]), "List[Double] ")
-
-
+  include(DecoderChecks.positive(reading[FiniteDuration]), "FiniteDuration ")
 
   //#+typesafe
 
