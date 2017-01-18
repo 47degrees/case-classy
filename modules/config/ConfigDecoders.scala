@@ -9,6 +9,7 @@ import com.typesafe.config.Config
 import com.typesafe.config.ConfigException
 
 import scala.collection.JavaConverters._
+import scala.concurrent.duration.FiniteDuration
 import scala.reflect.{ ClassTag, classTag } //#=typesafe
 import scala.reflect.ClassTag               //#=shocon
 
@@ -23,21 +24,22 @@ object ConfigDecoders {
     */
   object std {
     // format: OFF
-    def config     (path: String): ConfigDecoder[Config]        = instance(path)(_ getConfig _)
-    def string     (path: String): ConfigDecoder[String]        = instance(path)(_ getString _)
-    def number     (path: String): ConfigDecoder[Number]        = instance(path)(_ getNumber _)      //#=typesafe
-    def boolean    (path: String): ConfigDecoder[Boolean]       = instance(path)(_ getBoolean _)
-    def int        (path: String): ConfigDecoder[Int]           = instance(path)(_ getInt _)
-    def long       (path: String): ConfigDecoder[Long]          = instance(path)(_ getLong _)
-    def double     (path: String): ConfigDecoder[Double]        = instance(path)(_ getDouble _)
+    def config        (path: String): ConfigDecoder[Config]         = instance(path)(_ getConfig _)
+    def string        (path: String): ConfigDecoder[String]         = instance(path)(_ getString _)
+    def number        (path: String): ConfigDecoder[Number]         = instance(path)(_ getNumber _)      //#=typesafe
+    def boolean       (path: String): ConfigDecoder[Boolean]        = instance(path)(_ getBoolean _)
+    def int           (path: String): ConfigDecoder[Int]            = instance(path)(_ getInt _)
+    def long          (path: String): ConfigDecoder[Long]           = instance(path)(_ getLong _)
+    def double        (path: String): ConfigDecoder[Double]         = instance(path)(_ getDouble _)
+    def finiteDuration(path: String): ConfigDecoder[FiniteDuration] = instance(path)(_ getDuration _)
 
-    def configList (path: String): ConfigDecoder[List[Config]]  = instance(path)(_ getConfigList _)
-    def stringList (path: String): ConfigDecoder[List[String]]  = instance(path)(_ getStringList _)
-    def numberList (path: String): ConfigDecoder[List[Number]]  = instance(path)(_ getNumberList _)  //#=typesafe
-    def booleanList(path: String): ConfigDecoder[List[Boolean]] = instance(path)(_ getBooleanList _)
-    def intList    (path: String): ConfigDecoder[List[Int]]     = instance(path)(_ getIntList _)
-    def longList   (path: String): ConfigDecoder[List[Long]]    = instance(path)(_ getLongList _)
-    def doubleList (path: String): ConfigDecoder[List[Double]]  = instance(path)(_ getDoubleList _)
+    def configList    (path: String): ConfigDecoder[List[Config]]   = instance(path)(_ getConfigList _)
+    def stringList    (path: String): ConfigDecoder[List[String]]   = instance(path)(_ getStringList _)
+    def numberList    (path: String): ConfigDecoder[List[Number]]   = instance(path)(_ getNumberList _)  //#=typesafe
+    def booleanList   (path: String): ConfigDecoder[List[Boolean]]  = instance(path)(_ getBooleanList _)
+    def intList       (path: String): ConfigDecoder[List[Int]]      = instance(path)(_ getIntList _)
+    def longList      (path: String): ConfigDecoder[List[Long]]     = instance(path)(_ getLongList _)
+    def doubleList    (path: String): ConfigDecoder[List[Double]]   = instance(path)(_ getDoubleList _)
     // format: ON
 
     @inline private[this] def instance[A: ClassTag](
@@ -58,6 +60,9 @@ object ConfigDecoders {
 
     @inline private[this] implicit def convertLists[A, B](j: java.util.List[A]): List[B] =
       j.asScala.toList.map(_.asInstanceOf[B])
+
+    @inline private[this] implicit def convertDuration(j: java.time.Duration): FiniteDuration =
+      scala.concurrent.duration.FiniteDuration(j.toNanos, java.util.concurrent.TimeUnit.NANOSECONDS)
   }
 
   /** Typesafe config decoders that prevent narrowing of configuration

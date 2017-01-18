@@ -5,7 +5,9 @@
 package classy_generic_examples
 
 import com.typesafe.config.ConfigFactory
+
 import scala.Predef._
+import scala.concurrent.duration.FiniteDuration
 
 object Example1 extends App {
 
@@ -15,12 +17,14 @@ object Example1 extends App {
     a: String = "a's default value",
     b: Option[Int],
     c: List[String],
+    d: FiniteDuration,
     bars: List[Bar]
   )
 
   val typesafeConfig = ConfigFactory parseString """
    | a : okay
    | c = ["hello", "world"]
+   | b = 20s
    | bars = [{ value: hello }]
    |""".stripMargin
 
@@ -54,11 +58,12 @@ object Example1 extends App {
     val decodeA    = readConfig[String]("a").withDefault("a's default value")
     val decodeB    = readConfig[Int]("b").optional
     val decodeC    = readConfig[List[String]]("c")
+    val decodeD    = readConfig[FiniteDuration]("d")
     val decodeBar  = readConfig[String]("value").map(value => Bar(value))
     val decodeBars = readConfig[List[Config]]("bars") andThen decodeBar.sequence[List]
 
-    implicit val decodeFoo = (decodeA and decodeB and decodeC and decodeBars).map {
-      case (((a, b), c), bar) => Foo(a, b, c, bar)
+    implicit val decodeFoo = (decodeA and decodeB and decodeC and decodeD and decodeBars).map {
+      case ((((a, b), c), d), bar) => Foo(a, b, c, d, bar)
     }
 
     val res = ConfigDecoder[Foo].decode(typesafeConfig)
