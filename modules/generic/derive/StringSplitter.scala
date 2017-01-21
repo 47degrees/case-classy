@@ -19,15 +19,16 @@ object StringSplitter {
   def split(input: String): List[String] = {
     val chars = input.toCharArray
     val length = chars.length
+    val end = length - 1
 
     (length: @switch) match {
       case 0 => List.empty
       case 1 => input :: Nil
       case _ =>
         val splits = CharCat(chars(0)) match {
-          case AlphaUpper => firstUpper(chars, 1, length - 1, 0 :: Nil)
-          case Separator  => inSeparator(chars, 1, length - 1, Nil)
-          case _          => inLower(chars, 1, length - 1, 0 :: Nil)
+          case AlphaUpper => firstUpper(chars, 1, end, 0 :: Nil)
+          case Separator  => inSeparator(chars, 1, end, Nil)
+          case _          => inLower(chars, 1, end, 0 :: Nil)
         }
         segments(input, length :: splits, Nil)
     }
@@ -43,47 +44,35 @@ object StringSplitter {
 
   // @mutalrec
   private[this] def firstUpper(chars: Array[Char], i: Int, end: Int, acc: List[Int]): List[Int] =
-    if (i >= end) acc else {
-      val cat = CharCat(chars(i))
-      cat match {
-        case AlphaUpper => inUpper(chars, i + 1, end, acc, 1)
-        case Numeric    => inUpper(chars, i + 1, end, acc, 0)
-        case _          => inLower(chars, i + 1, end, acc)
-      }
+    if (i >= end) acc else CharCat(chars(i)) match {
+      case AlphaUpper => inUpper(chars, i + 1, end, acc, 1)
+      case Numeric    => inUpper(chars, i + 1, end, acc, 0)
+      case _          => inLower(chars, i + 1, end, acc)
     }
 
   // @mutalrec
   private[this] def inUpper(chars: Array[Char], i: Int, end: Int, acc: List[Int], offset: Int): List[Int] =
-    if (i >= end) acc else {
-      val cat = CharCat(chars(i))
-      cat match {
-        case AlphaUpper => inUpper(chars, i + 1, end, acc, 1)
-        case Numeric    => inUpper(chars, i + 1, end, acc, 0)
-        case Separator  => inSeparator(chars, i + 1, end, i :: acc)
-        case _          => inLower(chars, i + 1, end, (i - offset) :: (i - offset) :: acc)
-      }
+    if (i >= end) acc else CharCat(chars(i)) match {
+      case AlphaUpper => inUpper(chars, i + 1, end, acc, 1)
+      case Numeric    => inUpper(chars, i + 1, end, acc, 0)
+      case Separator  => inSeparator(chars, i + 1, end, i :: acc)
+      case _          => inLower(chars, i + 1, end, (i - offset) :: (i - offset) :: acc)
     }
 
   // @mutalrec
   private[this] def inLower(chars: Array[Char], i: Int, end: Int, acc: List[Int]): List[Int] =
-    if (i >= end) acc else {
-      val cat = CharCat(chars(i))
-      cat match {
-        case AlphaUpper => firstUpper(chars, i + 1, end, i :: i :: acc)
-        case Separator  => inSeparator(chars, i + 1, end, i :: acc)
-        case _          => inLower(chars, i + 1, end, acc)
-      }
+    if (i >= end) acc else CharCat(chars(i)) match {
+      case AlphaUpper => firstUpper(chars, i + 1, end, i :: i :: acc)
+      case Separator  => inSeparator(chars, i + 1, end, i :: acc)
+      case _          => inLower(chars, i + 1, end, acc)
     }
 
   // @mutalrec
   private[this] def inSeparator(chars: Array[Char], i: Int, end: Int, acc: List[Int]): List[Int] =
-    if (i >= end) acc else {
-      val cat = CharCat(chars(i))
-      cat match {
-        case AlphaUpper => firstUpper(chars, i + 1, end, i :: acc)
-        case Separator  => inSeparator(chars, i + 1, end, acc)
-        case _          => inLower(chars, i + 1, end, i :: acc)
-      }
+    if (i >= end) acc else CharCat(chars(i)) match {
+      case AlphaUpper => firstUpper(chars, i + 1, end, i :: acc)
+      case Separator  => inSeparator(chars, i + 1, end, acc)
+      case _          => inLower(chars, i + 1, end, i :: acc)
     }
 
 }
