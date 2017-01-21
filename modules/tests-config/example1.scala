@@ -46,7 +46,7 @@ object Example1 extends App {
     implicit val decodeBar = deriveDecoder[Config, Bar]
     implicit val decodeFoo = deriveDecoder[Config, Foo]
 
-    val res = ConfigDecoder[Foo].decode(typesafeConfig)
+    val res = ConfigDecoder[Foo].apply(typesafeConfig)
     println("Yax: " + res)
   }
 
@@ -66,7 +66,7 @@ object Example1 extends App {
       case ((((a, b), c), d), bar) => Foo(a, b, c, d, bar)
     }
 
-    val res = ConfigDecoder[Foo].decode(typesafeConfig)
+    val res = ConfigDecoder[Foo].apply(typesafeConfig)
     println("Xan: " + res)
   }
 
@@ -80,10 +80,11 @@ object Example1 extends App {
     import classy.generic._
 
     val res = makeDecoder[Config, Foo]
+      .withOptions
       .renameFields(_.toUpperCase)
       .decoder
       .fromString
-      .decode("""
+      .apply("""
         A = OKAY
         B = 1235
         C = [ZZZ]

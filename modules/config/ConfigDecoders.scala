@@ -17,6 +17,7 @@ import core._
 
 object ConfigDecoders {
   import ShoconCompat._ //#=shocon
+  import DecodeError._
 
   /** Typesafe config decoders that behave just like the underlying
     * counter part.  For the Shocon backend, some of these are
@@ -48,13 +49,13 @@ object ConfigDecoders {
         try {
           f(config, path).right
         } catch {
-          case e: ConfigException.Missing   => DecodeError.MissingPath(path).left
-          case e: ConfigException.WrongType => DecodeError.WrongType(path, classTag[A].toString).left //#=typesafe
+          case e: ConfigException.Missing   => Missing.atPath(path).left
+          case e: ConfigException.WrongType => WrongType(classTag[A].toString).atPath(path).left //#=typesafe
           //#+shocon
           case e: MatchError if e.getMessage == "null" =>
-            DecodeError.MissingPath(path).left
+            Missing.atPath(path).left
           //#-shocon
-          case other: Throwable             => DecodeError.AtPath(path, DecodeError.Underlying(other)).left
+          case other: Throwable             => Underlying(other).atPath(path).left
         }
       )
 

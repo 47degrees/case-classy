@@ -16,57 +16,86 @@ import wheel._
 trait Decoder[A, B] extends Serializable {
 
   /** Decode a value of type `A` as type `B` */
-  def decode(a: A): Either[DecodeError, B]
+  def apply(a: A): Either[DecodeError, B]
 
   import Decoder.instance
+  import DecodeError._
+
+  /** Decode a value of type `A` as type `B`.
+    *
+    * This is an alias for [[apply]].
+    */
+  final def decode(a: A): Either[DecodeError, B] = apply(a)
 
   /** Construct a new decoder by mapping the output of this decoder
     */
   final def map[C](f: B => C): Decoder[A, C] =
-    instance(input => decode(input).map(f))
+    instance(input => apply(input).map(f))
 
   /** Construct a new decoder by mapping the output of this decoder
     * to either a `DecodeError` or a new result type
     */
   final def emap[C](f: B => Either[DecodeError, C]): Decoder[A, C] =
-    instance(input => decode(input).flatMap(f))
+    instance(input => apply(input).flatMap(f))
 
   /** Construct a new decoder by mapping the error output of this decoder
     * to a new error
     */
   final def leftMap(f: DecodeError => DecodeError): Decoder[A, B] =
-    instance(input => decode(input).leftMap(f))
+    instance(input => apply(input).leftMap(f))
 
   /** Construct a new decoder by mapping the input to this decoder
     */
   final def mapInput[Z](f: Z => A): Decoder[Z, B] =
-    instance(input => decode(f(input)))
+    instance(input => apply(f(input)))
 
   /** Construct a new decoder through a monadic bind */
   final def flatMap[C](f: B => Decoder[A, C]): Decoder[A, C] =
-    instance(input => decode(input).flatMap(b => f(b).decode(input)))
+    instance(input => apply(input).flatMap(b => f(b).apply(input)))
 
   /** Construct a new decoder by using the result of another decoder as
     * the input to this decoder
     */
   final def compose[Z](previous: Decoder[Z, A]): Decoder[Z, B] =
-    instance(input => previous.decode(input).flatMap(decode))
+    instance(input => previous.apply(input).flatMap(apply))
 
   /** Construct a new decoder by using the output of this decoder as
     * the input of another
     */
   final def andThen[C](next: Decoder[B, C]): Decoder[A, C] =
-    instance(input => decode(input).flatMap(next.decode))
+    instance(input => apply(input).flatMap(next.apply))
 
   /** Construct a new decoder by joining this decoder with another,
     * tupling the results. Errors accumulate.
     */
   final def and[C](that: Decoder[A, C]): Decoder[A, (B, C)] =
     instance { input =>
-      val rb = decode(input)
-      val rc = that.decode(input)
+      val rb = apply(input)
+      val rc = that.apply(input)
       (rb, rc) match {
         case (Right(b), Right(c)) => (b, c).right
+        case (Left(eb), Left(ec)) => (eb && ec).left
+        case (Left(eb), _)        => eb.left
+        case (_, Left(ec))        => ec.left
+      }
+    }
+
+  /** Construct a new decoder by joining this decoder with another,
+    * tupling the results. Errors accumulate.
+    *
+    * This behaves similar to [[and]] except that instead of always
+    * returning a nested tuple it attempts to return a flattened
+    * tuple.
+    *
+    * @usecase def join[C](that: Decoder[A, C]): Decoder[A, (B, C)]
+    * @inheritdoc
+    */
+  final def join[C](that: Decoder[A, C])(implicit j: Decoder.Join[B, C]): Decoder[A, j.Out] =
+    instance { input =>
+      val rb = apply(input)
+      val rc = that.apply(input)
+      (rb, rc) match {
+        case (Right(b), Right(c)) => j(b, c).right
         case (Left(eb), Left(ec)) => (eb && ec).left
         case (Left(eb), _)        => eb.left
         case (_, Left(ec))        => ec.left
@@ -77,9 +106,9 @@ trait Decoder[A, B] extends Serializable {
     * the other. Errors accumulate.
     */
   final def or[BB >: B](that: Decoder[A, BB]): Decoder[A, BB] =
-    instance(input => decode(input) match {
+    instance(input => apply(input) match {
       case b @ Right(_) => b
-      case Left(eb) => that.decode(input) match {
+      case Left(eb) => that.apply(input) match {
         case bb @ Right(_) => bb
         case Left(ebb)     => (eb || ebb).left
       }
@@ -93,7 +122,7 @@ trait Decoder[A, B] extends Serializable {
   final def sequence[F[_]](implicit Ft: Traversable[F], Fi: Indexed[F]): Decoder[F[A], F[B]] =
     instance { fa =>
       val ifa = Fi.indexed(fa)
-      val res = Ft.map(ifa)(ia => leftMap(_.atIndex(ia._1)).decode(ia._2))
+      val res = Ft.map(ifa)(ia => leftMap(_.atIndex(ia._1)).apply(ia._2))
       Ft.sequence(res)
     }
 
@@ -102,9 +131,21 @@ trait Decoder[A, B] extends Serializable {
     * fail.
     */
   final def optional: Decoder[A, Option[B]] =
-    instance(input => decode(input).fold(_ match {
-      case _: DecodeError.MissingPath => None.right
-      case other                      => other.left
+    instance(input => apply(input).fold(_ match {
+      case AtPath(_, Missing) => None.right
+      case other              => other.left
+    }, _.some.right))
+
+  /** Constructs a new decoder that optionally decodes a value. Deep
+    * errors other than a missing value still cause the resulting
+    * decoder to fail.
+    *
+    * @see [[DecodeError.AtPath.deepError]]
+    */
+  final def deepOptional: Decoder[A, Option[B]] =
+    instance(input => apply(input).fold(_ match {
+      case e: AtPath if e.deepError == Missing => None.right
+      case other                               => other.left
     }, _.some.right))
 
   /** Constructs a new decoder that falls back to a default
@@ -113,6 +154,14 @@ trait Decoder[A, B] extends Serializable {
   final def withDefault(default: B): Decoder[A, B] =
     optional.map(_ getOrElse default)
 
+  /** Constructs a new decoder that falls back to a default
+    * value if a deep missing value error occurs.
+    *
+    * @see [[DecodeError.AtPath.deepError]]
+    */
+  final def withDeepDefault(default: B): Decoder[A, B] =
+    deepOptional.map(_ getOrElse default)
+
   /** Constructs a new decoder that falls back to a value if _any_ error
     * occurs.
     *
@@ -120,7 +169,7 @@ trait Decoder[A, B] extends Serializable {
     * [[withDefault]].
     */
   final def withFallback(fallback: B): Decoder[A, B] =
-    instance(input => (decode(input) getOrElse fallback).right)
+    instance(input => (apply(input) getOrElse fallback).right)
 
   /** Construct a new decoder that first reads a path. The value read
     * is then passed to this decoder. Errors are adjusted to reflect
@@ -134,7 +183,7 @@ trait Decoder[A, B] extends Serializable {
   final def trace(prefix: String = "> "): Decoder[A, B] =
     instance { input =>
       scala.Predef.println(prefix + input)
-      val output = decode(input)
+      val output = apply(input)
       scala.Predef.println(prefix + output)
       output
     }
@@ -142,20 +191,147 @@ trait Decoder[A, B] extends Serializable {
 }
 
 object Decoder {
+
   /** Implicitly summon a decoder */
   def apply[A, B](implicit ev: Decoder[A, B]): Decoder[A, B] = ev
 
-  /** Construct a new decoder using function `f` for decoding */
-  def instance[A, B](
-    run: A => Either[DecodeError, B]): Decoder[A, B] = Instance(run)
+  /** Construct a new decoder using function `run` for decoding */
+  def instance[A, B](run: A => Either[DecodeError, B]): Decoder[A, B] = Instance(run)
 
-  case class Instance[A, B](run: A => Either[DecodeError, B]) extends Decoder[A, B] {
-    override def decode(a: A): Either[DecodeError, B] = run(a)
+  /** The default implementation of [[Decoder]] backed by a function
+    * `A => Either[DecodeError, B]`
+    *
+    * @param run the backing function
+    */
+  final case class Instance[A, B](run: A => Either[DecodeError, B]) extends Decoder[A, B] {
+    override def apply(a: A): Either[DecodeError, B] = run(a)
   }
 
   /** Construct a decoder that always succeeds with a given value */
-  def const[A, B](value: B): Decoder[A, B] = instance(_ => value.right)
+  def const[A, B](value: B): Decoder[A, B] = Const(value)
+
+  /** An implementation of [[Decoder]] that decodes a constant
+    * succesful value
+    *
+    * @param value the successful value
+    */
+  final case class Const[A, B](value: B) extends Decoder[A, B] {
+    override def apply(a: A): Either[DecodeError, B] = value.right
+  }
 
   /** Construct a decoder that always fails with the given error */
-  def fail[A, B](error: DecodeError): Decoder[A, B] = instance(_ => error.left)
+  def fail[A, B](error: DecodeError): Decoder[A, B] = Fail(error)
+
+  /** An implementation of [[Decoder]] that always fails with constant
+    * error
+    *
+    * @param error the constant error to decode
+    */
+  final case class Fail[A, B](error: DecodeError) extends Decoder[A, B] {
+    override def apply(a: A): Either[DecodeError, B] = error.left
+  }
+
+  /** A type class capturing the ability to join two decoders into one
+    */
+  sealed abstract class Join[A, B] private () extends Serializable {
+    type Out
+    def apply(a: A, b: B): Out
+  }
+
+  /** Companion containing supporting implicits for joining decoders
+    * into tupled decoders
+    *
+    * @groupname helpers Helpers
+    *
+    * @groupname low Low Arity Instances
+    * @groupprio low 10
+    */
+  object Join extends JoinInstances0 {
+
+    /** @group helpers */
+    type Aux[A, B, C] = Join[A, B] { type Out = C }
+
+    /** Create a [[Join]] instance with [[Join.Out]] equal to `C`
+      *
+      * @group helpers
+      */
+    def instance[A, B, C](f: (A, B) => C): Join.Aux[A, B, C] =
+      new Join[A, B] {
+        type Out = C
+        override def apply(a: A, b: B): Out = f(a, b)
+      }
+  }
+
+  private[Decoder] sealed trait JoinInstances0 extends JoinInstances1 { self: Join.type =>
+
+    /** Join a `Tuple1` on the left and a single value on the right into a `Tuple2`
+      *
+      * @group low
+      */
+    implicit def join1_0[A0, B0]: Join.Aux[Tuple1[A0], B0, (A0, B0)] =
+      instance((a, b) => (a._1, b))
+
+    /** Join a `Tuple2` on the left and a single value on the right into a `Tuple3`
+      *
+      * @group low
+      */
+    implicit def join2_0[A0, A1, B0]: Join.Aux[(A0, A1), B0, (A0, A1, B0)] =
+      instance((a, b) => (a._1, a._2, b))
+
+    /** Join a `Tuple3` on the left and a single value on the right into a `Tuple4`
+      *
+      * @group low
+      */
+    implicit def join3_0[A0, A1, A2, B0]: Join.Aux[(A0, A1, A2), B0, (A0, A1, A2, B0)] =
+      instance((a, b) => (a._1, a._2, a._3, b))
+
+    implicit def join4_0[A0, A1, A2, A3, B0]: Join.Aux[(A0, A1, A2, A3), B0, (A0, A1, A2, A3, B0)] =
+      instance((a, b) => (a._1, a._2, a._3, a._4, b))
+    implicit def join5_0[A0, A1, A2, A3, A4, B0]: Join.Aux[(A0, A1, A2, A3, A4), B0, (A0, A1, A2, A3, A4, B0)] =
+      instance((a, b) => (a._1, a._2, a._3, a._4, a._5, b))
+    implicit def join6_0[A0, A1, A2, A3, A4, A5, B0]: Join.Aux[(A0, A1, A2, A3, A4, A5), B0, (A0, A1, A2, A3, A4, A5, B0)] =
+      instance((a, b) => (a._1, a._2, a._3, a._4, a._5, a._6, b))
+    implicit def join7_0[A0, A1, A2, A3, A4, A5, A6, B0]: Join.Aux[(A0, A1, A2, A3, A4, A5, A6), B0, (A0, A1, A2, A3, A4, A5, A6, B0)] =
+      instance((a, b) => (a._1, a._2, a._3, a._4, a._5, a._6, a._7, b))
+    implicit def join8_0[A0, A1, A2, A3, A4, A5, A6, A7, B0]: Join.Aux[(A0, A1, A2, A3, A4, A5, A6, A7), B0, (A0, A1, A2, A3, A4, A5, A6, A7, B0)] =
+      instance((a, b) => (a._1, a._2, a._3, a._4, a._5, a._6, a._7, a._8, b))
+    implicit def join9_0[A0, A1, A2, A3, A4, A5, A6, A7, A8, B0]: Join.Aux[(A0, A1, A2, A3, A4, A5, A6, A7, A8), B0, (A0, A1, A2, A3, A4, A5, A6, A7, A8, B0)] =
+      instance((a, b) => (a._1, a._2, a._3, a._4, a._5, a._6, a._7, a._8, a._9, b))
+    implicit def join10_0[A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, B0]: Join.Aux[(A0, A1, A2, A3, A4, A5, A6, A7, A8, A9), B0, (A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, B0)] =
+      instance((a, b) => (a._1, a._2, a._3, a._4, a._5, a._6, a._7, a._8, a._9, a._10, b))
+    implicit def join11_0[A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, B0]: Join.Aux[(A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10), B0, (A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, B0)] =
+      instance((a, b) => (a._1, a._2, a._3, a._4, a._5, a._6, a._7, a._8, a._9, a._10, a._11, b))
+    implicit def join12_0[A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, B0]: Join.Aux[(A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11), B0, (A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, B0)] =
+      instance((a, b) => (a._1, a._2, a._3, a._4, a._5, a._6, a._7, a._8, a._9, a._10, a._11, a._12, b))
+    implicit def join13_0[A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, B0]: Join.Aux[(A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12), B0, (A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, B0)] =
+      instance((a, b) => (a._1, a._2, a._3, a._4, a._5, a._6, a._7, a._8, a._9, a._10, a._11, a._12, a._13, b))
+    implicit def join14_0[A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, B0]: Join.Aux[(A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13), B0, (A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, B0)] =
+      instance((a, b) => (a._1, a._2, a._3, a._4, a._5, a._6, a._7, a._8, a._9, a._10, a._11, a._12, a._13, a._14, b))
+    implicit def join15_0[A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, B0]: Join.Aux[(A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14), B0, (A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, B0)] =
+      instance((a, b) => (a._1, a._2, a._3, a._4, a._5, a._6, a._7, a._8, a._9, a._10, a._11, a._12, a._13, a._14, a._15, b))
+    implicit def join16_0[A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, B0]: Join.Aux[(A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15), B0, (A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, B0)] =
+      instance((a, b) => (a._1, a._2, a._3, a._4, a._5, a._6, a._7, a._8, a._9, a._10, a._11, a._12, a._13, a._14, a._15, a._16, b))
+    implicit def join17_0[A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, B0]: Join.Aux[(A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16), B0, (A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, B0)] =
+      instance((a, b) => (a._1, a._2, a._3, a._4, a._5, a._6, a._7, a._8, a._9, a._10, a._11, a._12, a._13, a._14, a._15, a._16, a._17, b))
+    implicit def join18_0[A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, B0]: Join.Aux[(A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17), B0, (A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, B0)] =
+      instance((a, b) => (a._1, a._2, a._3, a._4, a._5, a._6, a._7, a._8, a._9, a._10, a._11, a._12, a._13, a._14, a._15, a._16, a._17, a._18, b))
+    implicit def join19_0[A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, B0]: Join.Aux[(A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18), B0, (A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, B0)] =
+      instance((a, b) => (a._1, a._2, a._3, a._4, a._5, a._6, a._7, a._8, a._9, a._10, a._11, a._12, a._13, a._14, a._15, a._16, a._17, a._18, a._19, b))
+    implicit def join20_0[A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, B0]: Join.Aux[(A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19), B0, (A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, B0)] =
+      instance((a, b) => (a._1, a._2, a._3, a._4, a._5, a._6, a._7, a._8, a._9, a._10, a._11, a._12, a._13, a._14, a._15, a._16, a._17, a._18, a._19, a._20, b))
+    implicit def join21_0[A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, B0]: Join.Aux[(A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20), B0, (A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, B0)] =
+      instance((a, b) => (a._1, a._2, a._3, a._4, a._5, a._6, a._7, a._8, a._9, a._10, a._11, a._12, a._13, a._14, a._15, a._16, a._17, a._18, a._19, a._20, a._21, b))
+
+  }
+
+  private[Decoder] sealed trait JoinInstances1 { self: Join.type =>
+
+    /** Join a single value on the left and a single value on the right into a `Tuple2`
+      *
+      * @group low
+      */
+    implicit def join0_0[A0, B0]: Join.Aux[A0, B0, (A0, B0)] =
+      instance((a, b) => (a, b))
+  }
+
 }

@@ -8,6 +8,7 @@ lazy val V = new {
   lazy val scalacheckShapeless = "1.1.4"
   lazy val shapeless           = "2.3.2"
   lazy val shocon              = "0.1.7"
+  lazy val twoTails            = "0.3.0"
 }
 
 lazy val root = (project in file("."))
@@ -63,6 +64,14 @@ lazy val generic =
     .settings(libraryDependencies ++= Seq(
       "com.chuusai"  %%% "shapeless" % V.shapeless
     ))
+/* // one day in the near future...
+    .settings(
+      libraryDependencies += compilerPlugin("com.github.wheaties" %% "twotails" % V.twoTails),
+      ivyConfigurations   += config("compile-only").hide,
+      libraryDependencies += "com.github.wheaties" %% "twotails-annotations" % V.twoTails % "compile-only",
+      unmanagedClasspath in Compile ++= update.value.select(configurationFilter("compile-only"))
+  )
+ */
 lazy val genericJS = generic.js
 lazy val genericJVM = generic.jvm
 
@@ -120,6 +129,8 @@ lazy val testing =
       "com.github.alexarchambault" %%% "scalacheck-shapeless_1.13" % V.scalacheckShapeless,
       "org.typelevel"              %%% "cats-laws"                 % V.cats
     ))
+    .settings(
+      coverageExcludedPackages := "classy\\.testing\\..*")
     .dependsOn(core, generic, cats)
 lazy val testingJS = testing.js
 lazy val testingJVM = testing.jvm
@@ -164,6 +175,9 @@ lazy val docs =
     .settings(unidocSettings)
     .settings(ghpages.settings)
     .settings(
+      scalacOptions in (Compile, doc) ++= Seq(
+        "-implicits", "-implicits-show-all",
+        "-groups"),
       tutScalacOptions ~= (_.filterNot(Set("-Yno-predef"))),
       micrositeName := "Case Classy",
       micrositeAuthor := "the contributors",

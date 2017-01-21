@@ -21,7 +21,7 @@ package object testing {
     new Eq[Decoder[A, B]] {
       def eqv(x: Decoder[A, B], y: Decoder[A, B]): Boolean = {
         val a = ArbA.arbitrary.sample.get
-        x.decode(a) == y.decode(a)
+        x(a) == y(a)
       }
     }
 

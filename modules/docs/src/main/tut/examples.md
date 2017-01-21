@@ -71,7 +71,7 @@ val rawConfig = ConfigFactory.parseString(configString)
 
 // then decode
 import classy.core.DecodeError
-val result0: Either[DecodeError, MyConfig] = decoder.decode(rawConfig)
+val result0: Either[DecodeError, MyConfig] = decoder(rawConfig)
 ```
 
 Case classy also provides helpers so that you don't have to import
@@ -79,7 +79,7 @@ Case classy also provides helpers so that you don't have to import
 
 ```tut:silent
 // load direclty from string
-val result1: Either[DecodeError, MyConfig] = decoder.fromString.decode(configString)
+val result1: Either[DecodeError, MyConfig] = decoder.fromString(configString)
 
 // load from classpath, shorcut for ConfigFactory.load
 val result2: Either[DecodeError, MyConfig] = decoder.load()

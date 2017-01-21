@@ -14,5 +14,5 @@ package object auto {
 
   implicit def automaticallyMaterializeDecoder[A, B](
     implicit
-    ev: Lazy[MkDecoder[A, B]]): Decoder[A, B] = ev.value.decoder
+    ev: Lazy[MkDecoder[A, B]]): Decoder[A, B] = ev.value.decoder(Options.default)
 }
