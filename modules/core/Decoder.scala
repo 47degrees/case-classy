@@ -80,6 +80,28 @@ trait Decoder[A, B] extends Serializable {
       }
     }
 
+  /** Construct a new decoder by joining this decoder with another,
+    * tupling the results. Errors accumulate.
+    *
+    * This behaves similar to [[and]] except that instead of always
+    * returning a nested tuple it attempts to return a flattened
+    * tuple.
+    *
+    * @usecase def join[C](that: Decoder[A, C]): Decoder[A, (B, C)]
+    * @inheritdoc
+    */
+  final def join[C](that: Decoder[A, C])(implicit j: Decoder.Join[B, C]): Decoder[A, j.Out] =
+    instance { input =>
+      val rb = apply(input)
+      val rc = that.apply(input)
+      (rb, rc) match {
+        case (Right(b), Right(c)) => j(b, c).right
+        case (Left(eb), Left(ec)) => (eb && ec).left
+        case (Left(eb), _)        => eb.left
+        case (_, Left(ec))        => ec.left
+      }
+    }
+
   /** Construct a new decoder using this decoder first. If it fails, use
     * the other. Errors accumulate.
     */
@@ -208,4 +230,108 @@ object Decoder {
   final case class Fail[A, B](error: DecodeError) extends Decoder[A, B] {
     override def apply(a: A): Either[DecodeError, B] = error.left
   }
+
+  /** A type class capturing the ability to join two decoders into one
+    */
+  sealed abstract class Join[A, B] private () extends Serializable {
+    type Out
+    def apply(a: A, b: B): Out
+  }
+
+  /** Companion containing supporting implicits for joining decoders
+    * into tupled decoders
+    *
+    * @groupname helpers Helpers
+    *
+    * @groupname low Low Arity Instances
+    * @groupprio low 10
+    */
+  object Join extends JoinInstances0 {
+
+    /** @group helpers */
+    type Aux[A, B, C] = Join[A, B] { type Out = C }
+
+    /** Create a [[Join]] instance with [[Join.Out]] equal to `C`
+      *
+      * @group helpers
+      */
+    def instance[A, B, C](f: (A, B) => C): Join.Aux[A, B, C] =
+      new Join[A, B] {
+        type Out = C
+        override def apply(a: A, b: B): Out = f(a, b)
+      }
+  }
+
+  private[Decoder] sealed trait JoinInstances0 extends JoinInstances1 { self: Join.type =>
+
+    /** Join a `Tuple1` on the left and a single value on the right into a `Tuple2`
+      *
+      * @group low
+      */
+    implicit def join1_0[A0, B0]: Join.Aux[Tuple1[A0], B0, (A0, B0)] =
+      instance((a, b) => (a._1, b))
+
+    /** Join a `Tuple2` on the left and a single value on the right into a `Tuple3`
+      *
+      * @group low
+      */
+    implicit def join2_0[A0, A1, B0]: Join.Aux[(A0, A1), B0, (A0, A1, B0)] =
+      instance((a, b) => (a._1, a._2, b))
+
+    /** Join a `Tuple3` on the left and a single value on the right into a `Tuple4`
+      *
+      * @group low
+      */
+    implicit def join3_0[A0, A1, A2, B0]: Join.Aux[(A0, A1, A2), B0, (A0, A1, A2, B0)] =
+      instance((a, b) => (a._1, a._2, a._3, b))
+
+    implicit def join4_0[A0, A1, A2, A3, B0]: Join.Aux[(A0, A1, A2, A3), B0, (A0, A1, A2, A3, B0)] =
+      instance((a, b) => (a._1, a._2, a._3, a._4, b))
+    implicit def join5_0[A0, A1, A2, A3, A4, B0]: Join.Aux[(A0, A1, A2, A3, A4), B0, (A0, A1, A2, A3, A4, B0)] =
+      instance((a, b) => (a._1, a._2, a._3, a._4, a._5, b))
+    implicit def join6_0[A0, A1, A2, A3, A4, A5, B0]: Join.Aux[(A0, A1, A2, A3, A4, A5), B0, (A0, A1, A2, A3, A4, A5, B0)] =
+      instance((a, b) => (a._1, a._2, a._3, a._4, a._5, a._6, b))
+    implicit def join7_0[A0, A1, A2, A3, A4, A5, A6, B0]: Join.Aux[(A0, A1, A2, A3, A4, A5, A6), B0, (A0, A1, A2, A3, A4, A5, A6, B0)] =
+      instance((a, b) => (a._1, a._2, a._3, a._4, a._5, a._6, a._7, b))
+    implicit def join8_0[A0, A1, A2, A3, A4, A5, A6, A7, B0]: Join.Aux[(A0, A1, A2, A3, A4, A5, A6, A7), B0, (A0, A1, A2, A3, A4, A5, A6, A7, B0)] =
+      instance((a, b) => (a._1, a._2, a._3, a._4, a._5, a._6, a._7, a._8, b))
+    implicit def join9_0[A0, A1, A2, A3, A4, A5, A6, A7, A8, B0]: Join.Aux[(A0, A1, A2, A3, A4, A5, A6, A7, A8), B0, (A0, A1, A2, A3, A4, A5, A6, A7, A8, B0)] =
+      instance((a, b) => (a._1, a._2, a._3, a._4, a._5, a._6, a._7, a._8, a._9, b))
+    implicit def join10_0[A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, B0]: Join.Aux[(A0, A1, A2, A3, A4, A5, A6, A7, A8, A9), B0, (A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, B0)] =
+      instance((a, b) => (a._1, a._2, a._3, a._4, a._5, a._6, a._7, a._8, a._9, a._10, b))
+    implicit def join11_0[A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, B0]: Join.Aux[(A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10), B0, (A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, B0)] =
+      instance((a, b) => (a._1, a._2, a._3, a._4, a._5, a._6, a._7, a._8, a._9, a._10, a._11, b))
+    implicit def join12_0[A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, B0]: Join.Aux[(A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11), B0, (A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, B0)] =
+      instance((a, b) => (a._1, a._2, a._3, a._4, a._5, a._6, a._7, a._8, a._9, a._10, a._11, a._12, b))
+    implicit def join13_0[A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, B0]: Join.Aux[(A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12), B0, (A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, B0)] =
+      instance((a, b) => (a._1, a._2, a._3, a._4, a._5, a._6, a._7, a._8, a._9, a._10, a._11, a._12, a._13, b))
+    implicit def join14_0[A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, B0]: Join.Aux[(A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13), B0, (A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, B0)] =
+      instance((a, b) => (a._1, a._2, a._3, a._4, a._5, a._6, a._7, a._8, a._9, a._10, a._11, a._12, a._13, a._14, b))
+    implicit def join15_0[A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, B0]: Join.Aux[(A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14), B0, (A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, B0)] =
+      instance((a, b) => (a._1, a._2, a._3, a._4, a._5, a._6, a._7, a._8, a._9, a._10, a._11, a._12, a._13, a._14, a._15, b))
+    implicit def join16_0[A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, B0]: Join.Aux[(A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15), B0, (A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, B0)] =
+      instance((a, b) => (a._1, a._2, a._3, a._4, a._5, a._6, a._7, a._8, a._9, a._10, a._11, a._12, a._13, a._14, a._15, a._16, b))
+    implicit def join17_0[A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, B0]: Join.Aux[(A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16), B0, (A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, B0)] =
+      instance((a, b) => (a._1, a._2, a._3, a._4, a._5, a._6, a._7, a._8, a._9, a._10, a._11, a._12, a._13, a._14, a._15, a._16, a._17, b))
+    implicit def join18_0[A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, B0]: Join.Aux[(A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17), B0, (A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, B0)] =
+      instance((a, b) => (a._1, a._2, a._3, a._4, a._5, a._6, a._7, a._8, a._9, a._10, a._11, a._12, a._13, a._14, a._15, a._16, a._17, a._18, b))
+    implicit def join19_0[A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, B0]: Join.Aux[(A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18), B0, (A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, B0)] =
+      instance((a, b) => (a._1, a._2, a._3, a._4, a._5, a._6, a._7, a._8, a._9, a._10, a._11, a._12, a._13, a._14, a._15, a._16, a._17, a._18, a._19, b))
+    implicit def join20_0[A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, B0]: Join.Aux[(A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19), B0, (A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, B0)] =
+      instance((a, b) => (a._1, a._2, a._3, a._4, a._5, a._6, a._7, a._8, a._9, a._10, a._11, a._12, a._13, a._14, a._15, a._16, a._17, a._18, a._19, a._20, b))
+    implicit def join21_0[A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, B0]: Join.Aux[(A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20), B0, (A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, B0)] =
+      instance((a, b) => (a._1, a._2, a._3, a._4, a._5, a._6, a._7, a._8, a._9, a._10, a._11, a._12, a._13, a._14, a._15, a._16, a._17, a._18, a._19, a._20, a._21, b))
+
+  }
+
+  private[Decoder] sealed trait JoinInstances1 { self: Join.type =>
+
+    /** Join a single value on the left and a single value on the right into a `Tuple2`
+      *
+      * @group low
+      */
+    implicit def join0_0[A0, B0]: Join.Aux[A0, B0, (A0, B0)] =
+      instance((a, b) => (a, b))
+  }
+
 }

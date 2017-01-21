@@ -70,12 +70,12 @@ val decodeA = decodeString("a")
 val decodeB = decodeString("b")
 
 val decodeAandB: Decoder[Map[String, String], (String, String)] =
-  decodeA and decodeB
+  decodeA join decodeB
 
 case class Res(a: String, b: String)
 
 val decodeRes: Decoder[Map[String, String], Res] =
-  decodeAandB.map { case (a, b) => Res(a, b) }
+  decodeAandB map Res.tupled
 ```
 
 Now we can decode some values and see what happens:

@@ -64,7 +64,6 @@ lazy val generic =
     .settings(libraryDependencies ++= Seq(
       "com.chuusai"  %%% "shapeless" % V.shapeless
     ))
-
 /* // one day in the near future...
     .settings(
       libraryDependencies += compilerPlugin("com.github.wheaties" %% "twotails" % V.twoTails),
@@ -176,6 +175,9 @@ lazy val docs =
     .settings(unidocSettings)
     .settings(ghpages.settings)
     .settings(
+      scalacOptions in (Compile, doc) ++= Seq(
+        "-implicits", "-implicits-show-all",
+        "-groups"),
       tutScalacOptions ~= (_.filterNot(Set("-Yno-predef"))),
       micrositeName := "Case Classy",
       micrositeAuthor := "the contributors",
