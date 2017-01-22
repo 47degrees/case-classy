@@ -177,7 +177,9 @@ lazy val docs =
     .settings(
       scalacOptions in (Compile, doc) ++= Seq(
         "-implicits", "-implicits-show-all",
-        "-groups"),
+        "-groups",
+        "-doc-source-url", scmInfo.value.get.browseUrl + "/tree/master€{FILE_PATH}.scala",
+        "-sourcepath", baseDirectory.in(LocalRootProject).value.getAbsolutePath),
       tutScalacOptions ~= (_.filterNot(Set("-Yno-predef"))),
       micrositeName := "Case Classy",
       micrositeAuthor := "the contributors",
@@ -185,13 +187,13 @@ lazy val docs =
       micrositeBaseUrl := "/case-classy",
       micrositeGithubRepo := "case-classy",
       micrositePalette := Map(
-        "brand-primary"   -> "#023131",
-        "brand-secondary" -> "#010d10",
-        "brand-tertiary"  -> "#010a18",
-        "gray-dark"       -> "#49494B",
-        "gray"            -> "#7B7B7E",
-        "gray-light"      -> "#E5E5E6",
-        "gray-lighter"    -> "#F4F3F4",
+        "brand-primary"   -> "#27607D",
+        "brand-secondary" -> "#16212F",
+        "brand-tertiary"  -> "#17283E",
+        "gray-dark"       -> "#494A4F",
+        "gray"            -> "#76767E",
+        "gray-light"      -> "#E6E7EC",
+        "gray-lighter"    -> "#F4F5F9",
         "white-color"     -> "#FFFFFF"),
       unidocProjectFilter in (ScalaUnidoc, unidoc) :=
         inProjects(coreJVM, genericJVM, catsJVM, typesafeJVM),

@@ -1,3 +1,7 @@
 .jumbotron {
-  background-size: 120px 100px;
+    background-size: 32px 36px;
+}
+
+#site-header .navbar-wrapper .brand .icon-wrapper {
+    background-size: 39px 44px;
 }
