@@ -127,8 +127,14 @@
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="classy.generic">generic</a></dd></dl></div>
     </li><li class="current-entities indented3">
+                        <a class="object" href="CharCat$.html" title=""></a>
+                        <a class="class" href="CharCat.html" title="A categorization of char."></a>
+                        <a href="CharCat.html" title="A categorization of char.">
+                          CharCat
+                        </a>
+                      </li><li class="current-entities indented3">
                         <a class="object" href="CoproductStrategy$.html" title=""></a>
-                        <a class="class" href="CoproductStrategy.html" title="An option that configures the behavior for automatically derived
+                        <a class="trait" href="CoproductStrategy.html" title="An option that configures the behavior for automatically derived
 decoders of coproduct types (sealed trait hierarchies)."></a>
                         <a href="CoproductStrategy.html" title="An option that configures the behavior for automatically derived
 decoders of coproduct types (sealed trait hierarchies).">
@@ -136,13 +142,19 @@ decoders of coproduct types (sealed trait hierarchies).">
                         </a>
                       </li><li class="current-entities indented3">
                         <a class="object" href="MkDecoder$.html" title=""></a>
-                        <a class="class" href="MkDecoder.html" title="Captures the ability to automatically create a decoder, configured
-with Options
+                        <a class="class" href="MkDecoder.html" title="Captures the ability to automatically create a decoder given
+Options
 "></a>
-                        <a href="MkDecoder.html" title="Captures the ability to automatically create a decoder, configured
-with Options
+                        <a href="MkDecoder.html" title="Captures the ability to automatically create a decoder given
+Options
 ">
                           MkDecoder
+                        </a>
+                      </li><li class="current-entities indented3">
+                        <span class="separator"></span>
+                        <a class="class" href="MkDecoderWithOptions.html" title="Captures the ability to automatically create a decoder."></a>
+                        <a href="MkDecoderWithOptions.html" title="Captures the ability to automatically create a decoder.">
+                          MkDecoderWithOptions
                         </a>
                       </li><li class="current-entities indented3">
                         <a class="object" href="MkRead$.html" title=""></a>
@@ -151,12 +163,27 @@ with Options
                           MkRead
                         </a>
                       </li><li class="current-entities indented3">
+                        <a class="object" href="NamingStrategy$.html" title="Companion containing several basic naming strategy implementations
+"></a>
+                        <a class="trait" href="NamingStrategy.html" title="Captures the ability to take an input string name and output
+a new name."></a>
+                        <a href="NamingStrategy.html" title="Captures the ability to take an input string name and output
+a new name.">
+                          NamingStrategy
+                        </a>
+                      </li><li class="current-entities indented3">
                         <a class="object" href="Options$.html" title=""></a>
                         <a class="class" href="Options.html" title="Options for the behavior of automatically derived decoders
 "></a>
                         <a href="Options.html" title="Options for the behavior of automatically derived decoders
 ">
                           Options
+                        </a>
+                      </li><li class="current-entities indented3">
+                        <span class="separator"></span>
+                        <a class="object" href="StringSplitter$.html" title="A utility for splitting strings on word/phrase boundaries."></a>
+                        <a href="StringSplitter$.html" title="A utility for splitting strings on word/phrase boundaries.">
+                          StringSplitter
                         </a>
                       </li>
               </ul>
@@ -180,19 +207,19 @@ with Options
       <h4 id="signature" class="signature">
       <span class="modifier_kind">
         <span class="modifier">final </span>
-        <span class="kind">class</span>
+        <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <span class="name">MkRead</span><span class="tparams">[<span name="A">A</span>, <span name="B">B</span>]</span><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <span class="name">MkRead</span><span class="tparams">[<span name="A">A</span>, <span name="B">B</span>]</span><span class="params">(<span name="f">f: (<a href="Options.html" class="extype" name="classy.generic.derive.Options">Options</a>) ⇒ <a href="../../core/Read.html" class="extype" name="classy.core.Read">Read</a>[<span class="extype" name="classy.generic.derive.MkRead.A">A</span>, <span class="extype" name="classy.generic.derive.MkRead.B">B</span>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span> with <span class="extype" name="scala.Product">Product</span></span>
       </span>
       </h4>
 
       
-          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/47deg/case-classy/tree/master/modules/generic/derive/MkDecoder.scala" target="_blank">MkDecoder.scala</a></dd></dl><div class="toggleContainer block">
           <span class="toggle">
             Linear Supertypes
           </span>
-          <div class="superTypes hiddenContent"><span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+          <div class="superTypes hiddenContent"><span class="extype" name="scala.Product">Product</span>, <span class="extype" name="scala.Equals">Equals</span>, <span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
         
 
@@ -218,7 +245,7 @@ with Options
                   <span class="filtertype">Inherited<br />
                   </span>
                   <ol id="linearization">
-                    <li class="in" name="classy.generic.derive.MkRead"><span>MkRead</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                    <li class="in" name="classy.generic.derive.MkRead"><span>MkRead</span></li><li class="in" name="scala.Product"><span>Product</span></li><li class="in" name="scala.Equals"><span>Equals</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
                   </ol>
                 </div><div class="ancestors">
               <span class="filtertype"></span>
@@ -236,7 +263,26 @@ with Options
 
       <div id="template">
         <div id="allMembers">
-        
+        <div id="constructors" class="members">
+              <h3>Instance Constructors</h3>
+              <ol><li name="classy.generic.derive.MkRead#&lt;init&gt;" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="&lt;init&gt;(f:classy.generic.derive.Options=&gt;classy.core.Read[A,B]):classy.generic.derive.MkRead[A,B]"></a><a id="&lt;init&gt;:MkRead[A,B]"></a>
+      <span class="permalink">
+      <a href="../../../classy/generic/derive/MkRead.html#&lt;init&gt;(f:classy.generic.derive.Options=&gt;classy.core.Read[A,B]):classy.generic.derive.MkRead[A,B]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">new</span>
+      </span>
+      <span class="symbol">
+        <span class="name">MkRead</span><span class="params">(<span name="f">f: (<a href="Options.html" class="extype" name="classy.generic.derive.Options">Options</a>) ⇒ <a href="../../core/Read.html" class="extype" name="classy.core.Read">Read</a>[<span class="extype" name="classy.generic.derive.MkRead.A">A</span>, <span class="extype" name="classy.generic.derive.MkRead.B">B</span>]</span>)</span>
+      </span>
+      
+      
+    </li></ol>
+            </div>
 
         
 
@@ -363,22 +409,22 @@ with Options
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li name="scala.AnyRef#equals" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="equals(x$1:Any):Boolean"></a><a id="equals(Any):Boolean"></a>
+    </li><li name="classy.generic.derive.MkRead#f" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="f:classy.generic.derive.Options=&gt;classy.core.Read[A,B]"></a><a id="f:(Options)⇒Read[A,B]"></a>
       <span class="permalink">
-      <a href="../../../classy/generic/derive/MkRead.html#equals(x$1:Any):Boolean" title="Permalink">
+      <a href="../../../classy/generic/derive/MkRead.html#f:classy.generic.derive.Options=&gt;classy.core.Read[A,B]" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
       <span class="modifier_kind">
         <span class="modifier"></span>
-        <span class="kind">def</span>
+        <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">equals</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+        <span class="name">f</span><span class="result">: (<a href="Options.html" class="extype" name="classy.generic.derive.Options">Options</a>) ⇒ <a href="../../core/Read.html" class="extype" name="classy.core.Read">Read</a>[<span class="extype" name="classy.generic.derive.MkRead.A">A</span>, <span class="extype" name="classy.generic.derive.MkRead.B">B</span>]</span>
       </span>
       
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+      
     </li><li name="scala.AnyRef#finalize" visbl="prt" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="finalize():Unit"></a>
       <span class="permalink">
@@ -414,22 +460,6 @@ with Options
       </span>
       <span class="symbol">
         <span class="name">getClass</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.Class">Class</span>[_]</span>
-      </span>
-      
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li name="scala.AnyRef#hashCode" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="hashCode():Int"></a>
-      <span class="permalink">
-      <a href="../../../classy/generic/derive/MkRead.html#hashCode():Int" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">hashCode</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
@@ -513,22 +543,6 @@ with Options
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li name="scala.AnyRef#toString" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="toString():String"></a>
-      <span class="permalink">
-      <a href="../../../classy/generic/derive/MkRead.html#toString():String" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
-      </span>
-      
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li name="scala.AnyRef#wait" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait():Unit"></a>
       <span class="permalink">
@@ -605,7 +619,11 @@ with Options
         </div>
 
         <div id="inheritedMembers">
-        <div class="parent" name="scala.Serializable">
+        <div class="parent" name="scala.Product">
+              <h3>Inherited from <span class="extype" name="scala.Product">Product</span></h3>
+            </div><div class="parent" name="scala.Equals">
+              <h3>Inherited from <span class="extype" name="scala.Equals">Equals</span></h3>
+            </div><div class="parent" name="scala.Serializable">
               <h3>Inherited from <span class="extype" name="scala.Serializable">Serializable</span></h3>
             </div><div class="parent" name="java.io.Serializable">
               <h3>Inherited from <span class="extype" name="java.io.Serializable">Serializable</span></h3>

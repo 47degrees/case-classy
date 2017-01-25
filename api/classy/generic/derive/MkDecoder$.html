@@ -127,8 +127,14 @@
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="classy.generic">generic</a></dd></dl></div>
     </li><li class="current-entities indented3">
+                        <a class="object" href="CharCat$.html" title=""></a>
+                        <a class="class" href="CharCat.html" title="A categorization of char."></a>
+                        <a href="CharCat.html" title="A categorization of char.">
+                          CharCat
+                        </a>
+                      </li><li class="current-entities indented3">
                         <a class="object" href="CoproductStrategy$.html" title=""></a>
-                        <a class="class" href="CoproductStrategy.html" title="An option that configures the behavior for automatically derived
+                        <a class="trait" href="CoproductStrategy.html" title="An option that configures the behavior for automatically derived
 decoders of coproduct types (sealed trait hierarchies)."></a>
                         <a href="CoproductStrategy.html" title="An option that configures the behavior for automatically derived
 decoders of coproduct types (sealed trait hierarchies).">
@@ -136,13 +142,19 @@ decoders of coproduct types (sealed trait hierarchies).">
                         </a>
                       </li><li class="current-entities indented3">
                         <a class="object" href="" title=""></a>
-                        <a class="class" href="MkDecoder.html" title="Captures the ability to automatically create a decoder, configured
-with Options
+                        <a class="class" href="MkDecoder.html" title="Captures the ability to automatically create a decoder given
+Options
 "></a>
-                        <a href="MkDecoder.html" title="Captures the ability to automatically create a decoder, configured
-with Options
+                        <a href="MkDecoder.html" title="Captures the ability to automatically create a decoder given
+Options
 ">
                           MkDecoder
+                        </a>
+                      </li><li class="current-entities indented3">
+                        <span class="separator"></span>
+                        <a class="class" href="MkDecoderWithOptions.html" title="Captures the ability to automatically create a decoder."></a>
+                        <a href="MkDecoderWithOptions.html" title="Captures the ability to automatically create a decoder.">
+                          MkDecoderWithOptions
                         </a>
                       </li><li class="current-entities indented3">
                         <a class="object" href="MkRead$.html" title=""></a>
@@ -151,12 +163,27 @@ with Options
                           MkRead
                         </a>
                       </li><li class="current-entities indented3">
+                        <a class="object" href="NamingStrategy$.html" title="Companion containing several basic naming strategy implementations
+"></a>
+                        <a class="trait" href="NamingStrategy.html" title="Captures the ability to take an input string name and output
+a new name."></a>
+                        <a href="NamingStrategy.html" title="Captures the ability to take an input string name and output
+a new name.">
+                          NamingStrategy
+                        </a>
+                      </li><li class="current-entities indented3">
                         <a class="object" href="Options$.html" title=""></a>
                         <a class="class" href="Options.html" title="Options for the behavior of automatically derived decoders
 "></a>
                         <a href="Options.html" title="Options for the behavior of automatically derived decoders
 ">
                           Options
+                        </a>
+                      </li><li class="current-entities indented3">
+                        <span class="separator"></span>
+                        <a class="object" href="StringSplitter$.html" title="A utility for splitting strings on word/phrase boundaries."></a>
+                        <a href="StringSplitter$.html" title="A utility for splitting strings on word/phrase boundaries.">
+                          StringSplitter
                         </a>
                       </li>
               </ul>
@@ -188,7 +215,7 @@ with Options
       </h4>
 
       
-          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/47deg/case-classy/tree/master/modules/generic/derive/MkDecoder.scala" target="_blank">MkDecoder.scala</a></dd></dl><div class="toggleContainer block">
           <span class="toggle">
             Linear Supertypes
           </span>
@@ -293,22 +320,6 @@ with Options
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li name="classy.generic.derive.MkDecoder#apply" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="apply[A,B](implicitev:classy.generic.derive.MkDecoder[A,B]):classy.generic.derive.MkDecoder[A,B]"></a><a id="apply[A,B](MkDecoder[A,B]):MkDecoder[A,B]"></a>
-      <span class="permalink">
-      <a href="../../../classy/generic/derive/MkDecoder$.html#apply[A,B](implicitev:classy.generic.derive.MkDecoder[A,B]):classy.generic.derive.MkDecoder[A,B]" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">apply</span><span class="tparams">[<span name="A">A</span>, <span name="B">B</span>]</span><span class="params">(<span class="implicit">implicit </span><span name="ev">ev: <a href="MkDecoder.html" class="extype" name="classy.generic.derive.MkDecoder">MkDecoder</a>[<span class="extype" name="classy.generic.derive.MkDecoder.apply.A">A</span>, <span class="extype" name="classy.generic.derive.MkDecoder.apply.B">B</span>]</span>)</span><span class="result">: <a href="MkDecoder.html" class="extype" name="classy.generic.derive.MkDecoder">MkDecoder</a>[<span class="extype" name="classy.generic.derive.MkDecoder.apply.A">A</span>, <span class="extype" name="classy.generic.derive.MkDecoder.apply.B">B</span>]</span>
-      </span>
-      
-      
     </li><li name="scala.Any#asInstanceOf" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="asInstanceOf[T0]:T0"></a>
       <span class="permalink">
@@ -466,9 +477,9 @@ with Options
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>MkDecoderInstances2</dd></dl></div>
     </li><li name="classy.generic.derive.MkDecoderInstances1#mkDecoderCoproduct" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="mkDecoderCoproduct[A,K&lt;:Symbol,H,T&lt;:shapeless.Coproduct](implicitkey:shapeless.Witness.Aux[K],implicitdecodeH:shapeless.Lazy[classy.core.Decoder[A,H]],implicitnest:classy.core.Read[A,A],implicitmkT:shapeless.Lazy[classy.generic.derive.MkDecoder[A,T]]):classy.generic.derive.MkDecoder[A,shapeless.:+:[shapeless.labelled.FieldType[K,H],T]]"></a><a id="mkDecoderCoproduct[A,K&lt;:Symbol,H,T&lt;:Coproduct](Aux[K],Lazy[Decoder[A,H]],Read[A,A],Lazy[MkDecoder[A,T]]):MkDecoder[A,:+:[FieldType[K,H],T]]"></a>
+      <a id="mkDecoderCoproduct[A,K&lt;:Symbol,H,T&lt;:shapeless.Coproduct](implicitkey:shapeless.Witness.Aux[K],implicitdecodeH:shapeless.Lazy[classy.core.Decoder[A,H]],implicitnest:classy.core.Read[A,A],implicitreadString:classy.core.Read[A,String],implicitmkT:shapeless.Lazy[classy.generic.derive.MkDecoder[A,T]]):classy.generic.derive.MkDecoder[A,shapeless.:+:[shapeless.labelled.FieldType[K,H],T]]"></a><a id="mkDecoderCoproduct[A,K&lt;:Symbol,H,T&lt;:Coproduct](Aux[K],Lazy[Decoder[A,H]],Read[A,A],Read[A,String],Lazy[MkDecoder[A,T]]):MkDecoder[A,:+:[FieldType[K,H],T]]"></a>
       <span class="permalink">
-      <a href="../../../classy/generic/derive/MkDecoder$.html#mkDecoderCoproduct[A,K&lt;:Symbol,H,T&lt;:shapeless.Coproduct](implicitkey:shapeless.Witness.Aux[K],implicitdecodeH:shapeless.Lazy[classy.core.Decoder[A,H]],implicitnest:classy.core.Read[A,A],implicitmkT:shapeless.Lazy[classy.generic.derive.MkDecoder[A,T]]):classy.generic.derive.MkDecoder[A,shapeless.:+:[shapeless.labelled.FieldType[K,H],T]]" title="Permalink">
+      <a href="../../../classy/generic/derive/MkDecoder$.html#mkDecoderCoproduct[A,K&lt;:Symbol,H,T&lt;:shapeless.Coproduct](implicitkey:shapeless.Witness.Aux[K],implicitdecodeH:shapeless.Lazy[classy.core.Decoder[A,H]],implicitnest:classy.core.Read[A,A],implicitreadString:classy.core.Read[A,String],implicitmkT:shapeless.Lazy[classy.generic.derive.MkDecoder[A,T]]):classy.generic.derive.MkDecoder[A,shapeless.:+:[shapeless.labelled.FieldType[K,H],T]]" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -477,14 +488,14 @@ with Options
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">mkDecoderCoproduct</span><span class="tparams">[<span name="A">A</span>, <span name="K">K &lt;: <span class="extype" name="scala.Symbol">Symbol</span></span>, <span name="H">H</span>, <span name="T">T &lt;: <span class="extype" name="shapeless.Coproduct">Coproduct</span></span>]</span><span class="params">(<span class="implicit">implicit </span><span name="key">key: <span class="extype" name="shapeless.Witness.Aux">Aux</span>[<span class="extype" name="classy.generic.derive.MkDecoderInstances1.mkDecoderCoproduct.K">K</span>]</span>, <span name="decodeH">decodeH: <span class="extype" name="shapeless.Lazy">Lazy</span>[<a href="../../core/Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a>[<span class="extype" name="classy.generic.derive.MkDecoderInstances1.mkDecoderCoproduct.A">A</span>, <span class="extype" name="classy.generic.derive.MkDecoderInstances1.mkDecoderCoproduct.H">H</span>]]</span>, <span name="nest">nest: <a href="../../core/Read.html" class="extype" name="classy.core.Read">Read</a>[<span class="extype" name="classy.generic.derive.MkDecoderInstances1.mkDecoderCoproduct.A">A</span>, <span class="extype" name="classy.generic.derive.MkDecoderInstances1.mkDecoderCoproduct.A">A</span>]</span>, <span name="mkT">mkT: <span class="extype" name="shapeless.Lazy">Lazy</span>[<a href="MkDecoder.html" class="extype" name="classy.generic.derive.MkDecoder">MkDecoder</a>[<span class="extype" name="classy.generic.derive.MkDecoderInstances1.mkDecoderCoproduct.A">A</span>, <span class="extype" name="classy.generic.derive.MkDecoderInstances1.mkDecoderCoproduct.T">T</span>]]</span>)</span><span class="result">: <a href="MkDecoder.html" class="extype" name="classy.generic.derive.MkDecoder">MkDecoder</a>[<span class="extype" name="classy.generic.derive.MkDecoderInstances1.mkDecoderCoproduct.A">A</span>, <span class="extype" name="shapeless.:+:">:+:</span>[<span class="extype" name="shapeless.labelled.FieldType">FieldType</span>[<span class="extype" name="classy.generic.derive.MkDecoderInstances1.mkDecoderCoproduct.K">K</span>, <span class="extype" name="classy.generic.derive.MkDecoderInstances1.mkDecoderCoproduct.H">H</span>], <span class="extype" name="classy.generic.derive.MkDecoderInstances1.mkDecoderCoproduct.T">T</span>]]</span>
+        <span class="name">mkDecoderCoproduct</span><span class="tparams">[<span name="A">A</span>, <span name="K">K &lt;: <span class="extype" name="scala.Symbol">Symbol</span></span>, <span name="H">H</span>, <span name="T">T &lt;: <span class="extype" name="shapeless.Coproduct">Coproduct</span></span>]</span><span class="params">(<span class="implicit">implicit </span><span name="key">key: <span class="extype" name="shapeless.Witness.Aux">Aux</span>[<span class="extype" name="classy.generic.derive.MkDecoderInstances1.mkDecoderCoproduct.K">K</span>]</span>, <span name="decodeH">decodeH: <span class="extype" name="shapeless.Lazy">Lazy</span>[<a href="../../core/Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a>[<span class="extype" name="classy.generic.derive.MkDecoderInstances1.mkDecoderCoproduct.A">A</span>, <span class="extype" name="classy.generic.derive.MkDecoderInstances1.mkDecoderCoproduct.H">H</span>]]</span>, <span name="nest">nest: <a href="../../core/Read.html" class="extype" name="classy.core.Read">Read</a>[<span class="extype" name="classy.generic.derive.MkDecoderInstances1.mkDecoderCoproduct.A">A</span>, <span class="extype" name="classy.generic.derive.MkDecoderInstances1.mkDecoderCoproduct.A">A</span>]</span>, <span name="readString">readString: <a href="../../core/Read.html" class="extype" name="classy.core.Read">Read</a>[<span class="extype" name="classy.generic.derive.MkDecoderInstances1.mkDecoderCoproduct.A">A</span>, <span class="extype" name="java.lang.String">String</span>]</span>, <span name="mkT">mkT: <span class="extype" name="shapeless.Lazy">Lazy</span>[<a href="MkDecoder.html" class="extype" name="classy.generic.derive.MkDecoder">MkDecoder</a>[<span class="extype" name="classy.generic.derive.MkDecoderInstances1.mkDecoderCoproduct.A">A</span>, <span class="extype" name="classy.generic.derive.MkDecoderInstances1.mkDecoderCoproduct.T">T</span>]]</span>)</span><span class="result">: <a href="MkDecoder.html" class="extype" name="classy.generic.derive.MkDecoder">MkDecoder</a>[<span class="extype" name="classy.generic.derive.MkDecoderInstances1.mkDecoderCoproduct.A">A</span>, <span class="extype" name="shapeless.:+:">:+:</span>[<span class="extype" name="shapeless.labelled.FieldType">FieldType</span>[<span class="extype" name="classy.generic.derive.MkDecoderInstances1.mkDecoderCoproduct.K">K</span>, <span class="extype" name="classy.generic.derive.MkDecoderInstances1.mkDecoderCoproduct.H">H</span>], <span class="extype" name="classy.generic.derive.MkDecoderInstances1.mkDecoderCoproduct.T">T</span>]]</span>
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>MkDecoderInstances1</dd></dl></div>
     </li><li name="classy.generic.derive.MkDecoderInstances0#mkDecoderCoproductDerived" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="mkDecoderCoproductDerived[A,K&lt;:Symbol,H,T&lt;:shapeless.Coproduct](implicitkey:shapeless.Witness.Aux[K],implicitmkDecodeH:shapeless.Lazy[classy.generic.derive.MkDecoder[A,H]],implicitnest:classy.core.Read[A,A],implicitmkT:shapeless.Lazy[classy.generic.derive.MkDecoder[A,T]]):classy.generic.derive.MkDecoder[A,shapeless.:+:[shapeless.labelled.FieldType[K,H],T]]"></a><a id="mkDecoderCoproductDerived[A,K&lt;:Symbol,H,T&lt;:Coproduct](Aux[K],Lazy[MkDecoder[A,H]],Read[A,A],Lazy[MkDecoder[A,T]]):MkDecoder[A,:+:[FieldType[K,H],T]]"></a>
+      <a id="mkDecoderCoproductDerived[A,K&lt;:Symbol,H,T&lt;:shapeless.Coproduct](implicitkey:shapeless.Witness.Aux[K],implicitmkDecodeH:shapeless.Lazy[classy.generic.derive.MkDecoder[A,H]],implicitnest:classy.core.Read[A,A],implicitreadString:classy.core.Read[A,String],implicitmkT:shapeless.Lazy[classy.generic.derive.MkDecoder[A,T]]):classy.generic.derive.MkDecoder[A,shapeless.:+:[shapeless.labelled.FieldType[K,H],T]]"></a><a id="mkDecoderCoproductDerived[A,K&lt;:Symbol,H,T&lt;:Coproduct](Aux[K],Lazy[MkDecoder[A,H]],Read[A,A],Read[A,String],Lazy[MkDecoder[A,T]]):MkDecoder[A,:+:[FieldType[K,H],T]]"></a>
       <span class="permalink">
-      <a href="../../../classy/generic/derive/MkDecoder$.html#mkDecoderCoproductDerived[A,K&lt;:Symbol,H,T&lt;:shapeless.Coproduct](implicitkey:shapeless.Witness.Aux[K],implicitmkDecodeH:shapeless.Lazy[classy.generic.derive.MkDecoder[A,H]],implicitnest:classy.core.Read[A,A],implicitmkT:shapeless.Lazy[classy.generic.derive.MkDecoder[A,T]]):classy.generic.derive.MkDecoder[A,shapeless.:+:[shapeless.labelled.FieldType[K,H],T]]" title="Permalink">
+      <a href="../../../classy/generic/derive/MkDecoder$.html#mkDecoderCoproductDerived[A,K&lt;:Symbol,H,T&lt;:shapeless.Coproduct](implicitkey:shapeless.Witness.Aux[K],implicitmkDecodeH:shapeless.Lazy[classy.generic.derive.MkDecoder[A,H]],implicitnest:classy.core.Read[A,A],implicitreadString:classy.core.Read[A,String],implicitmkT:shapeless.Lazy[classy.generic.derive.MkDecoder[A,T]]):classy.generic.derive.MkDecoder[A,shapeless.:+:[shapeless.labelled.FieldType[K,H],T]]" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -493,7 +504,7 @@ with Options
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">mkDecoderCoproductDerived</span><span class="tparams">[<span name="A">A</span>, <span name="K">K &lt;: <span class="extype" name="scala.Symbol">Symbol</span></span>, <span name="H">H</span>, <span name="T">T &lt;: <span class="extype" name="shapeless.Coproduct">Coproduct</span></span>]</span><span class="params">(<span class="implicit">implicit </span><span name="key">key: <span class="extype" name="shapeless.Witness.Aux">Aux</span>[<span class="extype" name="classy.generic.derive.MkDecoderInstances0.mkDecoderCoproductDerived.K">K</span>]</span>, <span name="mkDecodeH">mkDecodeH: <span class="extype" name="shapeless.Lazy">Lazy</span>[<a href="MkDecoder.html" class="extype" name="classy.generic.derive.MkDecoder">MkDecoder</a>[<span class="extype" name="classy.generic.derive.MkDecoderInstances0.mkDecoderCoproductDerived.A">A</span>, <span class="extype" name="classy.generic.derive.MkDecoderInstances0.mkDecoderCoproductDerived.H">H</span>]]</span>, <span name="nest">nest: <a href="../../core/Read.html" class="extype" name="classy.core.Read">Read</a>[<span class="extype" name="classy.generic.derive.MkDecoderInstances0.mkDecoderCoproductDerived.A">A</span>, <span class="extype" name="classy.generic.derive.MkDecoderInstances0.mkDecoderCoproductDerived.A">A</span>]</span>, <span name="mkT">mkT: <span class="extype" name="shapeless.Lazy">Lazy</span>[<a href="MkDecoder.html" class="extype" name="classy.generic.derive.MkDecoder">MkDecoder</a>[<span class="extype" name="classy.generic.derive.MkDecoderInstances0.mkDecoderCoproductDerived.A">A</span>, <span class="extype" name="classy.generic.derive.MkDecoderInstances0.mkDecoderCoproductDerived.T">T</span>]]</span>)</span><span class="result">: <a href="MkDecoder.html" class="extype" name="classy.generic.derive.MkDecoder">MkDecoder</a>[<span class="extype" name="classy.generic.derive.MkDecoderInstances0.mkDecoderCoproductDerived.A">A</span>, <span class="extype" name="shapeless.:+:">:+:</span>[<span class="extype" name="shapeless.labelled.FieldType">FieldType</span>[<span class="extype" name="classy.generic.derive.MkDecoderInstances0.mkDecoderCoproductDerived.K">K</span>, <span class="extype" name="classy.generic.derive.MkDecoderInstances0.mkDecoderCoproductDerived.H">H</span>], <span class="extype" name="classy.generic.derive.MkDecoderInstances0.mkDecoderCoproductDerived.T">T</span>]]</span>
+        <span class="name">mkDecoderCoproductDerived</span><span class="tparams">[<span name="A">A</span>, <span name="K">K &lt;: <span class="extype" name="scala.Symbol">Symbol</span></span>, <span name="H">H</span>, <span name="T">T &lt;: <span class="extype" name="shapeless.Coproduct">Coproduct</span></span>]</span><span class="params">(<span class="implicit">implicit </span><span name="key">key: <span class="extype" name="shapeless.Witness.Aux">Aux</span>[<span class="extype" name="classy.generic.derive.MkDecoderInstances0.mkDecoderCoproductDerived.K">K</span>]</span>, <span name="mkDecodeH">mkDecodeH: <span class="extype" name="shapeless.Lazy">Lazy</span>[<a href="MkDecoder.html" class="extype" name="classy.generic.derive.MkDecoder">MkDecoder</a>[<span class="extype" name="classy.generic.derive.MkDecoderInstances0.mkDecoderCoproductDerived.A">A</span>, <span class="extype" name="classy.generic.derive.MkDecoderInstances0.mkDecoderCoproductDerived.H">H</span>]]</span>, <span name="nest">nest: <a href="../../core/Read.html" class="extype" name="classy.core.Read">Read</a>[<span class="extype" name="classy.generic.derive.MkDecoderInstances0.mkDecoderCoproductDerived.A">A</span>, <span class="extype" name="classy.generic.derive.MkDecoderInstances0.mkDecoderCoproductDerived.A">A</span>]</span>, <span name="readString">readString: <a href="../../core/Read.html" class="extype" name="classy.core.Read">Read</a>[<span class="extype" name="classy.generic.derive.MkDecoderInstances0.mkDecoderCoproductDerived.A">A</span>, <span class="extype" name="java.lang.String">String</span>]</span>, <span name="mkT">mkT: <span class="extype" name="shapeless.Lazy">Lazy</span>[<a href="MkDecoder.html" class="extype" name="classy.generic.derive.MkDecoder">MkDecoder</a>[<span class="extype" name="classy.generic.derive.MkDecoderInstances0.mkDecoderCoproductDerived.A">A</span>, <span class="extype" name="classy.generic.derive.MkDecoderInstances0.mkDecoderCoproductDerived.T">T</span>]]</span>)</span><span class="result">: <a href="MkDecoder.html" class="extype" name="classy.generic.derive.MkDecoder">MkDecoder</a>[<span class="extype" name="classy.generic.derive.MkDecoderInstances0.mkDecoderCoproductDerived.A">A</span>, <span class="extype" name="shapeless.:+:">:+:</span>[<span class="extype" name="shapeless.labelled.FieldType">FieldType</span>[<span class="extype" name="classy.generic.derive.MkDecoderInstances0.mkDecoderCoproductDerived.K">K</span>, <span class="extype" name="classy.generic.derive.MkDecoderInstances0.mkDecoderCoproductDerived.H">H</span>], <span class="extype" name="classy.generic.derive.MkDecoderInstances0.mkDecoderCoproductDerived.T">T</span>]]</span>
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>MkDecoderInstances0</dd></dl></div>

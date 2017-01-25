@@ -147,7 +147,7 @@ outside of this library.
                         </a>
                       </li><li class="current-entities indented2">
                         <a class="object" href="Read$.html" title=""></a>
-                        <a class="class" href="Read.html" title="Read captures the ability to create a Decoder given a path string."></a>
+                        <a class="trait" href="Read.html" title="Read captures the ability to create a Decoder given a path string."></a>
                         <a href="Read.html" title="Read captures the ability to create a Decoder given a path string.">
                           Read
                         </a>
@@ -181,7 +181,7 @@ outside of this library.
       </h4>
 
       
-          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/47deg/case-classy/tree/master/modules/core/Decoder.scala" target="_blank">Decoder.scala</a></dd></dl><div class="toggleContainer block">
           <span class="toggle">
             Linear Supertypes
           </span>
@@ -233,7 +233,55 @@ outside of this library.
 
         <div id="types" class="types members">
               <h3>Type Members</h3>
-              <ol><li name="classy.core.Decoder.Instance" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+              <ol><li name="classy.core.Decoder.Const" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="Const[A,B]extendsDecoder[A,B]withProductwithSerializable"></a><a id="Const[A,B]:Const[A,B]"></a>
+      <span class="permalink">
+      <a href="../../classy/core/Decoder$.html#Const[A,B]extendsDecoder[A,B]withProductwithSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a title="An implementation of Decoder that decodes a constant
+succesful value
+" href="Decoder$$Const.html">
+              <span class="name">Const</span>
+            </a><span class="tparams">[<span name="A">A</span>, <span name="B">B</span>]</span><span class="params">(<span name="value">value: <span class="extype" name="classy.core.Decoder.Const.B">B</span></span>)</span><span class="result"> extends <a href="Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a>[<span class="extype" name="classy.core.Decoder.Const.A">A</span>, <span class="extype" name="classy.core.Decoder.Const.B">B</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      
+      <p class="shortcomment cmt">An implementation of <a href="Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a> that decodes a constant
+succesful value
+</p><div class="fullcomment"><div class="comment cmt"><p>An implementation of <a href="Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a> that decodes a constant
+succesful value
+</p></div><dl class="paramcmts block"><dt class="param">value</dt><dd class="cmt"><p>the successful value</p></dd></dl></div>
+    </li><li name="classy.core.Decoder.Fail" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="Fail[A,B]extendsDecoder[A,B]withProductwithSerializable"></a><a id="Fail[A,B]:Fail[A,B]"></a>
+      <span class="permalink">
+      <a href="../../classy/core/Decoder$.html#Fail[A,B]extendsDecoder[A,B]withProductwithSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a title="An implementation of Decoder that always fails with constant
+error
+" href="Decoder$$Fail.html">
+              <span class="name">Fail</span>
+            </a><span class="tparams">[<span name="A">A</span>, <span name="B">B</span>]</span><span class="params">(<span name="error">error: <a href="DecodeError.html" class="extype" name="classy.core.DecodeError">DecodeError</a></span>)</span><span class="result"> extends <a href="Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a>[<span class="extype" name="classy.core.Decoder.Fail.A">A</span>, <span class="extype" name="classy.core.Decoder.Fail.B">B</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      
+      <p class="shortcomment cmt">An implementation of <a href="Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a> that always fails with constant
+error
+</p><div class="fullcomment"><div class="comment cmt"><p>An implementation of <a href="Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a> that always fails with constant
+error
+</p></div><dl class="paramcmts block"><dt class="param">error</dt><dd class="cmt"><p>the constant error to decode</p></dd></dl></div>
+    </li><li name="classy.core.Decoder.Instance" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="Instance[A,B]extendsDecoder[A,B]withProductwithSerializable"></a><a id="Instance[A,B]:Instance[A,B]"></a>
       <span class="permalink">
       <a href="../../classy/core/Decoder$.html#Instance[A,B]extendsDecoder[A,B]withProductwithSerializable" title="Permalink">
@@ -241,16 +289,42 @@ outside of this library.
       </a>
     </span>
       <span class="modifier_kind">
-        <span class="modifier"></span>
+        <span class="modifier">final </span>
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <a title="" href="Decoder$$Instance.html">
+        <a title="The default implementation of Decoder backed by a function
+A =&gt; Either[DecodeError, B]
+" href="Decoder$$Instance.html">
               <span class="name">Instance</span>
             </a><span class="tparams">[<span name="A">A</span>, <span name="B">B</span>]</span><span class="params">(<span name="run">run: (<span class="extype" name="classy.core.Decoder.Instance.A">A</span>) ⇒ <span class="extype" name="scala.util.Either">Either</span>[<a href="DecodeError.html" class="extype" name="classy.core.DecodeError">DecodeError</a>, <span class="extype" name="classy.core.Decoder.Instance.B">B</span>]</span>)</span><span class="result"> extends <a href="Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a>[<span class="extype" name="classy.core.Decoder.Instance.A">A</span>, <span class="extype" name="classy.core.Decoder.Instance.B">B</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       
+      <p class="shortcomment cmt">The default implementation of <a href="Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a> backed by a function
+<code>A =&gt; Either[DecodeError, B]</code>
+</p><div class="fullcomment"><div class="comment cmt"><p>The default implementation of <a href="Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a> backed by a function
+<code>A =&gt; Either[DecodeError, B]</code>
+</p></div><dl class="paramcmts block"><dt class="param">run</dt><dd class="cmt"><p>the backing function</p></dd></dl></div>
+    </li><li name="classy.core.Decoder.Join" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="Join[A,B]extendsSerializable"></a><a id="Join[A,B]:Join[A,B]"></a>
+      <span class="permalink">
+      <a href="../../classy/core/Decoder$.html#Join[A,B]extendsSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">sealed abstract </span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a title="A type class capturing the ability to join two decoders into one
+" href="Decoder$$Join.html">
+              <span class="name">Join</span>
+            </a><span class="tparams">[<span name="A">A</span>, <span name="B">B</span>]</span><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
       
+      <p class="shortcomment cmt">A type class capturing the ability to join two decoders into one
+</p>
     </li></ol>
             </div>
 
@@ -494,7 +568,7 @@ outside of this library.
         <span class="name">instance</span><span class="tparams">[<span name="A">A</span>, <span name="B">B</span>]</span><span class="params">(<span name="run">run: (<span class="extype" name="classy.core.Decoder.instance.A">A</span>) ⇒ <span class="extype" name="scala.util.Either">Either</span>[<a href="DecodeError.html" class="extype" name="classy.core.DecodeError">DecodeError</a>, <span class="extype" name="classy.core.Decoder.instance.B">B</span>]</span>)</span><span class="result">: <a href="Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a>[<span class="extype" name="classy.core.Decoder.instance.A">A</span>, <span class="extype" name="classy.core.Decoder.instance.B">B</span>]</span>
       </span>
       
-      <p class="shortcomment cmt">Construct a new decoder using function <code>f</code> for decoding</p>
+      <p class="shortcomment cmt">Construct a new decoder using function <code>run</code> for decoding</p>
     </li><li name="scala.Any#isInstanceOf" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="isInstanceOf[T0]:Boolean"></a>
       <span class="permalink">
@@ -657,6 +731,28 @@ outside of this library.
     </span>)</span>
               
         </dd></dl></div>
+    </li><li name="classy.core.Decoder.Join" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Join"></a><a id="Join:Join"></a>
+      <span class="permalink">
+      <a href="../../classy/core/Decoder$.html#Join" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="Companion containing supporting implicits for joining decoders
+into tupled decoders
+" href="Decoder$$Join$.html">
+              <span class="name">Join</span>
+            </a><span class="result"> extends <span class="extype" name="classy.core.Decoder.JoinInstances0">JoinInstances0</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      
+      <p class="shortcomment cmt">Companion containing supporting implicits for joining decoders
+into tupled decoders
+</p>
     </li>
               </ol>
             </div>

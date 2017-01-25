@@ -147,7 +147,7 @@ outside of this library.
                         </a>
                       </li><li class="current-entities indented2">
                         <a class="object" href="Read$.html" title=""></a>
-                        <a class="class" href="Read.html" title="Read captures the ability to create a Decoder given a path string."></a>
+                        <a class="trait" href="Read.html" title="Read captures the ability to create a Decoder given a path string."></a>
                         <a href="Read.html" title="Read captures the ability to create a Decoder given a path string.">
                           Read
                         </a>
@@ -181,7 +181,7 @@ outside of this library.
       </h4>
 
       
-          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/47deg/case-classy/tree/master/modules/core/DecodeError.scala" target="_blank">DecodeError.scala</a></dd></dl><div class="toggleContainer block">
           <span class="toggle">
             Linear Supertypes
           </span>
@@ -336,28 +336,6 @@ a particular path within the source data structure
       
       <p class="shortcomment cmt">A marker for decode errors that don't have any child errors
 </p>
-    </li><li name="classy.core.DecodeError.MissingPath" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="MissingPathextendsDecodeErrorwithDecodeError.LeafDecodeErrorwithProductwithSerializable"></a><a id="MissingPath:MissingPath"></a>
-      <span class="permalink">
-      <a href="../../classy/core/DecodeError$.html#MissingPathextendsDecodeErrorwithDecodeError.LeafDecodeErrorwithProductwithSerializable" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier">final </span>
-        <span class="kind">case class</span>
-      </span>
-      <span class="symbol">
-        <a title="A value at a path was required but not found in the source data
-structure
-" href="DecodeError$$MissingPath.html">
-              <span class="name">MissingPath</span>
-            </a><span class="params">(<span name="path">path: <span class="extype" name="java.lang.String">String</span></span>)</span><span class="result"> extends <a href="DecodeError.html" class="extype" name="classy.core.DecodeError">DecodeError</a> with <a href="DecodeError$$LeafDecodeError.html" class="extype" name="classy.core.DecodeError.LeafDecodeError">LeafDecodeError</a> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
-      </span>
-      
-      <p class="shortcomment cmt">A value at a <code>path</code> was required but not found in the source data
-structure
-</p>
     </li><li name="classy.core.DecodeError.Or" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="OrextendsDecodeError.AggregateErrorwithProductwithSerializable"></a><a id="Or:Or"></a>
       <span class="permalink">
@@ -389,15 +367,15 @@ structure
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <a title="A value was found at path but was truncated during strict
-decoding." href="DecodeError$$Truncated.html">
+        <a title="A value was present and decoded but was truncated during the
+decoding process." href="DecodeError$$Truncated.html">
               <span class="name">Truncated</span>
-            </a><span class="params">(<span name="path">path: <span class="extype" name="java.lang.String">String</span></span>, <span name="raw">raw: <span class="extype" name="java.lang.String">String</span></span>, <span name="result">result: <span class="extype" name="java.lang.String">String</span></span>)</span><span class="result"> extends <a href="DecodeError.html" class="extype" name="classy.core.DecodeError">DecodeError</a> with <a href="DecodeError$$LeafDecodeError.html" class="extype" name="classy.core.DecodeError.LeafDecodeError">LeafDecodeError</a> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+            </a><span class="params">(<span name="raw">raw: <span class="extype" name="java.lang.String">String</span></span>, <span name="result">result: <span class="extype" name="java.lang.String">String</span></span>)</span><span class="result"> extends <a href="DecodeError.html" class="extype" name="classy.core.DecodeError">DecodeError</a> with <a href="DecodeError$$LeafDecodeError.html" class="extype" name="classy.core.DecodeError.LeafDecodeError">LeafDecodeError</a> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       
-      <p class="shortcomment cmt">A value was found at <code>path</code> but was truncated during strict
-decoding.</p><div class="fullcomment"><div class="comment cmt"><p>A value was found at <code>path</code> but was truncated during strict
-decoding.</p><p>This error typically occurs when strict decoding is used against
+      <p class="shortcomment cmt">A value was present and decoded but was truncated during the
+decoding process.</p><div class="fullcomment"><div class="comment cmt"><p>A value was present and decoded but was truncated during the
+decoding process.</p><p>This error typically occurs when strict decoding is used against
 a backend implementation that normally defaults to lossy decoding
 that truncates values (generally numeric).
 </p></div></div>
@@ -436,13 +414,13 @@ future releases.
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <a title="A value was found at path but was the type was incorrect
+        <a title="A value was present but was the type was incorrect
 " href="DecodeError$$WrongType.html">
               <span class="name">WrongType</span>
-            </a><span class="params">(<span name="path">path: <span class="extype" name="java.lang.String">String</span></span>, <span name="expected">expected: <span class="extype" name="java.lang.String">String</span></span>, <span name="got">got: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.lang.String">String</span>] = <span class="symbol">None</span></span>)</span><span class="result"> extends <a href="DecodeError.html" class="extype" name="classy.core.DecodeError">DecodeError</a> with <a href="DecodeError$$LeafDecodeError.html" class="extype" name="classy.core.DecodeError.LeafDecodeError">LeafDecodeError</a> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+            </a><span class="params">(<span name="expected">expected: <span class="extype" name="java.lang.String">String</span></span>, <span name="got">got: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.lang.String">String</span>] = <span class="symbol">None</span></span>)</span><span class="result"> extends <a href="DecodeError.html" class="extype" name="classy.core.DecodeError">DecodeError</a> with <a href="DecodeError$$LeafDecodeError.html" class="extype" name="classy.core.DecodeError.LeafDecodeError">LeafDecodeError</a> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       
-      <p class="shortcomment cmt">A value was found at <code>path</code> but was the type was incorrect
+      <p class="shortcomment cmt">A value was present but was the type was incorrect
 </p>
     </li></ol>
             </div>
@@ -856,6 +834,26 @@ unfolded before returning a single &quot;flattened&quot; result.
       </span>
       
       
+    </li><li name="classy.core.DecodeError.Missing" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Missing"></a><a id="Missing:Missing"></a>
+      <span class="permalink">
+      <a href="../../classy/core/DecodeError$.html#Missing" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a title="A value was required but not found in the source data structure
+" href="DecodeError$$Missing$.html">
+              <span class="name">Missing</span>
+            </a><span class="result"> extends <a href="DecodeError.html" class="extype" name="classy.core.DecodeError">DecodeError</a> with <a href="DecodeError$$LeafDecodeError.html" class="extype" name="classy.core.DecodeError.LeafDecodeError">LeafDecodeError</a> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      
+      <p class="shortcomment cmt">A value was required but not found in the source data structure
+</p>
     </li><li name="classy.core.DecodeError.Or" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="Or"></a><a id="Or:Or"></a>
       <span class="permalink">

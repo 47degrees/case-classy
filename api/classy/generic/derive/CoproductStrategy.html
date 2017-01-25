@@ -127,8 +127,14 @@
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="classy.generic">generic</a></dd></dl></div>
     </li><li class="current-entities indented3">
+                        <a class="object" href="CharCat$.html" title=""></a>
+                        <a class="class" href="CharCat.html" title="A categorization of char."></a>
+                        <a href="CharCat.html" title="A categorization of char.">
+                          CharCat
+                        </a>
+                      </li><li class="current-entities indented3">
                         <a class="object" href="CoproductStrategy$.html" title=""></a>
-                        <a class="class" href="" title="An option that configures the behavior for automatically derived
+                        <a class="trait" href="" title="An option that configures the behavior for automatically derived
 decoders of coproduct types (sealed trait hierarchies)."></a>
                         <a href="" title="An option that configures the behavior for automatically derived
 decoders of coproduct types (sealed trait hierarchies).">
@@ -136,19 +142,34 @@ decoders of coproduct types (sealed trait hierarchies).">
                         </a>
                       </li><li class="current-entities indented3">
                         <a class="object" href="MkDecoder$.html" title=""></a>
-                        <a class="class" href="MkDecoder.html" title="Captures the ability to automatically create a decoder, configured
-with Options
+                        <a class="class" href="MkDecoder.html" title="Captures the ability to automatically create a decoder given
+Options
 "></a>
-                        <a href="MkDecoder.html" title="Captures the ability to automatically create a decoder, configured
-with Options
+                        <a href="MkDecoder.html" title="Captures the ability to automatically create a decoder given
+Options
 ">
                           MkDecoder
+                        </a>
+                      </li><li class="current-entities indented3">
+                        <span class="separator"></span>
+                        <a class="class" href="MkDecoderWithOptions.html" title="Captures the ability to automatically create a decoder."></a>
+                        <a href="MkDecoderWithOptions.html" title="Captures the ability to automatically create a decoder.">
+                          MkDecoderWithOptions
                         </a>
                       </li><li class="current-entities indented3">
                         <a class="object" href="MkRead$.html" title=""></a>
                         <a class="class" href="MkRead.html" title=""></a>
                         <a href="MkRead.html" title="">
                           MkRead
+                        </a>
+                      </li><li class="current-entities indented3">
+                        <a class="object" href="NamingStrategy$.html" title="Companion containing several basic naming strategy implementations
+"></a>
+                        <a class="trait" href="NamingStrategy.html" title="Captures the ability to take an input string name and output
+a new name."></a>
+                        <a href="NamingStrategy.html" title="Captures the ability to take an input string name and output
+a new name.">
+                          NamingStrategy
                         </a>
                       </li><li class="current-entities indented3">
                         <a class="object" href="Options$.html" title=""></a>
@@ -158,14 +179,20 @@ with Options
 ">
                           Options
                         </a>
+                      </li><li class="current-entities indented3">
+                        <span class="separator"></span>
+                        <a class="object" href="StringSplitter$.html" title="A utility for splitting strings on word/phrase boundaries."></a>
+                        <a href="StringSplitter$.html" title="A utility for splitting strings on word/phrase boundaries.">
+                          StringSplitter
+                        </a>
                       </li>
               </ul>
             </div>
           </div>
           <div id="content">
-            <body class="class type">
+            <body class="trait type">
       <div id="definition">
-        <a href="CoproductStrategy$.html" title="See companion object"><div class="big-circle class-companion-object">c</div></a>
+        <a href="CoproductStrategy$.html" title="See companion object"><div class="big-circle trait-companion-object">t</div></a>
         <p id="owner"><a href="../../index.html" class="extype" name="classy">classy</a>.<a href="../index.html" class="extype" name="classy.generic">generic</a>.<a href="index.html" class="extype" name="classy.generic.derive">derive</a></p>
         <h1><a href="CoproductStrategy$.html" title="See companion object">CoproductStrategy</a><span class="permalink">
       <a href="../../../classy/generic/derive/CoproductStrategy.html" title="Permalink">
@@ -179,8 +206,8 @@ with Options
 
       <h4 id="signature" class="signature">
       <span class="modifier_kind">
-        <span class="modifier">abstract </span>
-        <span class="kind">class</span>
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
       </span>
       <span class="symbol">
         <span class="name">CoproductStrategy</span><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
@@ -190,7 +217,7 @@ with Options
       
           <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>An option that configures the behavior for automatically derived
 decoders of coproduct types (sealed trait hierarchies).
-</p></div><div class="toggleContainer block">
+</p></div><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/47deg/case-classy/tree/master/modules/generic/derive/MkDecoder.scala" target="_blank">MkDecoder.scala</a></dd></dl><div class="toggleContainer block">
           <span class="toggle">
             Linear Supertypes
           </span>
@@ -199,7 +226,7 @@ decoders of coproduct types (sealed trait hierarchies).
             <span class="toggle">
               Known Subclasses
             </span>
-            <div class="subClasses hiddenContent"><a href="CoproductStrategy$$default$.html" class="extype" name="classy.generic.derive.CoproductStrategy.default">default</a></div>
+            <div class="subClasses hiddenContent"><a href="CoproductStrategy$$Nested.html" class="extype" name="classy.generic.derive.CoproductStrategy.Nested">Nested</a>, <a href="CoproductStrategy$$Typed.html" class="extype" name="classy.generic.derive.CoproductStrategy.Typed">Typed</a></div>
           </div></div>
         
 
@@ -243,35 +270,16 @@ decoders of coproduct types (sealed trait hierarchies).
 
       <div id="template">
         <div id="allMembers">
-        <div id="constructors" class="members">
-              <h3>Instance Constructors</h3>
-              <ol><li name="classy.generic.derive.CoproductStrategy#&lt;init&gt;" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="&lt;init&gt;():classy.generic.derive.CoproductStrategy"></a><a id="&lt;init&gt;:CoproductStrategy"></a>
-      <span class="permalink">
-      <a href="../../../classy/generic/derive/CoproductStrategy.html#&lt;init&gt;():classy.generic.derive.CoproductStrategy" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">new</span>
-      </span>
-      <span class="symbol">
-        <span class="name">CoproductStrategy</span><span class="params">()</span>
-      </span>
-      
-      
-    </li></ol>
-            </div>
+        
 
         
 
         <div class="values members">
               <h3>Abstract Value Members</h3>
-              <ol><li name="classy.generic.derive.CoproductStrategy#decoder" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
-      <a id="decoder[A,B](decoder:classy.core.Decoder[A,B],name:String)(implicitnest:classy.core.Read[A,A]):classy.core.Decoder[A,B]"></a><a id="decoder[A,B](Decoder[A,B],String)(Read[A,A]):Decoder[A,B]"></a>
+              <ol><li name="classy.generic.derive.CoproductStrategy#decoder" visbl="pub" class="indented0 " data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="decoder[A,B](decoder:classy.core.Decoder[A,B],name:String)(implicitnest:classy.core.Read[A,A],implicitreadString:classy.core.Read[A,String]):classy.core.Decoder[A,B]"></a><a id="decoder[A,B](Decoder[A,B],String)(Read[A,A],Read[A,String]):Decoder[A,B]"></a>
       <span class="permalink">
-      <a href="../../../classy/generic/derive/CoproductStrategy.html#decoder[A,B](decoder:classy.core.Decoder[A,B],name:String)(implicitnest:classy.core.Read[A,A]):classy.core.Decoder[A,B]" title="Permalink">
+      <a href="../../../classy/generic/derive/CoproductStrategy.html#decoder[A,B](decoder:classy.core.Decoder[A,B],name:String)(implicitnest:classy.core.Read[A,A],implicitreadString:classy.core.Read[A,String]):classy.core.Decoder[A,B]" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -280,10 +288,13 @@ decoders of coproduct types (sealed trait hierarchies).
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">decoder</span><span class="tparams">[<span name="A">A</span>, <span name="B">B</span>]</span><span class="params">(<span name="decoder">decoder: <a href="../../core/Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a>[<span class="extype" name="classy.generic.derive.CoproductStrategy.decoder.A">A</span>, <span class="extype" name="classy.generic.derive.CoproductStrategy.decoder.B">B</span>]</span>, <span name="name">name: <span class="extype" name="java.lang.String">String</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="nest">nest: <a href="../../core/Read.html" class="extype" name="classy.core.Read">Read</a>[<span class="extype" name="classy.generic.derive.CoproductStrategy.decoder.A">A</span>, <span class="extype" name="classy.generic.derive.CoproductStrategy.decoder.A">A</span>]</span>)</span><span class="result">: <a href="../../core/Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a>[<span class="extype" name="classy.generic.derive.CoproductStrategy.decoder.A">A</span>, <span class="extype" name="classy.generic.derive.CoproductStrategy.decoder.B">B</span>]</span>
+        <span class="name">decoder</span><span class="tparams">[<span name="A">A</span>, <span name="B">B</span>]</span><span class="params">(<span name="decoder">decoder: <a href="../../core/Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a>[<span class="extype" name="classy.generic.derive.CoproductStrategy.decoder.A">A</span>, <span class="extype" name="classy.generic.derive.CoproductStrategy.decoder.B">B</span>]</span>, <span name="name">name: <span class="extype" name="java.lang.String">String</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="nest">nest: <a href="../../core/Read.html" class="extype" name="classy.core.Read">Read</a>[<span class="extype" name="classy.generic.derive.CoproductStrategy.decoder.A">A</span>, <span class="extype" name="classy.generic.derive.CoproductStrategy.decoder.A">A</span>]</span>, <span name="readString">readString: <a href="../../core/Read.html" class="extype" name="classy.core.Read">Read</a>[<span class="extype" name="classy.generic.derive.CoproductStrategy.decoder.A">A</span>, <span class="extype" name="java.lang.String">String</span>]</span>)</span><span class="result">: <a href="../../core/Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a>[<span class="extype" name="classy.generic.derive.CoproductStrategy.decoder.A">A</span>, <span class="extype" name="classy.generic.derive.CoproductStrategy.decoder.B">B</span>]</span>
       </span>
       
-      
+      <p class="shortcomment cmt">Create a decoder for <code>A</code>
+</p><div class="fullcomment"><div class="comment cmt"><p>Create a decoder for <code>A</code>
+</p></div><dl class="paramcmts block"><dt class="param">decoder</dt><dd class="cmt"><p>an existing decoder <code>A</code></p></dd><dt class="param">name</dt><dd class="cmt"><p>the name of the type <code>A</code></p></dd><dt class="param">nest</dt><dd class="cmt"><p>an implicit <a href="../../core/Read.html" class="extype" name="classy.core.Read">Read</a> to permit calling of
+<a href="../../core/Decoder.html#atPath(path:String)(implicitread:classy.core.Read[A,A]):classy.core.Decoder[A,B]" class="extmbr" name="classy.core.Decoder#atPath">atPath</a>, if desired</p></dd></dl></div>
     </li></ol>
             </div>
 

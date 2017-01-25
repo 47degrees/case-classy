@@ -147,7 +147,7 @@ outside of this library.
                         </a>
                       </li><li class="current-entities indented2">
                         <a class="object" href="Read$.html" title=""></a>
-                        <a class="class" href="" title="Read captures the ability to create a Decoder given a path string."></a>
+                        <a class="trait" href="" title="Read captures the ability to create a Decoder given a path string."></a>
                         <a href="" title="Read captures the ability to create a Decoder given a path string.">
                           Read
                         </a>
@@ -156,9 +156,9 @@ outside of this library.
             </div>
           </div>
           <div id="content">
-            <body class="class type">
+            <body class="trait type">
       <div id="definition">
-        <a href="Read$.html" title="See companion object"><div class="big-circle class-companion-object">c</div></a>
+        <a href="Read$.html" title="See companion object"><div class="big-circle trait-companion-object">t</div></a>
         <p id="owner"><a href="../index.html" class="extype" name="classy">classy</a>.<a href="index.html" class="extype" name="classy.core">core</a></p>
         <h1><a href="Read$.html" title="See companion object">Read</a><span class="permalink">
       <a href="../../classy/core/Read.html" title="Permalink">
@@ -172,8 +172,8 @@ outside of this library.
 
       <h4 id="signature" class="signature">
       <span class="modifier_kind">
-        <span class="modifier">final </span>
-        <span class="kind">class</span>
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
       </span>
       <span class="symbol">
         <span class="name">Read</span><span class="tparams">[<span name="A">A</span>, <span name="B">B</span>]</span><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
@@ -182,12 +182,17 @@ outside of this library.
 
       
           <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Read captures the ability to create a <a href="Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a> given a path string.
-</p></div><dl class="paramcmts block"><dt class="tparam">A</dt><dd class="cmt"><p>type A of created decoders</p></dd><dt class="tparam">B</dt><dd class="cmt"><p>type B of created decoders</p></dd></dl><div class="toggleContainer block">
+</p></div><dl class="paramcmts block"><dt class="tparam">A</dt><dd class="cmt"><p>type <code>A</code> of created decoders</p></dd><dt class="tparam">B</dt><dd class="cmt"><p>type <code>B</code> of created decoders</p></dd></dl><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/47deg/case-classy/tree/master/modules/core/Read.scala" target="_blank">Read.scala</a></dd></dl><div class="toggleContainer block">
           <span class="toggle">
             Linear Supertypes
           </span>
           <div class="superTypes hiddenContent"><span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
-        </div></div>
+        </div><div class="toggleContainer block">
+            <span class="toggle">
+              Known Subclasses
+            </span>
+            <div class="subClasses hiddenContent"><a href="Read$$Instance.html" class="extype" name="classy.core.Read.Instance">Instance</a></div>
+          </div></div>
         
 
       <div id="mbrsel">
@@ -234,10 +239,30 @@ outside of this library.
 
         
 
-        
+        <div class="values members">
+              <h3>Abstract Value Members</h3>
+              <ol><li name="classy.core.Read#apply" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="apply(path:String):classy.core.Decoder[A,B]"></a><a id="apply(String):Decoder[A,B]"></a>
+      <span class="permalink">
+      <a href="../../classy/core/Read.html#apply(path:String):classy.core.Decoder[A,B]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">abstract </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">apply</span><span class="params">(<span name="path">path: <span class="extype" name="java.lang.String">String</span></span>)</span><span class="result">: <a href="Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a>[<span class="extype" name="classy.core.Read.A">A</span>, <span class="extype" name="classy.core.Read.B">B</span>]</span>
+      </span>
+      
+      <p class="shortcomment cmt">Create a decoder for the given <code>path</code>
+</p>
+    </li></ol>
+            </div>
 
         <div class="values members">
-              <h3>Value Members</h3>
+              <h3>Concrete Value Members</h3>
               <ol>
                 <li name="scala.AnyRef#!=" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="!=(x$1:Any):Boolean"></a><a id="!=(Any):Boolean"></a>
@@ -287,22 +312,6 @@ outside of this library.
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li name="classy.core.Read#apply" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="apply(path:String):classy.core.Decoder[A,B]"></a><a id="apply(String):Decoder[A,B]"></a>
-      <span class="permalink">
-      <a href="../../classy/core/Read.html#apply(path:String):classy.core.Decoder[A,B]" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">apply</span><span class="params">(<span name="path">path: <span class="extype" name="java.lang.String">String</span></span>)</span><span class="result">: <a href="Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a>[<span class="extype" name="classy.core.Read.A">A</span>, <span class="extype" name="classy.core.Read.B">B</span>]</span>
-      </span>
-      
-      
     </li><li name="scala.Any#asInstanceOf" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="asInstanceOf[T0]:T0"></a>
       <span class="permalink">
@@ -491,6 +500,23 @@ outside of this library.
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="classy.core.Read#read" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="read(path:String):classy.core.Decoder[A,B]"></a><a id="read(String):Decoder[A,B]"></a>
+      <span class="permalink">
+      <a href="../../classy/core/Read.html#read(path:String):classy.core.Decoder[A,B]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">read</span><span class="params">(<span name="path">path: <span class="extype" name="java.lang.String">String</span></span>)</span><span class="result">: <a href="Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a>[<span class="extype" name="classy.core.Read.A">A</span>, <span class="extype" name="classy.core.Read.B">B</span>]</span>
+      </span>
+      
+      <p class="shortcomment cmt">Create a decoder for the given <code>path</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Create a decoder for the given <code>path</code>.</p><p>This is an alias for <a href="#apply(path:String):classy.core.Decoder[A,B]" class="extmbr" name="classy.core.Read#apply">apply</a>.
+</p></div></div>
     </li><li name="scala.AnyRef#synchronized" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a><a id="synchronized[T0](⇒T0):T0"></a>
       <span class="permalink">

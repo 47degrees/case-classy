@@ -127,8 +127,14 @@
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="classy.generic">generic</a></dd></dl></div>
     </li><li class="current-entities indented3">
+                        <a class="object" href="CharCat$.html" title=""></a>
+                        <a class="class" href="CharCat.html" title="A categorization of char."></a>
+                        <a href="CharCat.html" title="A categorization of char.">
+                          CharCat
+                        </a>
+                      </li><li class="current-entities indented3">
                         <a class="object" href="CoproductStrategy$.html" title=""></a>
-                        <a class="class" href="CoproductStrategy.html" title="An option that configures the behavior for automatically derived
+                        <a class="trait" href="CoproductStrategy.html" title="An option that configures the behavior for automatically derived
 decoders of coproduct types (sealed trait hierarchies)."></a>
                         <a href="CoproductStrategy.html" title="An option that configures the behavior for automatically derived
 decoders of coproduct types (sealed trait hierarchies).">
@@ -136,13 +142,19 @@ decoders of coproduct types (sealed trait hierarchies).">
                         </a>
                       </li><li class="current-entities indented3">
                         <a class="object" href="MkDecoder$.html" title=""></a>
-                        <a class="class" href="" title="Captures the ability to automatically create a decoder, configured
-with Options
+                        <a class="class" href="" title="Captures the ability to automatically create a decoder given
+Options
 "></a>
-                        <a href="" title="Captures the ability to automatically create a decoder, configured
-with Options
+                        <a href="" title="Captures the ability to automatically create a decoder given
+Options
 ">
                           MkDecoder
+                        </a>
+                      </li><li class="current-entities indented3">
+                        <span class="separator"></span>
+                        <a class="class" href="MkDecoderWithOptions.html" title="Captures the ability to automatically create a decoder."></a>
+                        <a href="MkDecoderWithOptions.html" title="Captures the ability to automatically create a decoder.">
+                          MkDecoderWithOptions
                         </a>
                       </li><li class="current-entities indented3">
                         <a class="object" href="MkRead$.html" title=""></a>
@@ -151,12 +163,27 @@ with Options
                           MkRead
                         </a>
                       </li><li class="current-entities indented3">
+                        <a class="object" href="NamingStrategy$.html" title="Companion containing several basic naming strategy implementations
+"></a>
+                        <a class="trait" href="NamingStrategy.html" title="Captures the ability to take an input string name and output
+a new name."></a>
+                        <a href="NamingStrategy.html" title="Captures the ability to take an input string name and output
+a new name.">
+                          NamingStrategy
+                        </a>
+                      </li><li class="current-entities indented3">
                         <a class="object" href="Options$.html" title=""></a>
                         <a class="class" href="Options.html" title="Options for the behavior of automatically derived decoders
 "></a>
                         <a href="Options.html" title="Options for the behavior of automatically derived decoders
 ">
                           Options
+                        </a>
+                      </li><li class="current-entities indented3">
+                        <span class="separator"></span>
+                        <a class="object" href="StringSplitter$.html" title="A utility for splitting strings on word/phrase boundaries."></a>
+                        <a href="StringSplitter$.html" title="A utility for splitting strings on word/phrase boundaries.">
+                          StringSplitter
                         </a>
                       </li>
               </ul>
@@ -179,22 +206,22 @@ with Options
 
       <h4 id="signature" class="signature">
       <span class="modifier_kind">
-        <span class="modifier">sealed abstract </span>
-        <span class="kind">class</span>
+        <span class="modifier">final </span>
+        <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <span class="name">MkDecoder</span><span class="tparams">[<span name="A">A</span>, <span name="B">B</span>]</span><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <span class="name">MkDecoder</span><span class="tparams">[<span name="A">A</span>, <span name="B">B</span>]</span><span class="params">(<span name="run">run: (<a href="Options.html" class="extype" name="classy.generic.derive.Options">Options</a>) ⇒ <a href="../../core/Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a>[<span class="extype" name="classy.generic.derive.MkDecoder.A">A</span>, <span class="extype" name="classy.generic.derive.MkDecoder.B">B</span>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       </h4>
 
       
-          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Captures the ability to automatically create a decoder, configured
-with <a href="Options.html" class="extype" name="classy.generic.derive.Options">Options</a>
-</p></div><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Captures the ability to automatically create a decoder given
+<a href="Options.html" class="extype" name="classy.generic.derive.Options">Options</a>
+</p></div><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/47deg/case-classy/tree/master/modules/generic/derive/MkDecoder.scala" target="_blank">MkDecoder.scala</a></dd></dl><div class="toggleContainer block">
           <span class="toggle">
             Linear Supertypes
           </span>
-          <div class="superTypes hiddenContent"><span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+          <div class="superTypes hiddenContent"><span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <span class="extype" name="scala.Product">Product</span>, <span class="extype" name="scala.Equals">Equals</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
         
 
@@ -220,7 +247,7 @@ with <a href="Options.html" class="extype" name="classy.generic.derive.Options">
                   <span class="filtertype">Inherited<br />
                   </span>
                   <ol id="linearization">
-                    <li class="in" name="classy.generic.derive.MkDecoder"><span>MkDecoder</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                    <li class="in" name="classy.generic.derive.MkDecoder"><span>MkDecoder</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="scala.Product"><span>Product</span></li><li class="in" name="scala.Equals"><span>Equals</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
                   </ol>
                 </div><div class="ancestors">
               <span class="filtertype"></span>
@@ -238,65 +265,33 @@ with <a href="Options.html" class="extype" name="classy.generic.derive.Options">
 
       <div id="template">
         <div id="allMembers">
-        
-
-        
-
-        <div class="values members">
-              <h3>Abstract Value Members</h3>
-              <ol><li name="classy.generic.derive.MkDecoder#decoder" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
-      <a id="decoder:classy.core.Decoder[A,B]"></a><a id="decoder:Decoder[A,B]"></a>
+        <div id="constructors" class="members">
+              <h3>Instance Constructors</h3>
+              <ol><li name="classy.generic.derive.MkDecoder#&lt;init&gt;" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="&lt;init&gt;(run:classy.generic.derive.Options=&gt;classy.core.Decoder[A,B]):classy.generic.derive.MkDecoder[A,B]"></a><a id="&lt;init&gt;:MkDecoder[A,B]"></a>
       <span class="permalink">
-      <a href="../../../classy/generic/derive/MkDecoder.html#decoder:classy.core.Decoder[A,B]" title="Permalink">
+      <a href="../../../classy/generic/derive/MkDecoder.html#&lt;init&gt;(run:classy.generic.derive.Options=&gt;classy.core.Decoder[A,B]):classy.generic.derive.MkDecoder[A,B]" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
       <span class="modifier_kind">
-        <span class="modifier">abstract </span>
-        <span class="kind">def</span>
+        <span class="modifier"></span>
+        <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">decoder</span><span class="result">: <a href="../../core/Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a>[<span class="extype" name="classy.generic.derive.MkDecoder.A">A</span>, <span class="extype" name="classy.generic.derive.MkDecoder.B">B</span>]</span>
-      </span>
-      
-      
-    </li><li name="classy.generic.derive.MkDecoder#options" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
-      <a id="options:classy.generic.derive.Options"></a><a id="options:Options"></a>
-      <span class="permalink">
-      <a href="../../../classy/generic/derive/MkDecoder.html#options:classy.generic.derive.Options" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier">abstract </span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">options</span><span class="result">: <a href="Options.html" class="extype" name="classy.generic.derive.Options">Options</a></span>
-      </span>
-      
-      
-    </li><li name="classy.generic.derive.MkDecoder#withOptions" visbl="pub" class="indented0 " data-isabs="true" fullComment="no" group="Ungrouped">
-      <a id="withOptions(options:classy.generic.derive.Options):classy.generic.derive.MkDecoder[A,B]"></a><a id="withOptions(Options):MkDecoder[A,B]"></a>
-      <span class="permalink">
-      <a href="../../../classy/generic/derive/MkDecoder.html#withOptions(options:classy.generic.derive.Options):classy.generic.derive.MkDecoder[A,B]" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier">abstract </span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">withOptions</span><span class="params">(<span name="options">options: <a href="Options.html" class="extype" name="classy.generic.derive.Options">Options</a></span>)</span><span class="result">: <a href="" class="extype" name="classy.generic.derive.MkDecoder">MkDecoder</a>[<span class="extype" name="classy.generic.derive.MkDecoder.A">A</span>, <span class="extype" name="classy.generic.derive.MkDecoder.B">B</span>]</span>
+        <span class="name">MkDecoder</span><span class="params">(<span name="run">run: (<a href="Options.html" class="extype" name="classy.generic.derive.Options">Options</a>) ⇒ <a href="../../core/Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a>[<span class="extype" name="classy.generic.derive.MkDecoder.A">A</span>, <span class="extype" name="classy.generic.derive.MkDecoder.B">B</span>]</span>)</span>
       </span>
       
       
     </li></ol>
             </div>
 
+        
+
+        
+
         <div class="values members">
-              <h3>Concrete Value Members</h3>
+              <h3>Value Members</h3>
               <ol>
                 <li name="scala.AnyRef#!=" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="!=(x$1:Any):Boolean"></a><a id="!=(Any):Boolean"></a>
@@ -392,11 +387,11 @@ with <a href="Options.html" class="extype" name="classy.generic.derive.Options">
       </a>
     </span>
       <span class="modifier_kind">
-        <span class="modifier">final </span>
+        <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">decoder</span><span class="params">(<span name="options">options: <a href="Options.html" class="extype" name="classy.generic.derive.Options">Options</a></span>)</span><span class="result">: <a href="../../core/Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a>[<span class="extype" name="classy.generic.derive.MkDecoder.A">A</span>, <span class="extype" name="classy.generic.derive.MkDecoder.B">B</span>]</span>
+        <span class="name">decoder</span><span class="params">(<span name="options">options: <a href="Options.html" class="extype" name="classy.generic.derive.Options">Options</a> = <span class="symbol"><span class="name"><a href="Options$.html">Options.default</a></span></span></span>)</span><span class="result">: <a href="../../core/Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a>[<span class="extype" name="classy.generic.derive.MkDecoder.A">A</span>, <span class="extype" name="classy.generic.derive.MkDecoder.B">B</span>]</span>
       </span>
       
       
@@ -416,22 +411,6 @@ with <a href="Options.html" class="extype" name="classy.generic.derive.Options">
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li name="scala.AnyRef#equals" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="equals(x$1:Any):Boolean"></a><a id="equals(Any):Boolean"></a>
-      <span class="permalink">
-      <a href="../../../classy/generic/derive/MkDecoder.html#equals(x$1:Any):Boolean" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">equals</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
-      </span>
-      
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li name="scala.AnyRef#finalize" visbl="prt" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="finalize():Unit"></a>
       <span class="permalink">
@@ -467,22 +446,6 @@ with <a href="Options.html" class="extype" name="classy.generic.derive.Options">
       </span>
       <span class="symbol">
         <span class="name">getClass</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.Class">Class</span>[_]</span>
-      </span>
-      
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li name="scala.AnyRef#hashCode" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="hashCode():Int"></a>
-      <span class="permalink">
-      <a href="../../../classy/generic/derive/MkDecoder.html#hashCode():Int" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">hashCode</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
@@ -550,19 +513,19 @@ with <a href="Options.html" class="extype" name="classy.generic.derive.Options">
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li name="classy.generic.derive.MkDecoder#renameFields" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="renameFields(f:String=&gt;String):classy.generic.derive.MkDecoder[A,B]"></a><a id="renameFields((String)⇒String):MkDecoder[A,B]"></a>
+    </li><li name="classy.generic.derive.MkDecoder#run" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="run:classy.generic.derive.Options=&gt;classy.core.Decoder[A,B]"></a><a id="run:(Options)⇒Decoder[A,B]"></a>
       <span class="permalink">
-      <a href="../../../classy/generic/derive/MkDecoder.html#renameFields(f:String=&gt;String):classy.generic.derive.MkDecoder[A,B]" title="Permalink">
+      <a href="../../../classy/generic/derive/MkDecoder.html#run:classy.generic.derive.Options=&gt;classy.core.Decoder[A,B]" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
       <span class="modifier_kind">
-        <span class="modifier">final </span>
-        <span class="kind">def</span>
+        <span class="modifier"></span>
+        <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">renameFields</span><span class="params">(<span name="f">f: (<span class="extype" name="java.lang.String">String</span>) ⇒ <span class="extype" name="java.lang.String">String</span></span>)</span><span class="result">: <a href="" class="extype" name="classy.generic.derive.MkDecoder">MkDecoder</a>[<span class="extype" name="classy.generic.derive.MkDecoder.A">A</span>, <span class="extype" name="classy.generic.derive.MkDecoder.B">B</span>]</span>
+        <span class="name">run</span><span class="result">: (<a href="Options.html" class="extype" name="classy.generic.derive.Options">Options</a>) ⇒ <a href="../../core/Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a>[<span class="extype" name="classy.generic.derive.MkDecoder.A">A</span>, <span class="extype" name="classy.generic.derive.MkDecoder.B">B</span>]</span>
       </span>
       
       
@@ -582,22 +545,6 @@ with <a href="Options.html" class="extype" name="classy.generic.derive.Options">
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li name="scala.AnyRef#toString" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="toString():String"></a>
-      <span class="permalink">
-      <a href="../../../classy/generic/derive/MkDecoder.html#toString():String" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
-      </span>
-      
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li name="scala.AnyRef#wait" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait():Unit"></a>
       <span class="permalink">
@@ -664,6 +611,22 @@ with <a href="Options.html" class="extype" name="classy.generic.derive.Options">
     </span>)</span>
               
         </dd></dl></div>
+    </li><li name="classy.generic.derive.MkDecoder#withOptions" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="withOptions:classy.generic.derive.MkDecoderWithOptions[A,B]"></a><a id="withOptions:MkDecoderWithOptions[A,B]"></a>
+      <span class="permalink">
+      <a href="../../../classy/generic/derive/MkDecoder.html#withOptions:classy.generic.derive.MkDecoderWithOptions[A,B]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">withOptions</span><span class="result">: <a href="MkDecoderWithOptions.html" class="extype" name="classy.generic.derive.MkDecoderWithOptions">MkDecoderWithOptions</a>[<span class="extype" name="classy.generic.derive.MkDecoder.A">A</span>, <span class="extype" name="classy.generic.derive.MkDecoder.B">B</span>]</span>
+      </span>
+      
+      
     </li>
               </ol>
             </div>
@@ -678,6 +641,10 @@ with <a href="Options.html" class="extype" name="classy.generic.derive.Options">
               <h3>Inherited from <span class="extype" name="scala.Serializable">Serializable</span></h3>
             </div><div class="parent" name="java.io.Serializable">
               <h3>Inherited from <span class="extype" name="java.io.Serializable">Serializable</span></h3>
+            </div><div class="parent" name="scala.Product">
+              <h3>Inherited from <span class="extype" name="scala.Product">Product</span></h3>
+            </div><div class="parent" name="scala.Equals">
+              <h3>Inherited from <span class="extype" name="scala.Equals">Equals</span></h3>
             </div><div class="parent" name="scala.AnyRef">
               <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>
             </div><div class="parent" name="scala.Any">

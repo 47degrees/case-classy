@@ -127,8 +127,14 @@
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="classy.generic">generic</a></dd></dl></div>
     </li><li class="current-entities indented3">
+                        <a class="object" href="CharCat$.html" title=""></a>
+                        <a class="class" href="CharCat.html" title="A categorization of char."></a>
+                        <a href="CharCat.html" title="A categorization of char.">
+                          CharCat
+                        </a>
+                      </li><li class="current-entities indented3">
                         <a class="object" href="CoproductStrategy$.html" title=""></a>
-                        <a class="class" href="CoproductStrategy.html" title="An option that configures the behavior for automatically derived
+                        <a class="trait" href="CoproductStrategy.html" title="An option that configures the behavior for automatically derived
 decoders of coproduct types (sealed trait hierarchies)."></a>
                         <a href="CoproductStrategy.html" title="An option that configures the behavior for automatically derived
 decoders of coproduct types (sealed trait hierarchies).">
@@ -136,13 +142,19 @@ decoders of coproduct types (sealed trait hierarchies).">
                         </a>
                       </li><li class="current-entities indented3">
                         <a class="object" href="MkDecoder$.html" title=""></a>
-                        <a class="class" href="MkDecoder.html" title="Captures the ability to automatically create a decoder, configured
-with Options
+                        <a class="class" href="MkDecoder.html" title="Captures the ability to automatically create a decoder given
+Options
 "></a>
-                        <a href="MkDecoder.html" title="Captures the ability to automatically create a decoder, configured
-with Options
+                        <a href="MkDecoder.html" title="Captures the ability to automatically create a decoder given
+Options
 ">
                           MkDecoder
+                        </a>
+                      </li><li class="current-entities indented3">
+                        <span class="separator"></span>
+                        <a class="class" href="MkDecoderWithOptions.html" title="Captures the ability to automatically create a decoder."></a>
+                        <a href="MkDecoderWithOptions.html" title="Captures the ability to automatically create a decoder.">
+                          MkDecoderWithOptions
                         </a>
                       </li><li class="current-entities indented3">
                         <a class="object" href="MkRead$.html" title=""></a>
@@ -151,12 +163,27 @@ with Options
                           MkRead
                         </a>
                       </li><li class="current-entities indented3">
+                        <a class="object" href="NamingStrategy$.html" title="Companion containing several basic naming strategy implementations
+"></a>
+                        <a class="trait" href="NamingStrategy.html" title="Captures the ability to take an input string name and output
+a new name."></a>
+                        <a href="NamingStrategy.html" title="Captures the ability to take an input string name and output
+a new name.">
+                          NamingStrategy
+                        </a>
+                      </li><li class="current-entities indented3">
                         <a class="object" href="Options$.html" title=""></a>
                         <a class="class" href="" title="Options for the behavior of automatically derived decoders
 "></a>
                         <a href="" title="Options for the behavior of automatically derived decoders
 ">
                           Options
+                        </a>
+                      </li><li class="current-entities indented3">
+                        <span class="separator"></span>
+                        <a class="object" href="StringSplitter$.html" title="A utility for splitting strings on word/phrase boundaries."></a>
+                        <a href="StringSplitter$.html" title="A utility for splitting strings on word/phrase boundaries.">
+                          StringSplitter
                         </a>
                       </li>
               </ul>
@@ -183,14 +210,15 @@ with Options
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <span class="name">Options</span><span class="params">(<span name="renameField">renameField: (<span class="extype" name="java.lang.String">String</span>) ⇒ <span class="extype" name="java.lang.String">String</span> = <span class="symbol">s =&gt; s</span></span>, <span name="coproduct">coproduct: <a href="CoproductStrategy.html" class="extype" name="classy.generic.derive.CoproductStrategy">CoproductStrategy</a> = <span class="symbol"><span class="name"><a href="CoproductStrategy$.html">CoproductStrategy.default</a></span></span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <span class="name">Options</span><span class="params">(<span name="naming">naming: <a href="NamingStrategy.html" class="extype" name="classy.generic.derive.NamingStrategy">NamingStrategy</a> = <span class="symbol"><span class="name"><a href="NamingStrategy$.html">NamingStrategy.Identity</a></span></span></span>, <span name="coproduct">coproduct: <a href="CoproductStrategy.html" class="extype" name="classy.generic.derive.CoproductStrategy">CoproductStrategy</a> = <span class="symbol"><span class="name"><a href="CoproductStrategy$.html">CoproductStrategy.Nested()</a></span></span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       </h4>
 
       
           <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Options for the behavior of automatically derived decoders
-</p></div><dl class="paramcmts block"><dt class="param">renameField</dt><dd class="cmt"><p>a function applied to all paths before reading
-with a <a href="../../core/Read.html" class="extype" name="classy.core.Read">Read</a></p></dd></dl><div class="toggleContainer block">
+</p></div><dl class="paramcmts block"><dt class="param">naming</dt><dd class="cmt"><p>a <a href="NamingStrategy.html" class="extype" name="classy.generic.derive.NamingStrategy">NamingStrategy</a> to control the mapping from field names
+to the value <a href="../../core/Read.html" class="extype" name="classy.core.Read">read</a> from the input.</p></dd><dt class="param">coproduct</dt><dd class="cmt"><p>a <a href="CoproductStrategy.html" class="extype" name="classy.generic.derive.CoproductStrategy">CoproductStrategy</a> govering how coproduct (sealed trait hierarchies)
+types are differentiated and <a href="../../core/Read.html" class="extype" name="classy.core.Read">read</a> from the input</p></dd></dl><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/47deg/case-classy/tree/master/modules/generic/derive/MkDecoder.scala" target="_blank">MkDecoder.scala</a></dd></dl><div class="toggleContainer block">
           <span class="toggle">
             Linear Supertypes
           </span>
@@ -241,9 +269,9 @@ with a <a href="../../core/Read.html" class="extype" name="classy.core.Read">Rea
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
               <ol><li name="classy.generic.derive.Options#&lt;init&gt;" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="&lt;init&gt;(renameField:String=&gt;String,coproduct:classy.generic.derive.CoproductStrategy):classy.generic.derive.Options"></a><a id="&lt;init&gt;:Options"></a>
+      <a id="&lt;init&gt;(naming:classy.generic.derive.NamingStrategy,coproduct:classy.generic.derive.CoproductStrategy):classy.generic.derive.Options"></a><a id="&lt;init&gt;:Options"></a>
       <span class="permalink">
-      <a href="../../../classy/generic/derive/Options.html#&lt;init&gt;(renameField:String=&gt;String,coproduct:classy.generic.derive.CoproductStrategy):classy.generic.derive.Options" title="Permalink">
+      <a href="../../../classy/generic/derive/Options.html#&lt;init&gt;(naming:classy.generic.derive.NamingStrategy,coproduct:classy.generic.derive.CoproductStrategy):classy.generic.derive.Options" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -252,11 +280,12 @@ with a <a href="../../core/Read.html" class="extype" name="classy.core.Read">Rea
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">Options</span><span class="params">(<span name="renameField">renameField: (<span class="extype" name="java.lang.String">String</span>) ⇒ <span class="extype" name="java.lang.String">String</span> = <span class="symbol">s =&gt; s</span></span>, <span name="coproduct">coproduct: <a href="CoproductStrategy.html" class="extype" name="classy.generic.derive.CoproductStrategy">CoproductStrategy</a> = <span class="symbol"><span class="name"><a href="CoproductStrategy$.html">CoproductStrategy.default</a></span></span></span>)</span>
+        <span class="name">Options</span><span class="params">(<span name="naming">naming: <a href="NamingStrategy.html" class="extype" name="classy.generic.derive.NamingStrategy">NamingStrategy</a> = <span class="symbol"><span class="name"><a href="NamingStrategy$.html">NamingStrategy.Identity</a></span></span></span>, <span name="coproduct">coproduct: <a href="CoproductStrategy.html" class="extype" name="classy.generic.derive.CoproductStrategy">CoproductStrategy</a> = <span class="symbol"><span class="name"><a href="CoproductStrategy$.html">CoproductStrategy.Nested()</a></span></span></span>)</span>
       </span>
       
-      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">renameField</dt><dd class="cmt"><p>a function applied to all paths before reading
-with a <a href="../../core/Read.html" class="extype" name="classy.core.Read">Read</a></p></dd></dl></div>
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">naming</dt><dd class="cmt"><p>a <a href="NamingStrategy.html" class="extype" name="classy.generic.derive.NamingStrategy">NamingStrategy</a> to control the mapping from field names
+to the value <a href="../../core/Read.html" class="extype" name="classy.core.Read">read</a> from the input.</p></dd><dt class="param">coproduct</dt><dd class="cmt"><p>a <a href="CoproductStrategy.html" class="extype" name="classy.generic.derive.CoproductStrategy">CoproductStrategy</a> govering how coproduct (sealed trait hierarchies)
+types are differentiated and <a href="../../core/Read.html" class="extype" name="classy.core.Read">read</a> from the input</p></dd></dl></div>
     </li></ol>
             </div>
 
@@ -439,6 +468,22 @@ with a <a href="../../core/Read.html" class="extype" name="classy.core.Read">Rea
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="classy.generic.derive.Options#naming" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="naming:classy.generic.derive.NamingStrategy"></a><a id="naming:NamingStrategy"></a>
+      <span class="permalink">
+      <a href="../../../classy/generic/derive/Options.html#naming:classy.generic.derive.NamingStrategy" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">naming</span><span class="result">: <a href="NamingStrategy.html" class="extype" name="classy.generic.derive.NamingStrategy">NamingStrategy</a></span>
+      </span>
+      
+      
     </li><li name="scala.AnyRef#ne" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="ne(x$1:AnyRef):Boolean"></a><a id="ne(AnyRef):Boolean"></a>
       <span class="permalink">
@@ -487,22 +532,6 @@ with a <a href="../../core/Read.html" class="extype" name="classy.core.Read">Rea
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li name="classy.generic.derive.Options#renameField" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="renameField:String=&gt;String"></a><a id="renameField:(String)⇒String"></a>
-      <span class="permalink">
-      <a href="../../../classy/generic/derive/Options.html#renameField:String=&gt;String" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">val</span>
-      </span>
-      <span class="symbol">
-        <span class="name">renameField</span><span class="result">: (<span class="extype" name="java.lang.String">String</span>) ⇒ <span class="extype" name="java.lang.String">String</span></span>
-      </span>
-      
-      
     </li><li name="scala.AnyRef#synchronized" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a><a id="synchronized[T0](⇒T0):T0"></a>
       <span class="permalink">

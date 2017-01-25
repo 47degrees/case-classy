@@ -127,8 +127,14 @@
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="classy.generic">generic</a></dd></dl></div>
     </li><li class="current-entities indented3">
+                        <a class="object" href="CharCat$.html" title=""></a>
+                        <a class="class" href="CharCat.html" title="A categorization of char."></a>
+                        <a href="CharCat.html" title="A categorization of char.">
+                          CharCat
+                        </a>
+                      </li><li class="current-entities indented3">
                         <a class="object" href="" title=""></a>
-                        <a class="class" href="CoproductStrategy.html" title="An option that configures the behavior for automatically derived
+                        <a class="trait" href="CoproductStrategy.html" title="An option that configures the behavior for automatically derived
 decoders of coproduct types (sealed trait hierarchies)."></a>
                         <a href="CoproductStrategy.html" title="An option that configures the behavior for automatically derived
 decoders of coproduct types (sealed trait hierarchies).">
@@ -136,19 +142,34 @@ decoders of coproduct types (sealed trait hierarchies).">
                         </a>
                       </li><li class="current-entities indented3">
                         <a class="object" href="MkDecoder$.html" title=""></a>
-                        <a class="class" href="MkDecoder.html" title="Captures the ability to automatically create a decoder, configured
-with Options
+                        <a class="class" href="MkDecoder.html" title="Captures the ability to automatically create a decoder given
+Options
 "></a>
-                        <a href="MkDecoder.html" title="Captures the ability to automatically create a decoder, configured
-with Options
+                        <a href="MkDecoder.html" title="Captures the ability to automatically create a decoder given
+Options
 ">
                           MkDecoder
+                        </a>
+                      </li><li class="current-entities indented3">
+                        <span class="separator"></span>
+                        <a class="class" href="MkDecoderWithOptions.html" title="Captures the ability to automatically create a decoder."></a>
+                        <a href="MkDecoderWithOptions.html" title="Captures the ability to automatically create a decoder.">
+                          MkDecoderWithOptions
                         </a>
                       </li><li class="current-entities indented3">
                         <a class="object" href="MkRead$.html" title=""></a>
                         <a class="class" href="MkRead.html" title=""></a>
                         <a href="MkRead.html" title="">
                           MkRead
+                        </a>
+                      </li><li class="current-entities indented3">
+                        <a class="object" href="NamingStrategy$.html" title="Companion containing several basic naming strategy implementations
+"></a>
+                        <a class="trait" href="NamingStrategy.html" title="Captures the ability to take an input string name and output
+a new name."></a>
+                        <a href="NamingStrategy.html" title="Captures the ability to take an input string name and output
+a new name.">
+                          NamingStrategy
                         </a>
                       </li><li class="current-entities indented3">
                         <a class="object" href="Options$.html" title=""></a>
@@ -158,6 +179,12 @@ with Options
 ">
                           Options
                         </a>
+                      </li><li class="current-entities indented3">
+                        <span class="separator"></span>
+                        <a class="object" href="StringSplitter$.html" title="A utility for splitting strings on word/phrase boundaries."></a>
+                        <a href="StringSplitter$.html" title="A utility for splitting strings on word/phrase boundaries.">
+                          StringSplitter
+                        </a>
                       </li>
               </ul>
             </div>
@@ -165,15 +192,15 @@ with Options
           <div id="content">
             <body class="object value">
       <div id="definition">
-        <a href="CoproductStrategy.html" title="See companion class"><div class="big-circle object-companion-class">o</div></a>
+        <a href="CoproductStrategy.html" title="See companion trait"><div class="big-circle object-companion-trait">o</div></a>
         <p id="owner"><a href="../../index.html" class="extype" name="classy">classy</a>.<a href="../index.html" class="extype" name="classy.generic">generic</a>.<a href="index.html" class="extype" name="classy.generic.derive">derive</a></p>
-        <h1><a href="CoproductStrategy.html" title="See companion class">CoproductStrategy</a><span class="permalink">
+        <h1><a href="CoproductStrategy.html" title="See companion trait">CoproductStrategy</a><span class="permalink">
       <a href="../../../classy/generic/derive/CoproductStrategy$.html" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span></h1>
         <h3><span class="morelinks"><div>
-            Companion <a href="CoproductStrategy.html" title="See companion class">class CoproductStrategy</a>
+            Companion <a href="CoproductStrategy.html" title="See companion trait">trait CoproductStrategy</a>
           </div></span></h3>
       </div>
 
@@ -188,7 +215,7 @@ with Options
       </h4>
 
       
-          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/47deg/case-classy/tree/master/modules/generic/derive/MkDecoder.scala" target="_blank">MkDecoder.scala</a></dd></dl><div class="toggleContainer block">
           <span class="toggle">
             Linear Supertypes
           </span>
@@ -238,7 +265,60 @@ with Options
         <div id="allMembers">
         
 
-        
+        <div id="types" class="types members">
+              <h3>Type Members</h3>
+              <ol><li name="classy.generic.derive.CoproductStrategy.Nested" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="NestedextendsCoproductStrategywithProductwithSerializable"></a><a id="Nested:Nested"></a>
+      <span class="permalink">
+      <a href="../../../classy/generic/derive/CoproductStrategy$.html#NestedextendsCoproductStrategywithProductwithSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a title="A CoproductStrategy that decodes by reading the input at a nested
+path based off the name of the type to decode
+" href="CoproductStrategy$$Nested.html">
+              <span class="name">Nested</span>
+            </a><span class="params">(<span name="naming">naming: <a href="NamingStrategy.html" class="extype" name="classy.generic.derive.NamingStrategy">NamingStrategy</a> = <span class="symbol"><span class="name"><a href="NamingStrategy$.html">NamingStrategy.CamelCase</a></span></span></span>)</span><span class="result"> extends <a href="CoproductStrategy.html" class="extype" name="classy.generic.derive.CoproductStrategy">CoproductStrategy</a> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      
+      <p class="shortcomment cmt">A <a href="CoproductStrategy.html" class="extype" name="classy.generic.derive.CoproductStrategy">CoproductStrategy</a> that decodes by reading the input at a nested
+path based off the name of the type to decode
+</p><div class="fullcomment"><div class="comment cmt"><p>A <a href="CoproductStrategy.html" class="extype" name="classy.generic.derive.CoproductStrategy">CoproductStrategy</a> that decodes by reading the input at a nested
+path based off the name of the type to decode
+</p></div><dl class="paramcmts block"><dt class="param">naming</dt><dd class="cmt"><p>a <a href="NamingStrategy.html" class="extype" name="classy.generic.derive.NamingStrategy">NamingStrategy</a> for mapping the name of the type to
+decode to the path name in the input</p></dd></dl></div>
+    </li><li name="classy.generic.derive.CoproductStrategy.Typed" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="TypedextendsCoproductStrategywithProductwithSerializable"></a><a id="Typed:Typed"></a>
+      <span class="permalink">
+      <a href="../../../classy/generic/derive/CoproductStrategy$.html#TypedextendsCoproductStrategywithProductwithSerializable" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a title="A CoproductStrategy that decodes by reading a type field to determine
+how to decode the nested value
+" href="CoproductStrategy$$Typed.html">
+              <span class="name">Typed</span>
+            </a><span class="params">(<span name="fieldName">fieldName: <span class="extype" name="java.lang.String">String</span> = <span class="symbol">&quot;type&quot;</span></span>, <span name="naming">naming: <a href="NamingStrategy.html" class="extype" name="classy.generic.derive.NamingStrategy">NamingStrategy</a> = <span class="symbol"><span class="name"><a href="NamingStrategy$.html">NamingStrategy.CamelCase</a></span></span></span>)</span><span class="result"> extends <a href="CoproductStrategy.html" class="extype" name="classy.generic.derive.CoproductStrategy">CoproductStrategy</a> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      
+      <p class="shortcomment cmt">A <a href="CoproductStrategy.html" class="extype" name="classy.generic.derive.CoproductStrategy">CoproductStrategy</a> that decodes by reading a type field to determine
+how to decode the nested value
+</p><div class="fullcomment"><div class="comment cmt"><p>A <a href="CoproductStrategy.html" class="extype" name="classy.generic.derive.CoproductStrategy">CoproductStrategy</a> that decodes by reading a type field to determine
+how to decode the nested value
+</p></div><dl class="paramcmts block"><dt class="param">fieldName</dt><dd class="cmt"><p>the name of the type field</p></dd><dt class="param">naming</dt><dd class="cmt"><p>a <a href="NamingStrategy.html" class="extype" name="classy.generic.derive.NamingStrategy">NamingStrategy</a> to map the names of the decodable types
+to the corresponding candidate values to be read from the type field</p></dd></dl></div>
+    </li></ol>
+            </div>
 
         
 
@@ -579,24 +659,6 @@ with Options
     </span>)</span>
               
         </dd></dl></div>
-    </li><li name="classy.generic.derive.CoproductStrategy.default" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="default"></a><a id="default:default"></a>
-      <span class="permalink">
-      <a href="../../../classy/generic/derive/CoproductStrategy$.html#default" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">object</span>
-      </span>
-      <span class="symbol">
-        <a title="" href="CoproductStrategy$$default$.html">
-              <span class="name">default</span>
-            </a><span class="result"> extends <a href="CoproductStrategy.html" class="extype" name="classy.generic.derive.CoproductStrategy">CoproductStrategy</a></span>
-      </span>
-      
-      
     </li>
               </ol>
             </div>

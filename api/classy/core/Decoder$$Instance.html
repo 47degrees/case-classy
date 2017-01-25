@@ -128,9 +128,43 @@
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="index.html" class="extype" name="classy.core">core</a></dd></dl></div>
     </li><li class="current-entities indented3">
                         <span class="separator"></span>
-                        <a class="class" href="" title=""></a>
-                        <a href="" title="">
+                        <a class="class" href="Decoder$$Const.html" title="An implementation of Decoder that decodes a constant
+succesful value
+"></a>
+                        <a href="Decoder$$Const.html" title="An implementation of Decoder that decodes a constant
+succesful value
+">
+                          Const
+                        </a>
+                      </li><li class="current-entities indented3">
+                        <span class="separator"></span>
+                        <a class="class" href="Decoder$$Fail.html" title="An implementation of Decoder that always fails with constant
+error
+"></a>
+                        <a href="Decoder$$Fail.html" title="An implementation of Decoder that always fails with constant
+error
+">
+                          Fail
+                        </a>
+                      </li><li class="current-entities indented3">
+                        <span class="separator"></span>
+                        <a class="class" href="" title="The default implementation of Decoder backed by a function
+A =&gt; Either[DecodeError, B]
+"></a>
+                        <a href="" title="The default implementation of Decoder backed by a function
+A =&gt; Either[DecodeError, B]
+">
                           Instance
+                        </a>
+                      </li><li class="current-entities indented3">
+                        <a class="object" href="Decoder$$Join$.html" title="Companion containing supporting implicits for joining decoders
+into tupled decoders
+"></a>
+                        <a class="class" href="Decoder$$Join.html" title="A type class capturing the ability to join two decoders into one
+"></a>
+                        <a href="Decoder$$Join.html" title="A type class capturing the ability to join two decoders into one
+">
+                          Join
                         </a>
                       </li>
               </ul>
@@ -151,7 +185,7 @@
 
       <h4 id="signature" class="signature">
       <span class="modifier_kind">
-        <span class="modifier"></span>
+        <span class="modifier">final </span>
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
@@ -160,7 +194,9 @@
       </h4>
 
       
-          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>The default implementation of <a href="Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a> backed by a function
+<code>A =&gt; Either[DecodeError, B]</code>
+</p></div><dl class="paramcmts block"><dt class="param">run</dt><dd class="cmt"><p>the backing function</p></dd></dl><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/47deg/case-classy/tree/master/modules/core/Decoder.scala" target="_blank">Decoder.scala</a></dd></dl><div class="toggleContainer block">
           <span class="toggle">
             Linear Supertypes
           </span>
@@ -210,7 +246,7 @@
         <div id="allMembers">
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
-              <ol><li name="classy.core.Decoder.Instance#&lt;init&gt;" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+              <ol><li name="classy.core.Decoder.Instance#&lt;init&gt;" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="&lt;init&gt;(run:A=&gt;scala.util.Either[classy.core.DecodeError,B]):classy.core.Decoder.Instance[A,B]"></a><a id="&lt;init&gt;:Instance[A,B]"></a>
       <span class="permalink">
       <a href="../../classy/core/Decoder$$Instance.html#&lt;init&gt;(run:A=&gt;scala.util.Either[classy.core.DecodeError,B]):classy.core.Decoder.Instance[A,B]" title="Permalink">
@@ -225,7 +261,7 @@
         <span class="name">Instance</span><span class="params">(<span name="run">run: (<span class="extype" name="classy.core.Decoder.Instance.A">A</span>) ⇒ <span class="extype" name="scala.util.Either">Either</span>[<a href="DecodeError.html" class="extype" name="classy.core.DecodeError">DecodeError</a>, <span class="extype" name="classy.core.Decoder.Instance.B">B</span>]</span>)</span>
       </span>
       
-      
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">run</dt><dd class="cmt"><p>the backing function</p></dd></dl></div>
     </li></ol>
             </div>
 
@@ -323,6 +359,22 @@ the input of another
 </p><div class="fullcomment"><div class="comment cmt"><p>Construct a new decoder by using the output of this decoder as
 the input of another
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a></dd></dl></div>
+    </li><li name="classy.core.Decoder.Instance#apply" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="apply(a:A):scala.util.Either[classy.core.DecodeError,B]"></a><a id="apply(A):Either[DecodeError,B]"></a>
+      <span class="permalink">
+      <a href="../../classy/core/Decoder$$Instance.html#apply(a:A):scala.util.Either[classy.core.DecodeError,B]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">apply</span><span class="params">(<span name="a">a: <span class="extype" name="classy.core.Decoder.Instance.A">A</span></span>)</span><span class="result">: <span class="extype" name="scala.util.Either">Either</span>[<a href="DecodeError.html" class="extype" name="classy.core.DecodeError">DecodeError</a>, <span class="extype" name="classy.core.Decoder.Instance.B">B</span>]</span>
+      </span>
+      
+      <p class="shortcomment cmt">Decode a value of type <code>A</code> as type <code>B</code></p><div class="fullcomment"><div class="comment cmt"><p>Decode a value of type <code>A</code> as type <code>B</code></p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="classy.core.Decoder.Instance">Instance</a> → <a href="Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a></dd></dl></div>
     </li><li name="scala.Any#asInstanceOf" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="asInstanceOf[T0]:T0"></a>
       <span class="permalink">
@@ -400,7 +452,7 @@ the input to this decoder
 </p><div class="fullcomment"><div class="comment cmt"><p>Construct a new decoder by using the result of another decoder as
 the input to this decoder
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a></dd></dl></div>
-    </li><li name="classy.core.Decoder.Instance#decode" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+    </li><li name="classy.core.Decoder#decode" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="decode(a:A):scala.util.Either[classy.core.DecodeError,B]"></a><a id="decode(A):Either[DecodeError,B]"></a>
       <span class="permalink">
       <a href="../../classy/core/Decoder$$Instance.html#decode(a:A):scala.util.Either[classy.core.DecodeError,B]" title="Permalink">
@@ -408,14 +460,34 @@ the input to this decoder
       </a>
     </span>
       <span class="modifier_kind">
-        <span class="modifier"></span>
+        <span class="modifier">final </span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
         <span class="name">decode</span><span class="params">(<span name="a">a: <span class="extype" name="classy.core.Decoder.Instance.A">A</span></span>)</span><span class="result">: <span class="extype" name="scala.util.Either">Either</span>[<a href="DecodeError.html" class="extype" name="classy.core.DecodeError">DecodeError</a>, <span class="extype" name="classy.core.Decoder.Instance.B">B</span>]</span>
       </span>
       
-      <p class="shortcomment cmt">Decode a value of type <code>A</code> as type <code>B</code></p><div class="fullcomment"><div class="comment cmt"><p>Decode a value of type <code>A</code> as type <code>B</code></p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="classy.core.Decoder.Instance">Instance</a> → <a href="Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a></dd></dl></div>
+      <p class="shortcomment cmt">Decode a value of type <code>A</code> as type <code>B</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Decode a value of type <code>A</code> as type <code>B</code>.</p><p>This is an alias for <a href="Decoder.html#apply(a:A):scala.util.Either[classy.core.DecodeError,B]" class="extmbr" name="classy.core.Decoder#apply">apply</a>.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a></dd></dl></div>
+    </li><li name="classy.core.Decoder#deepOptional" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="deepOptional:classy.core.Decoder[A,Option[B]]"></a><a id="deepOptional:Decoder[A,Option[B]]"></a>
+      <span class="permalink">
+      <a href="../../classy/core/Decoder$$Instance.html#deepOptional:classy.core.Decoder[A,Option[B]]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">deepOptional</span><span class="result">: <a href="Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a>[<span class="extype" name="classy.core.Decoder.Instance.A">A</span>, <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="classy.core.Decoder.Instance.B">B</span>]]</span>
+      </span>
+      
+      <p class="shortcomment cmt">Constructs a new decoder that optionally decodes a value.</p><div class="fullcomment"><div class="comment cmt"><p>Constructs a new decoder that optionally decodes a value. Deep
+errors other than a missing value still cause the resulting
+decoder to fail.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a></dd><dt>See also</dt><dd><span class="cmt"><p><a href="DecodeError$$AtPath.html#deepError:classy.core.DecodeError" class="extmbr" name="classy.core.DecodeError.AtPath#deepError">DecodeError.AtPath.deepError</a></p></span></dd></dl></div>
     </li><li name="classy.core.Decoder#emap" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="emap[C](f:B=&gt;scala.util.Either[classy.core.DecodeError,C]):classy.core.Decoder[A,C]"></a><a id="emap[C]((B)⇒Either[DecodeError,C]):Decoder[A,C]"></a>
       <span class="permalink">
@@ -522,6 +594,40 @@ to either a <code>DecodeError</code> or a new result type
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="classy.core.Decoder#join" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="join[C](that:classy.core.Decoder[A,C]):classy.core.Decoder[A,(B,C)]"></a><a id="join[C](Decoder[A,C]):Decoder[A,(B,C)]"></a>
+      <span class="permalink">
+      <a href="../../classy/core/Decoder$$Instance.html#join[C](that:classy.core.Decoder[A,C]):classy.core.Decoder[A,(B,C)]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">join</span><span class="tparams">[<span name="C">C</span>]</span><span class="params">(<span name="that">that: <a href="Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a>[<span class="extype" name="classy.core.Decoder.Instance.A">A</span>, <span class="extype" name="classy.core.Decoder.join.C">C</span>]</span>)</span><span class="result">: <a href="Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a>[<span class="extype" name="classy.core.Decoder.Instance.A">A</span>, (<span class="extype" name="classy.core.Decoder.Instance.B">B</span>, <span class="extype" name="classy.core.Decoder.join.C">C</span>)]</span>
+      </span>
+      
+      <p class="shortcomment cmt">[use case]  Construct a new decoder by joining this decoder with another,
+tupling the results.</p><div class="fullcomment">[use case] <div class="comment cmt"><p> Construct a new decoder by joining this decoder with another,
+tupling the results. Errors accumulate.</p><p>This behaves similar to <a href="Decoder.html#and[C](that:classy.core.Decoder[A,C]):classy.core.Decoder[A,(B,C)]" class="extmbr" name="classy.core.Decoder#and">and</a> except that instead of always
+returning a nested tuple it attempts to return a flattened
+tuple.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a></dd><div class="full-signature-block toggleContainer">
+            <span class="toggle">
+              <i class="material-icons"></i>
+              Full Signature
+            </span>
+            <div class="hiddenContent full-signature-usecase"><h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">join</span><span class="tparams">[<span name="C">C</span>]</span><span class="params">(<span name="that">that: <a href="Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a>[<span class="extype" name="classy.core.Decoder.Instance.A">A</span>, <span class="extype" name="classy.core.Decoder.join.C">C</span>]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="j">j: <a href="Decoder$$Join.html" class="extype" name="classy.core.Decoder.Join">Join</a>[<span class="extype" name="classy.core.Decoder.Instance.B">B</span>, <span class="extype" name="classy.core.Decoder.join.C">C</span>]</span>)</span><span class="result">: <a href="Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a>[<span class="extype" name="classy.core.Decoder.Instance.A">A</span>, <a href="Decoder$$Join.html#Out" class="extmbr" name="classy.core.Decoder.Join.Out">Out</a>]</span>
+      </span>
+      </h4></div>
+          </div></dl></div>
     </li><li name="classy.core.Decoder#leftMap" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="leftMap(f:classy.core.DecodeError=&gt;classy.core.DecodeError):classy.core.Decoder[A,B]"></a><a id="leftMap((DecodeError)⇒DecodeError):Decoder[A,B]"></a>
       <span class="permalink">
@@ -799,6 +905,25 @@ they fail.
     </span>)</span>
               
         </dd></dl></div>
+    </li><li name="classy.core.Decoder#withDeepDefault" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="withDeepDefault(default:B):classy.core.Decoder[A,B]"></a><a id="withDeepDefault(B):Decoder[A,B]"></a>
+      <span class="permalink">
+      <a href="../../classy/core/Decoder$$Instance.html#withDeepDefault(default:B):classy.core.Decoder[A,B]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">withDeepDefault</span><span class="params">(<span name="default">default: <span class="extype" name="classy.core.Decoder.Instance.B">B</span></span>)</span><span class="result">: <a href="Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a>[<span class="extype" name="classy.core.Decoder.Instance.A">A</span>, <span class="extype" name="classy.core.Decoder.Instance.B">B</span>]</span>
+      </span>
+      
+      <p class="shortcomment cmt">Constructs a new decoder that falls back to a default
+value if a deep missing value error occurs.</p><div class="fullcomment"><div class="comment cmt"><p>Constructs a new decoder that falls back to a default
+value if a deep missing value error occurs.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a></dd><dt>See also</dt><dd><span class="cmt"><p><a href="DecodeError$$AtPath.html#deepError:classy.core.DecodeError" class="extmbr" name="classy.core.DecodeError.AtPath#deepError">DecodeError.AtPath.deepError</a></p></span></dd></dl></div>
     </li><li name="classy.core.Decoder#withDefault" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="withDefault(default:B):classy.core.Decoder[A,B]"></a><a id="withDefault(B):Decoder[A,B]"></a>
       <span class="permalink">
