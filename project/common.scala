@@ -84,6 +84,8 @@ object BuildCommon extends AutoPlugin {
       case _             => Nil
     }),
 
+    scalacOptions in (Compile, doc) :=
+      (scalacOptions in (Compile, doc)).value.filter(_ != "-Xfatal-warnings"),
 
     headers := Map(
       "scala" → (

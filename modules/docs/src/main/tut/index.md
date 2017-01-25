@@ -17,15 +17,15 @@ has _zero_ external dependencies.
 
 ```scala
 // required
-libraryDependencies += "com.fortysevendeg" %% "classy-core"            % "0.2.0"
+libraryDependencies += "com.fortysevendeg" %% "classy-core"            % "0.3.0"
 
 // at least one required
-libraryDependencies += "com.fortysevendeg" %% "classy-config-typesafe" % "0.2.0"
-libraryDependencies += "com.fortysevendeg" %% "classy-config-shocon"   % "0.2.0"
+libraryDependencies += "com.fortysevendeg" %% "classy-config-typesafe" % "0.3.0"
+libraryDependencies += "com.fortysevendeg" %% "classy-config-shocon"   % "0.3.0"
 
 // optional
-libraryDependencies += "com.fortysevendeg" %% "classy-generic"         % "0.2.0"
-libraryDependencies += "com.fortysevendeg" %% "classy-cats"            % "0.2.0"
+libraryDependencies += "com.fortysevendeg" %% "classy-generic"         % "0.3.0"
+libraryDependencies += "com.fortysevendeg" %% "classy-cats"            % "0.3.0"
 ```
 
 The modules provide the following support:
