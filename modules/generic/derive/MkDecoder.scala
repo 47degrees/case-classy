@@ -16,7 +16,7 @@ import core.wheel._
   * [[Options]]
   */
 final case class MkDecoder[A, B](run: Options => Decoder[A, B]) {
-  def decoder(options: Options): Decoder[A, B] = run(options)
+  def decoder(options: Options = Options.default): Decoder[A, B] = run(options)
   def withOptions: MkDecoderWithOptions[A, B] = MkDecoderWithOptions(this, Options.default)
 }
 
@@ -46,6 +46,17 @@ case class MkDecoderWithOptions[A, B](
   /** Adjusts [[Options.coproduct]] */
   def coproduct(strategy: CoproductStrategy): MkDecoderWithOptions[A, B] =
     copy(options = options.copy(coproduct = strategy))
+
+  /** Adjusts [[Options.coproduct]] to [[CoproductStrategy.Nested]] */
+  def nestCoproducts(naming: NamingStrategy = NamingStrategy.CamelCase): MkDecoderWithOptions[A, B] =
+    coproduct(CoproductStrategy.Nested(naming))
+
+  /** Adjusts [[Options.coproduct]] to [[CoproductStrategy.Nested]] */
+  def typeCoproducts(
+    fieldName: String = "type",
+    naming: NamingStrategy = NamingStrategy.CamelCase
+  ): MkDecoderWithOptions[A, B] =
+    coproduct(CoproductStrategy.Typed(fieldName, naming))
 }
 
 private[derive] sealed trait MkDecoderInstances2 extends MkDecoderInstances1 { self: MkDecoder.type =>

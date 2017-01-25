@@ -5,11 +5,11 @@ section: "examples"
 position: 3
 ---
 
-## Examples
-
-More examples/explanations coming soon.
+## Decoding People
 
 ```tut:silent
+// case class hierarchy and configuration text
+
 case class Person(
   firstName: String,
   lastName: String,
@@ -17,70 +17,43 @@ case class Person(
 
 case class MyConfig(
   people: List[Person])
-```
 
-We have a case class hierarchy that models a list of people. We'd like
-to load the following configuration using Typesafe's Config library:
-
-```
-people = [
-
-  { firstName : Augusta,
-    lastName  : Ada },
-
-  { firstName : Donald,
-    lastName  : Knuth },
-
-  { firstName : Grace,
-    lastName  : Hopper }
-
-]
-```
-```tut:invisible
 val configString = """
-people = [
+  people = [
+    { firstName : Augusta,
+      lastName  : Ada },
 
-  { firstName : Augusta,
-    lastName  : Ada },
+    { firstName : Donald,
+      lastName  : Knuth },
 
-  { firstName : Donald,
-    lastName  : Knuth },
+    { firstName : Grace,
+      lastName  : Hopper }
+  ]"""
 
-  { firstName : Grace,
-    lastName  : Hopper }
+// common imports
 
-]
-"""
-```
-
-We can use automatic decoder derivation to make this trivial.
-
-```tut:silent
+import com.typesafe.config.Config
 import classy.config._
-import classy.generic.auto._
 
-val decoder = ConfigDecoder[MyConfig]
-```
+// writing a decoder by hand
+val decodePerson: ConfigDecoder[Person] =
+  readConfig[String]("firstName").join(
+  readConfig[String]("lastName")).join(
+  readConfig[Option[Int]]("age")).map(Person.tupled)
+val manualDecoder = readConfig[List[Config]]("people") andThen decodePerson.sequence
 
-No we can easily decode any Typesafe config object to our data types.
+// deriving a decoder automatically
+import classy.generic._
+val derivedDecoder = deriveDecoder[Config, MyConfig]
 
-```tut:silent
-// load configuration
+// decoding the configuration
+
 import com.typesafe.config.ConfigFactory
-val rawConfig = ConfigFactory.parseString(configString)
-
-// then decode
 import classy.core.DecodeError
-val result0: Either[DecodeError, MyConfig] = decoder(rawConfig)
+
+val rawConfig = ConfigFactory.parseString(configString)
 ```
-
-Case classy also provides helpers so that you don't have to import
-`com.typesafe.config` in most circumstances.
-
-```tut:silent
-// load direclty from string
-val result1: Either[DecodeError, MyConfig] = decoder.fromString(configString)
-
-// load from classpath, shorcut for ConfigFactory.load
-val result2: Either[DecodeError, MyConfig] = decoder.load()
+```tut:book
+manualDecoder(rawConfig)
+derivedDecoder(rawConfig)
 ```
