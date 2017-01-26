@@ -1,4 +1,19 @@
-<html><head><meta charset="utf-8" /><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><title>Case Classy</title><meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="configuration with less hassle" /><meta name="author" content="the contributors" /><meta name="og:image" content="/case-classy/img/poster.png" /><meta name="og:title" content="Case Classy" /><meta name="og:site_name" content="Case Classy" /><meta name="og:url" content="https://github.com/47deg/case-classy" /><meta name="og:type" content="website" /><meta name="og:description" content="configuration with less hassle" /><meta name="twitter:image" content="/case-classy/img/poster.png" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:site" content="" /><link rel="icon" type="image/png" href="/case-classy/img/favicon.png" /><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" /><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" /><link rel="stylesheet" href="/case-classy/highlight/styles/atom-one-light.css" /><link rel="stylesheet" href="/case-classy/css/style.css" /><link rel="stylesheet" href="/case-classy/css/palette.css" /><link rel="stylesheet" href="/case-classy/css/overrides.css" /></head><body><header id="site-header"><div class="navbar-wrapper navbar-inverse"><div class="container"><div class="navbar-header"><button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="/case-classy/" class="brand"><div class="icon-wrapper" style="background:url('/case-classy/img/navbar_brand.png') no-repeat"><span>Case Classy</span></div></a></div><nav class="text-right"><ul class=""><li><a href="https://github.com/47deg/case-classy"><i class="fa fa-github"></i><span class="hidden-xs">GitHub</span></a></li></ul></nav></div></div><div class="jumbotron" style="background-image:url('/case-classy/img/jumbotron_pattern.png')"></div><div><ul class="horizontalNav">       <li><a class="" href="/case-classy/getting-started.html">Getting Started</a></li>  <li><a class="" href="/case-classy/derived.html">Derived</a></li>  <li><a class=" active " href="/case-classy/examples.html">Examples</a></li>  <li><a class="" href="/case-classy/scaladoc.html">Scaladoc</a></li> </ul></div></header><main id="site-main"><section class="use"><div class="container"><div id="content"><h2 id="decoding-people">Decoding People</h2>
+<html><head><meta charset="utf-8" /><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><title>Case Classy</title><meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="configuration with less hassle" /><meta name="author" content="the contributors" /><meta name="og:image" content="/case-classy/img/poster.png" /><meta name="og:title" content="Case Classy" /><meta name="og:site_name" content="Case Classy" /><meta name="og:url" content="https://github.com/47deg/case-classy" /><meta name="og:type" content="website" /><meta name="og:description" content="configuration with less hassle" /><meta name="twitter:image" content="/case-classy/img/poster.png" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:site" content="" /><link rel="icon" type="image/png" href="/case-classy/img/favicon.png" /><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" /><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" /><link rel="stylesheet" href="/case-classy/highlight/styles/atom-one-light.css" /><link rel="stylesheet" href="/case-classy/css/style.css" /><link rel="stylesheet" href="/case-classy/css/palette.css" /><link rel="stylesheet" href="/case-classy/css/overrides.css" /></head><body><header id="site-header"><div class="navbar-wrapper navbar-inverse"><div class="container"><div class="navbar-header"><button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="/case-classy/" class="brand"><div class="icon-wrapper" style="background:url('/case-classy/img/navbar_brand.png') no-repeat"><span>Case Classy</span></div></a></div><nav class="text-right"><ul class=""><li><a href="https://github.com/47deg/case-classy"><i class="fa fa-github"></i><span class="hidden-xs">GitHub</span></a></li></ul></nav></div></div><div class="jumbotron" style="background-image:url('/case-classy/img/jumbotron_pattern.png')"></div><div><ul class="horizontalNav">       <li><a class="" href="/case-classy/quick-start.html">Quick Start</a></li>  <li><a class="" href="/case-classy/key-concepts.html">Concepts</a></li>  <li><a class=" active " href="/case-classy/examples.html">Examples</a></li>  <li><a class="" href="/case-classy/scaladoc.html">Scaladoc</a></li> </ul></div></header><main id="site-main"><section class="use"><div class="container"><div id="content"><h1 id="examples">Examples</h1>
+
+<ul>
+  <li>
+    <p><a href="#decoding-people">Decoding People</a></p>
+
+    <p>Demonstrates writing decoders by hand compared to automatic decoders</p>
+  </li>
+  <li>
+    <p><a href="#configured-app">Configured Application</a></p>
+
+    <p>A trivial application that loads config on boot</p>
+  </li>
+</ul>
+
+<h2 id="decoding-people"><a name="decoding-people" class="anchor" href="#decoding-people">Decoding People</a></h2>
 
 <div class="language-scala highlighter-rouge"><pre class="highlight"><code><span class="c1">// case class hierarchy and configuration text
 </span>
@@ -52,6 +67,67 @@
 <span class="n">derivedDecoder</span><span class="o">(</span><span class="n">rawConfig</span><span class="o">)</span>
 <span class="c1">// res16: scala.util.Either[classy.core.DecodeError,MyConfig] = Right(MyConfig(List(Person(Augusta,Ada,None), Person(Donald,Knuth,None), Person(Grace,Hopper,None))))
 </span></code></pre>
+</div>
+
+<h2 id="configured-application"><a name="configured-app" class="anchor" href="#configured-app">Configured Application</a></h2>
+<div class="language-scala highlighter-rouge"><pre class="highlight"><code><span class="k">import</span> <span class="nn">classy.generic._</span>
+<span class="k">import</span> <span class="nn">classy.config._</span>
+<span class="k">import</span> <span class="nn">com.typesafe.config.Config</span>
+
+<span class="k">object</span> <span class="nc">QuickApplication</span> <span class="o">{</span>
+
+  <span class="c1">// we're going to load a list of people and some trivial actions from configuration data
+</span>  <span class="k">case</span> <span class="k">class</span> <span class="nc">Options</span><span class="o">(</span>
+    <span class="n">people</span> <span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Person</span><span class="o">],</span>
+    <span class="n">actions</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Action</span><span class="o">])</span>
+
+  <span class="k">case</span> <span class="k">class</span> <span class="nc">Person</span><span class="o">(</span>
+    <span class="n">firstName</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span>
+    <span class="n">lastName</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span>
+
+  <span class="k">sealed</span> <span class="k">abstract</span> <span class="k">class</span> <span class="nc">Action</span> <span class="k">extends</span> <span class="nc">Product</span> <span class="k">with</span> <span class="nc">Serializable</span>
+  <span class="k">case</span> <span class="k">class</span> <span class="nc">Dance</span><span class="o">(</span><span class="n">dance</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">Action</span>
+  <span class="k">case</span> <span class="k">class</span> <span class="nc">Sing</span><span class="o">(</span><span class="n">song</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">Action</span>
+  <span class="k">case</span> <span class="k">class</span> <span class="nc">Shout</span><span class="o">(</span><span class="n">expletive</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">Action</span>
+
+  <span class="c1">// main method that might abort if the configuration is invalid
+</span>  <span class="k">def</span> <span class="n">main</span><span class="o">(</span><span class="n">args</span><span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="k">val</span> <span class="n">decoder</span> <span class="k">=</span> <span class="n">deriveDecoder</span><span class="o">[</span><span class="kt">Config</span>, <span class="kt">Options</span><span class="o">]</span>
+
+    <span class="c1">// decoder.load() is just a shortcut for Typesafe's ConfigFactory.load()
+</span>    <span class="n">decoder</span><span class="o">.</span><span class="n">load</span><span class="o">()</span> <span class="k">match</span> <span class="o">{</span>
+
+      <span class="k">case</span> <span class="nc">Left</span><span class="o">(</span><span class="n">error</span><span class="o">)</span> <span class="k">=&gt;</span>
+        <span class="c1">// loading the config failed! this will print a reasonable error message
+</span>        <span class="nc">System</span><span class="o">.</span><span class="n">err</span><span class="o">.</span><span class="n">println</span><span class="o">(</span><span class="s">"config error: "</span> <span class="o">+</span> <span class="n">error</span><span class="o">)</span>
+        <span class="nc">System</span><span class="o">.</span><span class="n">exit</span><span class="o">(-</span><span class="mi">1</span><span class="o">)</span>
+
+      <span class="k">case</span> <span class="nc">Right</span><span class="o">(</span><span class="n">options</span><span class="o">)</span> <span class="k">=&gt;</span>
+        <span class="n">main</span><span class="o">(</span><span class="n">options</span><span class="o">)</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="c1">// main method that is only called with valid config
+</span>  <span class="k">def</span> <span class="n">main</span><span class="o">(</span><span class="n">options</span><span class="k">:</span> <span class="kt">Options</span><span class="o">)</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
+
+    <span class="c1">// assembly messages of everyone doing every action
+</span>    <span class="k">val</span> <span class="n">res</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="k">for</span> <span class="o">{</span>
+      <span class="n">person</span> <span class="k">&lt;-</span> <span class="n">options</span><span class="o">.</span><span class="n">people</span>
+      <span class="n">action</span> <span class="k">&lt;-</span> <span class="n">options</span><span class="o">.</span><span class="n">actions</span>
+      <span class="n">text</span>    <span class="k">=</span> <span class="n">action</span> <span class="k">match</span> <span class="o">{</span>
+        <span class="k">case</span> <span class="nc">Dance</span><span class="o">(</span><span class="n">dance</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">s</span><span class="s">"dances $dance"</span>
+        <span class="k">case</span> <span class="nc">Sing</span><span class="o">(</span><span class="n">song</span><span class="o">)</span>   <span class="k">=&gt;</span> <span class="n">s</span><span class="s">"sings $song"</span>
+        <span class="k">case</span> <span class="nc">Shout</span><span class="o">(</span><span class="n">word</span><span class="o">)</span>  <span class="k">=&gt;</span> <span class="n">s</span><span class="s">"shouts $word at the top of his/her lungs"</span>
+      <span class="o">}</span>
+    <span class="o">}</span> <span class="k">yield</span> <span class="n">s</span><span class="s">"$person $text"</span>
+
+    <span class="c1">// end of the world: print
+</span>    <span class="n">res</span><span class="o">.</span><span class="n">foreach</span><span class="o">(</span><span class="n">println</span><span class="o">)</span>
+  <span class="o">}</span>
+
+<span class="o">}</span>
+
+</code></pre>
 </div>
 </div></div></section></main><footer id="site-footer"><div class="container"><div class="row"><div class="col-xs-6"><p>Case Classy is designed and developed by <a href="https://github.com/47deg/case-classy" target="_blank">the contributors</a></p></div><div class="col-xs-6"><p class="text-right"><a href="https://github.com/47deg/case-classy"><span class="fa fa-github"></span>View on Github</a></p></div></div></div></footer><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script><script src="/case-classy/highlight/highlight.pack.js"></script><script>hljs.configure({
 languages:['scala','java','bash']
