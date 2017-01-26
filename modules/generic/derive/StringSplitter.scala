@@ -8,7 +8,7 @@ package derive
 
 import scala.annotation.switch
 import scala.annotation.tailrec
-//import twotails.mutualrec
+import twotails.mutualrec
 
 /** A utility for splitting strings on word/phrase boundaries.
   * This supports the various [[NamingStrategy naming strategies]]
@@ -34,7 +34,8 @@ object StringSplitter {
     }
   }
 
-  @tailrec private[this] def segments(
+  @tailrec
+  private[this] def segments(
     input: String, rem: List[Int], acc: List[String]
   ): List[String] =
     rem match {
@@ -42,7 +43,7 @@ object StringSplitter {
       case _                       => acc
     }
 
-  // @mutalrec
+  @mutualrec
   private[this] def firstUpper(chars: Array[Char], i: Int, end: Int, acc: List[Int]): List[Int] =
     if (i >= end) acc else CharCat(chars(i)) match {
       case AlphaUpper => inUpper(chars, i + 1, end, acc, 1)
@@ -50,7 +51,7 @@ object StringSplitter {
       case _          => inLower(chars, i + 1, end, acc)
     }
 
-  // @mutalrec
+  @mutualrec
   private[this] def inUpper(chars: Array[Char], i: Int, end: Int, acc: List[Int], offset: Int): List[Int] =
     if (i >= end) acc else CharCat(chars(i)) match {
       case AlphaUpper => inUpper(chars, i + 1, end, acc, 1)
@@ -59,7 +60,7 @@ object StringSplitter {
       case _          => inLower(chars, i + 1, end, (i - offset) :: (i - offset) :: acc)
     }
 
-  // @mutalrec
+  @mutualrec
   private[this] def inLower(chars: Array[Char], i: Int, end: Int, acc: List[Int]): List[Int] =
     if (i >= end) acc else CharCat(chars(i)) match {
       case AlphaUpper => firstUpper(chars, i + 1, end, i :: i :: acc)
@@ -67,7 +68,7 @@ object StringSplitter {
       case _          => inLower(chars, i + 1, end, acc)
     }
 
-  // @mutalrec
+  @mutualrec
   private[this] def inSeparator(chars: Array[Char], i: Int, end: Int, acc: List[Int]): List[Int] =
     if (i >= end) acc else CharCat(chars(i)) match {
       case AlphaUpper => firstUpper(chars, i + 1, end, i :: acc)
