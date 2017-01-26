@@ -8,7 +8,7 @@ lazy val V = new {
   lazy val scalacheckShapeless = "1.1.4"
   lazy val shapeless           = "2.3.2"
   lazy val shocon              = "0.1.7"
-  lazy val twoTails            = "0.3.0"
+  lazy val twoTails            = "0.3.1"
 }
 
 lazy val root = (project in file("."))
@@ -64,14 +64,12 @@ lazy val generic =
     .settings(libraryDependencies ++= Seq(
       "com.chuusai"  %%% "shapeless" % V.shapeless
     ))
-/* // one day in the near future...
     .settings(
-      libraryDependencies += compilerPlugin("com.github.wheaties" %% "twotails" % V.twoTails),
+      libraryDependencies += compilerPlugin("com.github.wheaties" %% "twotails" % V.twoTails cross CrossVersion.full),
       ivyConfigurations   += config("compile-only").hide,
-      libraryDependencies += "com.github.wheaties" %% "twotails-annotations" % V.twoTails % "compile-only",
+      libraryDependencies += "com.github.wheaties" %% "twotails-annotations" % V.twoTails % "compile-only" cross CrossVersion.full,
       unmanagedClasspath in Compile ++= update.value.select(configurationFilter("compile-only"))
-  )
- */
+    )
 lazy val genericJS = generic.js
 lazy val genericJVM = generic.jvm
 
