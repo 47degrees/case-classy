@@ -15,6 +15,7 @@ completely modular, support Scala 2.11 and
 2.12, [ScalaJS](https://www.scala-js.org) ready, and the core library
 has _zero_ external dependencies.
 
+<a name="modules"></a>
 ```scala
 // required
 libraryDependencies += "com.fortysevendeg" %% "classy-core"            % "0.3.0"

@@ -114,10 +114,15 @@ trait Decoder[A, B] extends Serializable {
       }
     })
 
-  /** Constructs a new decoder that decodes a sequence of inputs. The
-    * result is sequenced so that any errors cause the overall decoder
-    * to fail. Errors accumulate and are marked with their index if
-    * they fail.
+  /** Constructs a new decoder that decodes a sequence of inputs into a
+    * sequence of outputs.
+    *
+    * The result is sequenced so that any errors cause the overall
+    * decoder to fail. Errors accumulate and are marked with their
+    * index if they fail.
+    *
+    * @usecase def sequence: Decoder[List[A], List[B]]
+    * @inheritdoc
     */
   final def sequence[F[_]](implicit Ft: Traversable[F], Fi: Indexed[F]): Decoder[F[A], F[B]] =
     instance { fa =>
