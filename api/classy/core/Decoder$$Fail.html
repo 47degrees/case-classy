@@ -800,10 +800,11 @@ the other. Errors accumulate.
         <span class="name">sequence</span><span class="result">: <a href="Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a>[<span class="extype" name="scala.List">List</span>[<span class="extype" name="classy.core.Decoder.Fail.A">A</span>], <span class="extype" name="scala.List">List</span>[<span class="extype" name="classy.core.Decoder.Fail.B">B</span>]]</span>
       </span>
       
-      <p class="shortcomment cmt">[use case]  Constructs a new decoder that decodes a sequence of inputs.</p><div class="fullcomment">[use case] <div class="comment cmt"><p> Constructs a new decoder that decodes a sequence of inputs. The
-result is sequenced so that any errors cause the overall decoder
-to fail. Errors accumulate and are marked with their index if
-they fail.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a></dd><div class="full-signature-block toggleContainer">
+      <p class="shortcomment cmt">[use case]  Constructs a new decoder that decodes a sequence of inputs into a
+sequence of outputs.</p><div class="fullcomment">[use case] <div class="comment cmt"><p> Constructs a new decoder that decodes a sequence of inputs into a
+sequence of outputs.</p><p>The result is sequenced so that any errors cause the overall
+decoder to fail. Errors accumulate and are marked with their
+index if they fail.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a></dd><div class="full-signature-block toggleContainer">
             <span class="toggle">
               <i class="material-icons"></i>
               Full Signature
