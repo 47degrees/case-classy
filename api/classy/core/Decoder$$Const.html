@@ -770,9 +770,9 @@ fail.
 the other. Errors accumulate.
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a></dd></dl></div>
     </li><li name="classy.core.Decoder#sequence" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="sequence[F[_]](implicitFt:classy.core.wheel.Traversable[F],implicitFi:classy.core.wheel.Indexed[F]):classy.core.Decoder[F[A],F[B]]"></a><a id="sequence[F[_]](Traversable[F],Indexed[F]):Decoder[F[A],F[B]]"></a>
+      <a id="sequence:classy.core.Decoder[List[A],List[B]]"></a><a id="sequence:Decoder[List[A],List[B]]"></a>
       <span class="permalink">
-      <a href="../../classy/core/Decoder$$Const.html#sequence[F[_]](implicitFt:classy.core.wheel.Traversable[F],implicitFi:classy.core.wheel.Indexed[F]):classy.core.Decoder[F[A],F[B]]" title="Permalink">
+      <a href="../../classy/core/Decoder$$Const.html#sequence:classy.core.Decoder[List[A],List[B]]" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -781,14 +781,27 @@ the other. Errors accumulate.
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">sequence</span><span class="tparams">[<span name="F">F<span class="tparams">[<span name="_">_</span>]</span></span>]</span><span class="params">(<span class="implicit">implicit </span><span name="Ft">Ft: <a href="wheel/Traversable.html" class="extype" name="classy.core.wheel.Traversable">Traversable</a>[<span class="extype" name="classy.core.Decoder.sequence.F">F</span>]</span>, <span name="Fi">Fi: <a href="wheel/Indexed.html" class="extype" name="classy.core.wheel.Indexed">Indexed</a>[<span class="extype" name="classy.core.Decoder.sequence.F">F</span>]</span>)</span><span class="result">: <a href="Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a>[<span class="extype" name="classy.core.Decoder.sequence.F">F</span>[<span class="extype" name="classy.core.Decoder.Const.A">A</span>], <span class="extype" name="classy.core.Decoder.sequence.F">F</span>[<span class="extype" name="classy.core.Decoder.Const.B">B</span>]]</span>
+        <span class="name">sequence</span><span class="result">: <a href="Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a>[<span class="extype" name="scala.List">List</span>[<span class="extype" name="classy.core.Decoder.Const.A">A</span>], <span class="extype" name="scala.List">List</span>[<span class="extype" name="classy.core.Decoder.Const.B">B</span>]]</span>
       </span>
       
-      <p class="shortcomment cmt">Constructs a new decoder that decodes a sequence of inputs.</p><div class="fullcomment"><div class="comment cmt"><p>Constructs a new decoder that decodes a sequence of inputs. The
+      <p class="shortcomment cmt">[use case]  Constructs a new decoder that decodes a sequence of inputs.</p><div class="fullcomment">[use case] <div class="comment cmt"><p> Constructs a new decoder that decodes a sequence of inputs. The
 result is sequenced so that any errors cause the overall decoder
 to fail. Errors accumulate and are marked with their index if
-they fail.
-</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a></dd></dl></div>
+they fail.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a></dd><div class="full-signature-block toggleContainer">
+            <span class="toggle">
+              <i class="material-icons"></i>
+              Full Signature
+            </span>
+            <div class="hiddenContent full-signature-usecase"><h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">sequence</span><span class="tparams">[<span name="F">F<span class="tparams">[<span name="_">_</span>]</span></span>]</span><span class="params">(<span class="implicit">implicit </span><span name="Ft">Ft: <a href="wheel/Traversable.html" class="extype" name="classy.core.wheel.Traversable">Traversable</a>[<span class="extype" name="classy.core.Decoder.sequence.F">F</span>]</span>, <span name="Fi">Fi: <a href="wheel/Indexed.html" class="extype" name="classy.core.wheel.Indexed">Indexed</a>[<span class="extype" name="classy.core.Decoder.sequence.F">F</span>]</span>)</span><span class="result">: <a href="Decoder.html" class="extype" name="classy.core.Decoder">Decoder</a>[<span class="extype" name="classy.core.Decoder.sequence.F">F</span>[<span class="extype" name="classy.core.Decoder.Const.A">A</span>], <span class="extype" name="classy.core.Decoder.sequence.F">F</span>[<span class="extype" name="classy.core.Decoder.Const.B">B</span>]]</span>
+      </span>
+      </h4></div>
+          </div></dl></div>
     </li><li name="scala.AnyRef#synchronized" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a><a id="synchronized[T0](⇒T0):T0"></a>
       <span class="permalink">
