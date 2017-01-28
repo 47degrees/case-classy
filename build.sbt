@@ -2,7 +2,7 @@ import UnidocKeys._
 //
 
 lazy val V = new {
-  lazy val cats                = "0.8.1"
+  lazy val cats                = "0.9.0"
   lazy val typesafeConfig      = "1.3.0"
   lazy val scalacheck          = "1.13.4"
   lazy val scalacheckShapeless = "1.1.4"
