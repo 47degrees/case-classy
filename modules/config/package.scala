@@ -56,10 +56,15 @@ package object config {
     implicit read: ReadConfig[A]): ConfigDecoder[A] = read(path)
 
 
-  implicit class ConfigDecoderOps[A](val decoder: ConfigDecoder[A]) extends AnyVal {
+  implicit class ConfigDecoderOps[A](
+    private val decoder: ConfigDecoder[A]
+  ) extends AnyVal {
 
     /** Converts this decoder to a decoder that parses a string instead of
-      * a config object */
+      * a config object
+      *
+      * @group config
+      */
     def fromString: Decoder[String, A] =
       decoder compose Decoder.instance { data =>
         try {
@@ -70,9 +75,15 @@ package object config {
       }
 
     //#+typesafe
+    /**
+      * @group config
+      */
     def load(): Either[DecodeError, A] =
       decoder(ConfigFactory.load())
 
+    /**
+     * @group config
+     */
     def load(loader: ClassLoader): Either[DecodeError, A] =
       decoder(ConfigFactory.load(loader))
     //#-typesafe
