@@ -12,12 +12,11 @@ import core._
 package object cats {
 
   implicit class DecoderCatsOps[A, B](val decoder: Decoder[A, B]) extends AnyVal {
-
-    /** A Kleisli arrow for this decoder's decode function */
+    /** A Kleisli arrow for this decoder */
     def kleisli: Kleisli[Either[DecodeError, ?], A, B] = Kleisli(decoder.apply)
   }
 
-  implicit def decoderStdInstance[Z]: Monad[Decoder[Z, ?]] =
+  implicit def decoderMonadInstance[Z]: Monad[Decoder[Z, ?]] =
     new Monad[Decoder[Z, ?]] {
 
       override def map[A, B](a: Decoder[Z, A])(f: A => B): Decoder[Z, B] =
@@ -35,7 +34,17 @@ package object cats {
           case Left(a1) => tailRecM(a1)(f)
           case Right(b) => Decoder.const(b)
         }
+    }
 
+  implicit val decodeErrorEq: Eq[DecodeError] =
+    new Eq[DecodeError] {
+      def eqv(x: DecodeError, y: DecodeError): Boolean = x == y
+    }
+
+  implicit val decodeErrorMonoidInstance: Monoid[DecodeError] =
+    new Monoid[DecodeError] {
+      def empty = DecodeError.Identity
+      def combine(x: DecodeError, y: DecodeError): DecodeError = x && y
     }
 
 }
