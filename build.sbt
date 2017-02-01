@@ -2,7 +2,7 @@ import UnidocKeys._
 //
 
 lazy val V = new {
-  lazy val cats                = "0.8.1"
+  lazy val cats                = "0.9.0"
   lazy val typesafeConfig      = "1.3.0"
   lazy val scalacheck          = "1.13.4"
   lazy val scalacheckShapeless = "1.1.4"
@@ -162,6 +162,11 @@ lazy val testsShocon =
 lazy val testsShoconJS = testsShocon.js
 lazy val testsShoconJVM = testsShocon.jvm
 
+lazy val unidocMisc =
+  (project in file("modules/unidoc"))
+    .dependsOn(coreJVM, catsJVM, typesafeJVM)
+    .settings(noPublishSettings)
+
 lazy val docs =
   (project in file("modules/docs"))
     .enablePlugins(MicrositesPlugin)
@@ -194,7 +199,7 @@ lazy val docs =
         "gray-lighter"    -> "#F4F5F9",
         "white-color"     -> "#FFFFFF"),
       unidocProjectFilter in (ScalaUnidoc, unidoc) :=
-        inProjects(coreJVM, genericJVM, catsJVM, typesafeJVM),
+        inProjects(coreJVM, genericJVM, catsJVM, typesafeJVM, unidocMisc),
       autoAPIMappings := true,
       docsMappingsAPIDir := "api",
       addMappingsToSiteDir(mappings in (ScalaUnidoc, packageDoc), docsMappingsAPIDir),

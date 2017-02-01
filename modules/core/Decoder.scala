@@ -12,10 +12,29 @@ import wheel._
 /** A type class capturing the ability to decode data of type `A` to `B`.
   *
   * To construct a new decoder, consider using [[Decoder.instance]].
+  *
+  * @groupprio abstract 1
+  * @groupname abstract Abstract Value Members
+  *
+  * @groupprio concrete 2
+  * @groupname concrete Concrete Value Members
+  *
+  * @groupprio config 3
+  * @groupname config with Classy Config
+  * @groupdesc config Methods available on `Decoder[Config, ?]` when
+  * `classy.config._` is imported into scope
+  *
+  * @groupprio cats 4
+  * @groupname cats with Classy Cats
+  * @groupdesc cats Methods available when `classy.cats._` is imported
+  * into scope
   */
 trait Decoder[A, B] extends Serializable {
 
-  /** Decode a value of type `A` as type `B` */
+  /** Decode a value of type `A` as type `B`
+    *
+    * @group abstract
+    */
   def apply(a: A): Either[DecodeError, B]
 
   import Decoder.instance
@@ -24,49 +43,68 @@ trait Decoder[A, B] extends Serializable {
   /** Decode a value of type `A` as type `B`.
     *
     * This is an alias for [[apply]].
+    *
+    * @group concrete
     */
   final def decode(a: A): Either[DecodeError, B] = apply(a)
 
   /** Construct a new decoder by mapping the output of this decoder
+    *
+    * @group concrete
     */
   final def map[C](f: B => C): Decoder[A, C] =
     instance(input => apply(input).map(f))
 
   /** Construct a new decoder by mapping the output of this decoder
     * to either a `DecodeError` or a new result type
+    *
+    * @group concrete
     */
   final def emap[C](f: B => Either[DecodeError, C]): Decoder[A, C] =
     instance(input => apply(input).flatMap(f))
 
   /** Construct a new decoder by mapping the error output of this decoder
     * to a new error
+    *
+    * @group concrete
     */
   final def leftMap(f: DecodeError => DecodeError): Decoder[A, B] =
     instance(input => apply(input).leftMap(f))
 
   /** Construct a new decoder by mapping the input to this decoder
+    *
+    * @group concrete
     */
   final def mapInput[Z](f: Z => A): Decoder[Z, B] =
     instance(input => apply(f(input)))
 
-  /** Construct a new decoder through a monadic bind */
+  /** Construct a new decoder through a monadic bind
+    *
+    * @group concrete
+    */
   final def flatMap[C](f: B => Decoder[A, C]): Decoder[A, C] =
     instance(input => apply(input).flatMap(b => f(b).apply(input)))
 
   /** Construct a new decoder by using the result of another decoder as
     * the input to this decoder
+    *
+    * @group concrete
     */
   final def compose[Z](previous: Decoder[Z, A]): Decoder[Z, B] =
     instance(input => previous.apply(input).flatMap(apply))
 
   /** Construct a new decoder by using the output of this decoder as
     * the input of another
+    *
+    * @group concrete
     */
   final def andThen[C](next: Decoder[B, C]): Decoder[A, C] =
     instance(input => apply(input).flatMap(next.apply))
 
   /** Construct a new decoder by joining this decoder with another,
     * tupling the results. Errors accumulate.
+    *
+    * @group concrete
     */
   final def and[C](that: Decoder[A, C]): Decoder[A, (B, C)] =
     instance { input =>
@@ -87,6 +125,8 @@ trait Decoder[A, B] extends Serializable {
     * returning a nested tuple it attempts to return a flattened
     * tuple.
     *
+    * @group concrete
+    *
     * @usecase def join[C](that: Decoder[A, C]): Decoder[A, (B, C)]
     * @inheritdoc
     */
@@ -104,6 +144,8 @@ trait Decoder[A, B] extends Serializable {
 
   /** Construct a new decoder using this decoder first. If it fails, use
     * the other. Errors accumulate.
+    *
+    * @group concrete
     */
   final def or[BB >: B](that: Decoder[A, BB]): Decoder[A, BB] =
     instance(input => apply(input) match {
@@ -121,6 +163,8 @@ trait Decoder[A, B] extends Serializable {
     * decoder to fail. Errors accumulate and are marked with their
     * index if they fail.
     *
+    * @group concrete
+    *
     * @usecase def sequence: Decoder[List[A], List[B]]
     * @inheritdoc
     */
@@ -134,6 +178,8 @@ trait Decoder[A, B] extends Serializable {
   /** Constructs a new decoder that optionally decodes a value. Errors
     * other than a missing value still cause the resulting decoder to
     * fail.
+    *
+    * @group concrete
     */
   final def optional: Decoder[A, Option[B]] =
     instance(input => apply(input).fold(_ match {
@@ -143,7 +189,9 @@ trait Decoder[A, B] extends Serializable {
 
   /** Constructs a new decoder that optionally decodes a value. Deep
     * errors other than a missing value still cause the resulting
-    * decoder to fail.
+    * decoder to fail
+    *
+    * @group concrete
     *
     * @see [[DecodeError.AtPath.deepError]]
     */
@@ -154,24 +202,30 @@ trait Decoder[A, B] extends Serializable {
     }, _.some.right))
 
   /** Constructs a new decoder that falls back to a default
-    * value if a missing value error occurs.
+    * value if a missing value error occurs
+    *
+    * @group concrete
     */
   final def withDefault(default: B): Decoder[A, B] =
     optional.map(_ getOrElse default)
 
   /** Constructs a new decoder that falls back to a default
-    * value if a deep missing value error occurs.
+    * value if a deep missing value error occurs
+    *
+    * @group concrete
     *
     * @see [[DecodeError.AtPath.deepError]]
     */
   final def withDeepDefault(default: B): Decoder[A, B] =
     deepOptional.map(_ getOrElse default)
 
-  /** Constructs a new decoder that falls back to a value if _any_ error
-    * occurs.
+  /** Constructs a new decoder that falls back to a value if any error
+    * occurs
     *
     * To provide default values for a decoder, consider using
     * [[withDefault]].
+    *
+    * @group concrete
     */
   final def withFallback(fallback: B): Decoder[A, B] =
     instance(input => (apply(input) getOrElse fallback).right)
@@ -179,11 +233,15 @@ trait Decoder[A, B] extends Serializable {
   /** Construct a new decoder that first reads a path. The value read
     * is then passed to this decoder. Errors are adjusted to reflect
     * that they occurred at a nested path.
+    *
+    * @group concrete
     */
   final def atPath(path: String)(implicit read: Read[A, A]): Decoder[A, B] =
     read(path) andThen leftMap(_.atPath(path))
 
   /** Construct a new decoder that traces the result to stdout
+    *
+    * @group concrete
     */
   final def trace(prefix: String = "> "): Decoder[A, B] =
     instance { input =>

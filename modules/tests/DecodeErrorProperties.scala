@@ -7,6 +7,8 @@ package core
 
 import scala.Predef._
 
+//import _root_.cats.instances.all._
+import _root_.cats.kernel.laws._
 import org.scalacheck._
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.Gen.listOf
@@ -15,10 +17,12 @@ import org.scalacheck.Prop._
 import org.scalacheck.derive._
 import org.scalacheck.{ Shapeless => blackMagic }
 
+import cats._
+
 class DecodeErrorProperties extends Properties("DecodeError") {
   import DecodeError._
 
-  implicit val genLeaf: Gen[DecodeError] = {
+  val genLeaf: Gen[DecodeError] = {
     import blackMagic._
     MkArbitrary[LeafDecodeError].arbitrary.arbitrary
   }
@@ -76,4 +80,10 @@ class DecodeErrorProperties extends Properties("DecodeError") {
         pathTail.foldLeft(
           error.atPath(pathHead)
         )(_ atPath _).deepError ?= error)
+
+  {
+    import blackMagic._
+    implicit val arbitraryDecodeError = MkArbitrary[DecodeError].arbitrary
+    include(GroupLaws[DecodeError].monoid.all)
+  }
 }
