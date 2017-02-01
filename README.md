@@ -4,10 +4,10 @@
 
 ### Introduction
 
-Case classy is a tiny framework to make it easy to decode untyped
+Case classy is a tiny library to make it easy to decode untyped
 structured data into case class hierarchies of your choosing. It's
 completely modular, support Scala 2.11 and
-2.12, [ScalaJS](https://www.scala-js.org) ready, and the core library
+2.12, [ScalaJS](https://www.scala-js.org) ready, and the core module
 has _zero_ external dependencies.
 
 ```scala
@@ -58,8 +58,26 @@ val decoder1 = deriveDecoder[Config, MyConfig]
 ```
 
 ```scala
-decoder1.fromString("shapes = []")
+decoder1.fromString("""shapes = []""")
 // res4: scala.util.Either[classy.core.DecodeError,MyConfig] = Right(MyConfig(None,List()))
+
+decoder1.fromString("""
+  someString = "hello"
+  shapes     = []""")
+// res5: scala.util.Either[classy.core.DecodeError,MyConfig] = Right(MyConfig(Some(hello),List()))
+
+decoder1.fromString("""shapes = [{
+  circle   : { radius: 200.0 },
+  rectangle: { length: 10.0, width: 20.0 }
+}]""")
+// res6: scala.util.Either[classy.core.DecodeError,MyConfig] = Right(MyConfig(None,List(Circle(200.0))))
+
+// mismatched config
+decoder1.fromString("""shapes = [{
+  rectangle: { radius: 200.0 },
+  circle   : { length: 10.0, width: 20.0 }
+}]""")
+// res8: scala.util.Either[classy.core.DecodeError,MyConfig] = Left(AtPath(shapes,AtIndex(0,Or(AtPath(circle,AtPath(radius,Missing)), AtPath(rectangle,And(AtPath(length,Missing), AtPath(width,Missing)))))))
 ```
 
 ### License

@@ -111,8 +111,6 @@ object DecoderChecks {
   )(implicit ArbBtoB: Arbitrary[B => B], readAtoA: Read[A, A]): Properties = properties("operations") { self =>
     import self._
 
-    // format: OFF
-
     property("decode") = forAll(
       "result"  |: arbitrary[B]
     ) { (b) =>
@@ -193,8 +191,6 @@ object DecoderChecks {
       val (_, dab2) = make(sb2)
       checkAnd(dab1, dab2, a)
     }
-
-    // format: ON
 
   }
 

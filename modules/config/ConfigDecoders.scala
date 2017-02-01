@@ -12,6 +12,7 @@ import scala.collection.JavaConverters._
 import scala.concurrent.duration.FiniteDuration
 import scala.reflect.{ ClassTag, classTag } //#=typesafe
 import scala.reflect.ClassTag               //#=shocon
+import scala.util.control.NonFatal
 
 import core._
 
@@ -24,7 +25,6 @@ object ConfigDecoders {
     * provided through a small compatibility layer.
     */
   object std {
-    // format: OFF
     def config        (path: String): ConfigDecoder[Config]         = instance(path)(_ getConfig _)
     def string        (path: String): ConfigDecoder[String]         = instance(path)(_ getString _)
     def number        (path: String): ConfigDecoder[Number]         = instance(path)(_ getNumber _)      //#=typesafe
@@ -41,7 +41,6 @@ object ConfigDecoders {
     def intList       (path: String): ConfigDecoder[List[Int]]      = instance(path)(_ getIntList _)
     def longList      (path: String): ConfigDecoder[List[Long]]     = instance(path)(_ getLongList _)
     def doubleList    (path: String): ConfigDecoder[List[Double]]   = instance(path)(_ getDoubleList _)
-    // format: ON
 
     @inline private[this] def instance[A: ClassTag](
       path: String)(f: (Config, String) => A): ConfigDecoder[A] =
@@ -55,7 +54,7 @@ object ConfigDecoders {
           case e: MatchError if e.getMessage == "null" =>
             Missing.atPath(path).left
           //#-shocon
-          case other: Throwable             => Underlying(other).atPath(path).left
+          case NonFatal(e)                  => Underlying(e).atPath(path).left
         }
       )
 

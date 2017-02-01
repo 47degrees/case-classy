@@ -11,6 +11,8 @@ import core.DecodeError
 import core.Decoder
 import core.Read
 
+import scala.util.control.NonFatal
+
 /** Provides support for [[https://github.com/typesafehub/config
   * Typesafe Config]]/[[https://github.com/unicredit/shocon Shocon
   * Config]].
@@ -70,7 +72,7 @@ package object config {
         try {
           ConfigFactory.parseString(data).right
         } catch {
-          case e: Throwable => DecodeError.Underlying(e).left
+          case NonFatal(e) => DecodeError.Underlying(e).left
         }
       }
 
@@ -90,23 +92,21 @@ package object config {
 
   }
 
-  // implicit proxies for the defaults for generic derivation
-  // format: OFF
   import ConfigDecoders.std._
-  implicit val defaultConfigReadConfig         = Read.instance(config)
-  implicit val defaultConfigReadString         = Read.instance(string)
-  implicit val defaultConfigReadNumber         = Read.instance(number)      //#=typesafe
-  implicit val defaultConfigReadBoolean        = Read.instance(boolean)
-  implicit val defaultConfigReadFiniteDuration = Read.instance(finiteDuration)
-  implicit val defaultConfigReadInt            = Read.instance(int)
-  implicit val defaultConfigReadLong           = Read.instance(long)
-  implicit val defaultConfigReadDouble         = Read.instance(double)
+  implicit val classyConfigReadConfig         = Read.instance(config)
+  implicit val classyConfigReadString         = Read.instance(string)
+  implicit val classyConfigReadNumber         = Read.instance(number)      //#=typesafe
+  implicit val classyConfigReadBoolean        = Read.instance(boolean)
+  implicit val classyConfigReadFiniteDuration = Read.instance(finiteDuration)
+  implicit val classyConfigReadInt            = Read.instance(int)
+  implicit val classyConfigReadLong           = Read.instance(long)
+  implicit val classyConfigReadDouble         = Read.instance(double)
 
-  implicit val defaultConfigReadConfigList     = Read.instance(configList)
-  implicit val defaultConfigReadStringList     = Read.instance(stringList)
-  implicit val defaultConfigReadNumberList     = Read.instance(numberList)  //#=typesafe
-  implicit val defaultConfigReadBooleanList    = Read.instance(booleanList)
-  implicit val defaultConfigReadIntList        = Read.instance(intList)
-  implicit val defaultConfigReadLongList       = Read.instance(longList)
-  implicit val defaultConfigReadDoubleList     = Read.instance(doubleList)
+  implicit val classyConfigReadConfigList     = Read.instance(configList)
+  implicit val classyConfigReadStringList     = Read.instance(stringList)
+  implicit val classyConfigReadNumberList     = Read.instance(numberList)  //#=typesafe
+  implicit val classyConfigReadBooleanList    = Read.instance(booleanList)
+  implicit val classyConfigReadIntList        = Read.instance(intList)
+  implicit val classyConfigReadLongList       = Read.instance(longList)
+  implicit val classyConfigReadDoubleList     = Read.instance(doubleList)
 }
