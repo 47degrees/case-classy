@@ -78,8 +78,6 @@ object StringSplitter {
 
 }
 
-// format: OFF
-
 /** A categorization of `char`. */
 sealed abstract class CharCat extends Product with Serializable
 

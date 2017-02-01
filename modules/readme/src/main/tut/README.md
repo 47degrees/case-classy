@@ -4,10 +4,10 @@
 
 ### Introduction
 
-Case classy is a tiny framework to make it easy to decode untyped
+Case classy is a tiny library to make it easy to decode untyped
 structured data into case class hierarchies of your choosing. It's
 completely modular, support Scala 2.11 and
-2.12, [ScalaJS](https://www.scala-js.org) ready, and the core library
+2.12, [ScalaJS](https://www.scala-js.org) ready, and the core module
 has _zero_ external dependencies.
 
 ```scala
@@ -58,7 +58,22 @@ val decoder1 = deriveDecoder[Config, MyConfig]
 ```
 
 ```tut:book
-decoder1.fromString("shapes = []")
+decoder1.fromString("""shapes = []""")
+
+decoder1.fromString("""
+  someString = "hello"
+  shapes     = []""")
+
+decoder1.fromString("""shapes = [{
+  circle   : { radius: 200.0 },
+  rectangle: { length: 10.0, width: 20.0 }
+}]""")
+
+// mismatched config
+decoder1.fromString("""shapes = [{
+  rectangle: { radius: 200.0 },
+  circle   : { length: 10.0, width: 20.0 }
+}]""")
 ```
 
 ### License

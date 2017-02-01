@@ -9,10 +9,10 @@ technologies:
  - scala: ["ScalaJS Ready", "Case classy fully supports ScalaJS when used with the Shocon module"]
 ---
 
-Case classy is a tiny framework to make it easy to decode untyped
+Case classy is a tiny library to make it easy to decode untyped
 structured data into case class hierarchies of your choosing. It's
 completely modular, support Scala 2.11 and
-2.12, [ScalaJS](https://www.scala-js.org) ready, and the core library
+2.12, [ScalaJS](https://www.scala-js.org) ready, and the core module
 has _zero_ external dependencies.
 
 <a name="modules"></a>
