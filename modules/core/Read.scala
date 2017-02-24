@@ -27,6 +27,14 @@ trait Read[A, B] extends Serializable {
 
 object Read {
 
+  /** Implicitly summon a read
+    */
+  def apply[A, B](implicit ev: Read[A, B]): Read[A, B] = ev
+
+  /** Implicitly summon a read and immediately apply to create a decoder
+    */
+  def apply[A, B](path: String)(implicit ev: Read[A, B]): Decoder[A, B] = ev(path)
+
   /** Creates a Read instance given a backing function `run`
     *
     * @param f the function from a path string to a decoder
