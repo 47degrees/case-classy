@@ -134,16 +134,12 @@ object DecodeError extends DecodeErrorInstances {
     * unfolded before returning a single "flattened" result.
     */
   def and(a: DecodeError, b: DecodeError): DecodeError = (a, b) match {
-    case (anyA, Identity) => anyA
-    case (Identity, anyB) => anyB
-    case (manyA: And, manyB: And) =>
-      And(manyA.head, manyA.tail ::: manyB.head :: manyB.tail)
-    case (manyA: And, oneB) =>
-      And(manyA.head, manyA.tail ::: oneB :: Nil)
-    case (oneA, manyB: And) =>
-      And(oneA, manyB.head :: manyB.tail)
-    case (oneA, oneB) =>
-      And(oneA, oneB :: Nil)
+    case (_          , Identity   ) => a
+    case (Identity   , _          ) => b
+    case (And(ha, ta), And(hb, tb)) => And(ha, ta ::: hb :: tb)
+    case (And(ha, ta), _          ) => And(ha, ta ::: b :: Nil)
+    case (_          , And(hb, tb)) => And(a, hb :: tb)
+    case _                          => And(a, b :: Nil)
   }
 
   /** Create a disjunction of errors.
@@ -152,16 +148,12 @@ object DecodeError extends DecodeErrorInstances {
     * unfolded before returning a single "flattened" result.
     */
   def or(a: DecodeError, b: DecodeError): DecodeError = (a, b) match {
-    case (anyA, Identity) => anyA
-    case (Identity, anyB) => anyB
-    case (manyA: Or, manyB: Or) =>
-      Or(manyA.head, manyA.tail ::: manyB.head :: manyB.tail)
-    case (manyA: Or, oneB) =>
-      Or(manyA.head, manyA.tail ::: oneB :: Nil)
-    case (oneA, manyB: Or) =>
-      Or(oneA, manyB.head :: manyB.tail)
-    case (oneA, oneB) =>
-      Or(oneA, oneB :: Nil)
+    case (_          , Identity  ) => a
+    case (Identity   , _         ) => b
+    case (Or(ha, ta) , Or(hb, tb)) => Or(ha, ta ::: hb :: tb)
+    case (Or(ha, ta) , _         ) => Or(ha, ta ::: b :: Nil)
+    case (_          , Or(hb, tb)) => Or(a, hb :: tb)
+    case _                         => Or(a, b :: Nil)
   }
 
 }

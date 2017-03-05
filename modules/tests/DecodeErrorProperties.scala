@@ -84,6 +84,15 @@ class DecodeErrorProperties extends Properties("DecodeError") {
   {
     import blackMagic._
     implicit val arbitraryDecodeError = MkArbitrary[DecodeError].arbitrary
-    include(GroupLaws[DecodeError].monoid.all)
+
+    {
+      import DecodeErrorMonoid.and._
+      include(GroupLaws[DecodeError].monoid.all, "and ")
+    }
+
+    {
+      import DecodeErrorMonoid.or._
+      include(GroupLaws[DecodeError].monoid.all, "or ")
+    }
   }
 }

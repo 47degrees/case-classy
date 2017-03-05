@@ -51,10 +51,19 @@ package object cats {
       def eqv(x: DecodeError, y: DecodeError): Boolean = x == y
     }
 
-  implicit val decodeErrorMonoidInstance: Monoid[DecodeError] =
-    new Monoid[DecodeError] {
-      def empty = DecodeError.Identity
-      def combine(x: DecodeError, y: DecodeError): DecodeError = x && y
+  object DecodeErrorMonoid {
+    object and {
+      implicit val decodeErrorMonoidAnd: Monoid[DecodeError] = new Monoid[DecodeError] {
+        def empty = DecodeError.Identity
+        def combine(x: DecodeError, y: DecodeError): DecodeError = x && y
+      }
     }
+    object or {
+      implicit val decodeErrorMonoidOr: Monoid[DecodeError] = new Monoid[DecodeError] {
+        def empty = DecodeError.Identity
+        def combine(x: DecodeError, y: DecodeError): DecodeError = x || y
+      }
+    }
+  }
 
 }
