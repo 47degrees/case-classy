@@ -59,25 +59,25 @@ val decoder1 = deriveDecoder[Config, MyConfig]
 
 ```scala
 decoder1.fromString("""shapes = []""")
-// res4: scala.util.Either[classy.core.DecodeError,MyConfig] = Right(MyConfig(None,List()))
+// res4: Either[classy.DecodeError,MyConfig] = Right(MyConfig(None,List()))
 
 decoder1.fromString("""
   someString = "hello"
   shapes     = []""")
-// res5: scala.util.Either[classy.core.DecodeError,MyConfig] = Right(MyConfig(Some(hello),List()))
+// res5: Either[classy.DecodeError,MyConfig] = Right(MyConfig(Some(hello),List()))
 
 decoder1.fromString("""shapes = [{
   circle   : { radius: 200.0 },
   rectangle: { length: 10.0, width: 20.0 }
 }]""")
-// res6: scala.util.Either[classy.core.DecodeError,MyConfig] = Right(MyConfig(None,List(Circle(200.0))))
+// res6: Either[classy.DecodeError,MyConfig] = Right(MyConfig(None,List(Circle(200.0))))
 
 // mismatched config
 decoder1.fromString("""shapes = [{
   rectangle: { radius: 200.0 },
   circle   : { length: 10.0, width: 20.0 }
 }]""")
-// res8: scala.util.Either[classy.core.DecodeError,MyConfig] = Left(AtPath(shapes,AtIndex(0,Or(AtPath(circle,AtPath(radius,Missing)), AtPath(rectangle,And(AtPath(length,Missing), AtPath(width,Missing)))))))
+// res8: Either[classy.DecodeError,MyConfig] = Left(AtPath(shapes,AtIndex(0,Or(AtPath(circle,AtPath(radius,Missing)), AtPath(rectangle,And(AtPath(length,Missing), AtPath(width,Missing)))))))
 ```
 
 ### License

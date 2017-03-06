@@ -33,9 +33,9 @@ object BuildCommon extends AutoPlugin {
     AutomateHeaderPlugin.projectSettings
 
   private[this] def baseSettings = Seq(
-    scalaVersion := "2.12.0",
+    scalaVersion := "2.12.1",
     scalaOrganization := "org.typelevel",
-    crossScalaVersions := Seq("2.11.8", "2.12.0"),
+    crossScalaVersions := Seq("2.11.8", "2.12.1"),
 
     organization := "com.fortysevendeg",
     description := "configuration with less hassle",
@@ -66,12 +66,6 @@ object BuildCommon extends AutoPlugin {
       "-Xfuture",
       "-Yno-predef",
       "-Ypartial-unification"),
-
-    scalacOptions ++= (CrossVersion.partialVersion(scalaVersion.value) match {
-      case Some((2, 11)) => Nil
-      case Some((2, 12)) => Seq("-Yliteral-types")
-      case _             => Nil
-    }),
 
     libraryDependencies ++= (CrossVersion.partialVersion(scalaVersion.value) match {
       case Some((2, 11)) => Seq(
