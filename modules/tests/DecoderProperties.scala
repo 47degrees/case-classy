@@ -23,6 +23,9 @@ class DecoderProperties extends Properties("Decoder") {
       ArbDAB.arbitrary.map(value => Decoder.const[A, B](value)),
       ArbDecodeError.arbitrary.map(value => Decoder.fail[A, B](value))))
 
+  implicit val cogenDecodeError: Cogen[DecodeError] =
+    Cogen((_: DecodeError).hashCode.toLong)
+
   // a hack to make the "deep" DecoderChecks compile and pass for
   // primitive decoders
   implicit val timeToCheat: Read[String, String] =
@@ -35,6 +38,6 @@ class DecoderProperties extends Properties("Decoder") {
   include(DecoderChecks.positive(
     (result: String) => ("", Decoder.const[String, String](result))))
 
-  include(MonadTests[Decoder[String, ?]].stackUnsafeMonad[String, String, String].all)
-
+  include(MonadErrorTests[Decoder[String, ?], DecodeError].monadError[String, String, String].all)
+  include(SemigroupKTests[Decoder[String, ?]].semigroupK[String].all)
 }
