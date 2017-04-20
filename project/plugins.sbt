@@ -9,4 +9,4 @@ addSbtPlugin("com.fortysevendeg" % "sbt-microsites"  % "0.4.0")
 
 addSbtPlugin("com.jsuereth"      % "sbt-pgp"         % "1.0.0")
 
-addSbtPlugin("io.get-coursier"   % "sbt-coursier"    % "1.0.0-M15")
+addSbtPlugin("io.get-coursier"   % "sbt-coursier"    % "1.0.0-RC1")

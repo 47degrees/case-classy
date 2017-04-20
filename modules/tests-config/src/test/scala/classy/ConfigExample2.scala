@@ -2,14 +2,14 @@
  * Case Classy [case-classy-tests]
  */
 
-package classy_generic_examples
+package classy_example
 
 import com.typesafe.config.ConfigFactory
 
 import scala.Predef._
 import scala.concurrent.duration.FiniteDuration
 
-object Example1 extends App {
+object ConfigExample2 extends App {
 
   case class Bar(value: String)
 
