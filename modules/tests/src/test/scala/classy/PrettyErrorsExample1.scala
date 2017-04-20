@@ -9,9 +9,7 @@ import scala.Predef._
 import classy.stringMap._
 import classy.generic.auto._
 
-object PrettyErrorsExample1 extends App {
-
-
+object PrettyErrorsExample1Data {
   case class A(a: B)
   case class B(b: C)
   case class C(c: D)
@@ -30,6 +28,10 @@ object PrettyErrorsExample1 extends App {
     maybeFooBar: Option[FooBar],
     listFooBar: List[FooBar],
     listDouble: List[String])
+}
+
+object PrettyErrorsExample1 extends App {
+  import PrettyErrorsExample1Data._
 
   val decoder = StringMapDecoder[Config]
 
