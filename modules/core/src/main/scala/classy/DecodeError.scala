@@ -11,19 +11,22 @@ import scala.annotation.tailrec
 sealed abstract class DecodeError extends Product with Serializable {
 
   /** Create a conjunction between this error and another */
-  def &&(other: DecodeError): DecodeError = DecodeError.and(this, other)
+  final def &&(other: DecodeError): DecodeError = DecodeError.and(this, other)
 
   /** Create a disjunction between this error and another */
-  def ||(other: DecodeError): DecodeError = DecodeError.or(this, other)
+  final def ||(other: DecodeError): DecodeError = DecodeError.or(this, other)
 
   /** Indicate that this error occured while processing a value at `path` */
-  def atPath(path: String): DecodeError.AtPath = DecodeError.AtPath(path, this)
+  final def atPath(path: String): DecodeError.AtPath = DecodeError.AtPath(path, this)
 
   /** Indicate that this error occurred while processing a value at `index` */
-  def atIndex(index: Int): DecodeError.AtIndex = DecodeError.AtIndex(index, this)
+  final def atIndex(index: Int): DecodeError.AtIndex = DecodeError.AtIndex(index, this)
 
   /** Is this error an aggregation of other errors? */
   def isAggregate: Boolean = false
+
+  /** A pretty printed string representation of this error */
+  final def toPrettyString: String = DecodeErrorPrinter.toPrettyString(this)
 }
 
 object DecodeError extends DecodeErrorInstances {
@@ -98,10 +101,10 @@ object DecodeError extends DecodeErrorInstances {
     /** All of the other child errors that occurred */
     def tail: List[DecodeError]
 
-    final override def isAggregate = true
+    /** A list of errors containing [[head]] followed by [[tail]] */
+    final def toList: List[DecodeError] = head :: tail
 
-    override def toString: String =
-      s"""${getClass.getSimpleName}(${(head :: tail).mkString(", ")})"""
+    final override def isAggregate = true
   }
 
   /** A conjunction of child errors.

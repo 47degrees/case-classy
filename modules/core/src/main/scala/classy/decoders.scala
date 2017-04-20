@@ -6,6 +6,7 @@ package classy
 
 import predef._
 
+import scala.annotation.tailrec
 import scala.concurrent.duration.Duration
 import scala.concurrent.duration.FiniteDuration
 
@@ -87,18 +88,40 @@ package object decoders {
 
   def stringMapToStringMap(key: String): Decoder[StringMap, StringMap] =
     decoder { map =>
-      val prefix = s"$key."
-      val filtered = map.toList
-        .collect {
-        case (path, value) if path.startsWith(prefix) =>
-          (path.substring(prefix.length), value)
-      }.toMap
-
-      if (filtered.isEmpty)
-        Missing.atPath(key).left
-      else
-        filtered.right
+      val filtered = filterStringMap(s"$key.", map)
+      if (filtered.isEmpty) Missing.atPath(key).left
+      else filtered.right
     }
+
+  def stringMapToListString(key: String): Decoder[StringMap, List[String]] =
+    decoder { map =>
+      @tailrec def next(i: Int, acc: List[String]): List[String] =
+        map.get(s"$key[$i]") match {
+          case Some(v) => next(i + 1, v :: acc)
+          case None    => acc
+        }
+      val children = next(0, Nil)
+      if (children.isEmpty) Missing.atPath(key).left
+      else children.right
+    }
+
+  def stringMapToListStringMap(key: String): Decoder[StringMap, List[StringMap]] =
+    decoder { map =>
+      @tailrec def next(i: Int, acc: List[StringMap]): List[StringMap] = {
+        val filtered = filterStringMap(s"$key[$i].", map)
+        if (filtered.isEmpty) acc
+        else next(i + 1, filtered :: acc)
+      }
+      val children = next(0, Nil)
+      if (children.isEmpty) Missing.atPath(key).left
+      else children.right
+    }
+
+  private[this] def filterStringMap(prefix: String, map: StringMap): StringMap =
+    map.toList.collect {
+      case (path, value) if path.startsWith(prefix) =>
+        (path.substring(prefix.length), value)
+    }.toMap
 
   //#+jvm
   val inputStreamToProperties: Decoder[InputStream, Properties] =

@@ -12,11 +12,24 @@ package object stringMap {
   type StringMap     = scala.collection.Map[String, String]
   type JavaStringMap = java.util.Map[String, String]
 
+  type StringMapDecoder[A] = Decoder[StringMap, A]
+  object StringMapDecoder {
+    def apply[A](implicit ev: StringMapDecoder[A]): StringMapDecoder[A] = ev
+    def instance[A](f: StringMap => Either[DecodeError, A]): StringMapDecoder[A] =
+      Decoder.instance(f)
+  }
+
   implicit val stringMapReadString: Read[StringMap, String] =
     Read.instance(decoders.stringMapToString)
 
   implicit val stringMapReadNested: Read[StringMap, StringMap] =
     Read.instance(decoders.stringMapToStringMap)
+
+  implicit val stringMapReadListString: Read[StringMap, List[String]] =
+    Read.instance(decoders.stringMapToListString)
+
+  implicit val stringMapReadListStringMap: Read[StringMap, List[StringMap]] =
+    Read.instance(decoders.stringMapToListStringMap)
 
   val readStringMap: Read.From[StringMap] = Read.from[StringMap]
 
