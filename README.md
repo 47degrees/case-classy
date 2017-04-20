@@ -12,15 +12,15 @@ has _zero_ external dependencies.
 
 ```scala
 // required
-libraryDependencies += "com.fortysevendeg" %% "classy-core"            % "0.3.0"
+libraryDependencies += "com.fortysevendeg" %% "classy-core"            % "0.4.0"
 
 // at least one required
-libraryDependencies += "com.fortysevendeg" %% "classy-config-typesafe" % "0.3.0"
-libraryDependencies += "com.fortysevendeg" %% "classy-config-shocon"   % "0.3.0"
+libraryDependencies += "com.fortysevendeg" %% "classy-config-typesafe" % "0.4.0"
+libraryDependencies += "com.fortysevendeg" %% "classy-config-shocon"   % "0.4.0"
 
 // optional
-libraryDependencies += "com.fortysevendeg" %% "classy-generic"         % "0.3.0"
-libraryDependencies += "com.fortysevendeg" %% "classy-cats"            % "0.3.0"
+libraryDependencies += "com.fortysevendeg" %% "classy-generic"         % "0.4.0"
+libraryDependencies += "com.fortysevendeg" %% "classy-cats"            % "0.4.0"
 ```
 
 The modules provide the following support:
@@ -84,10 +84,10 @@ res.fold(
   error => error.toPrettyString,
   conf  => s"success: $conf")
 // res9: String =
-// errors.shapes (adjunction/AND):
+// errors.shapes (conjunction/AND):
 //   [0] (disjunction/OR):
 //     circle: missing value
-//     rectangle (adjunction/AND):
+//     rectangle (conjunction/AND):
 //       length: missing value
 //       width: missing value
 //   [1] (disjunction/OR):

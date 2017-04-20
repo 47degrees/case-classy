@@ -71,8 +71,8 @@ private[classy] object DecodeErrorPrinter {
 
   private[this] def aggregateHeader(error: DecodeError): String =
     error match {
-      case or: Or   => " (disjunction/OR):"
-      case and: And => " (adjunction/AND):"
+      case or : Or  => " (disjunction/OR):"
+      case and: And => " (conjunction/AND):"
       case _        => ":"
     }
 
