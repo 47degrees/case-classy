@@ -6,7 +6,7 @@ position: 2
 ---
 
 ```tut:invisible
-import classy.core.DecodeError
+import classy.DecodeError
 ```
 
 # <a name="key-concepts" class="anchor" href="#key-concepts">Key Concepts</a>
@@ -27,7 +27,7 @@ chaining decoders. For example, we can create a dummy decoder and
 then map the result:
 
 ```tut:reset:invisible
-import classy.core._
+import classy._
 ```
 
 ```tut:silent
@@ -122,7 +122,7 @@ to include the [`classy-config` module][modules] in addition to
 [`classy-generic`][modules].
 
 ```tut:silent
-import classy.core.DecodeError
+import classy.DecodeError
 import classy.generic._
 
 import classy.config._

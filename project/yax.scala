@@ -3,6 +3,8 @@ import sbt.Keys._
 import java.io._
 import scala.io.Source
 
+import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport.isScalaJSProject
+
 // Yax preprocessor
 // Modified, with permission, from Rob Norris' Doobie
 // at https://github.com/tpolecat/doobie
@@ -84,22 +86,23 @@ object yax {
       }
     }
 
-  private def foo(root: File, flags: String*) = Def.task {
-    val dest = sourceManaged.value
-    val sbv = scalaBinaryVersion.value
-    val srcs = List(root)
-    srcs.flatMap(walk(_, dest, flags.toSet))
-  }
+  private def foo(root: File, flags: List[String], yaxScala: Boolean, yaxPlatform: Boolean) = Def.task {
 
-  private def bar(root: File) = Def.task {
-    val flags = CrossVersion.partialVersion(scalaVersion.value) match {
-      case Some((x, y))  => List(s"$x.$y")
-      case _             => Nil
-    }
+    val scalaFlags =
+      if (!yaxScala) Nil
+      else CrossVersion.partialVersion(scalaVersion.value) match {
+        case Some((x, y))  => List(s"$x.$y")
+        case _             => Nil
+      }
+
+    val platformFlags =
+      if (yaxPlatform && isScalaJSProject.value) List("js")
+      else List("jvm")
+
     val dest = sourceManaged.value
     val sbv = scalaBinaryVersion.value
     val srcs = List(root)
-    srcs.flatMap(walk(_, dest, flags.toSet))
+    srcs.flatMap(walk(_, dest, flags.toSet ++ scalaFlags ++ platformFlags))
   }
 
   // all non-hidden files
@@ -110,12 +113,14 @@ object yax {
       src.listFiles.toList.flatMap(closure)
     }
 
-  def apply(root: File, config: Configuration, flags: String*): Seq[Setting[_]] =
-    inConfig(config)(Seq(sourceGenerators += foo(root, flags: _*).taskValue)) ++
-    Seq(watchSources := watchSources.value ++ closure(root))
-
-  def scala(root: File, config: Configuration): Seq[Setting[_]] =
-    inConfig(config)(Seq(sourceGenerators += bar(root).taskValue)) ++
+  def apply(
+    root: File,
+    config: Configuration,
+    flags: List[String],
+    yaxScala: Boolean = false,
+    yaxPlatform: Boolean = false
+  ): Seq[Setting[_]] =
+    inConfig(config)(Seq(sourceGenerators += foo(root, flags, yaxScala, yaxPlatform).taskValue)) ++
     Seq(watchSources := watchSources.value ++ closure(root))
 
 }

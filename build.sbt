@@ -53,7 +53,11 @@ addCommandAlias("validateJS", ";" + List(
 
 lazy val core =
   module("core")
-    .settings(yax.scala(file("modules/core_compat"), Compile))
+    .settings(unmanagedSourceDirectories in Compile := Nil)
+    .settings(unmanagedSourceDirectories in Test := Nil)
+    .settings(yax(file("modules/core/src/main/scala"), Compile, Nil,
+      yaxScala = true, yaxPlatform = true))
+
 lazy val coreJS = core.js
 lazy val coreJVM = core.jvm
 
@@ -75,22 +79,23 @@ lazy val genericJVM = generic.jvm
 
 
 lazy val typesafeJVM =
-  module("config-typesafe")
+  module("config-typesafe", hideFolder = true)
     .dependsOn(core)
     .settings(libraryDependencies ++= Seq(
       "com.typesafe"  % "config"    % V.typesafeConfig
     ))
-    .settings(yax(file("modules/config"), Compile, "typesafe"))
+    .settings(yax(file("modules/config"), Compile, "typesafe" :: Nil))
     .jvm
 
 
 lazy val shocon =
-  module("config-shocon")
+  module("config-shocon", hideFolder = true)
     .dependsOn(core)
     .settings(libraryDependencies ++= Seq(
-      "eu.unicredit" %%% "shocon" % V.shocon
+      "eu.unicredit" %%% "shocon" % V.shocon,
+      "org.scala-lang" % "scala-reflect" % scalaVersion.value % "provided"
     ))
-    .settings(yax(file("modules/config"), Compile, "shocon"))
+    .settings(yax(file("modules/config"), Compile, "shocon" :: Nil))
 lazy val shoconJS = shocon.js
 lazy val shoconJVM = shocon.jvm
 
@@ -103,7 +108,6 @@ lazy val cats =
     ))
 lazy val catsJS = cats.js
 lazy val catsJVM = cats.jvm
-
 
 
 lazy val testsSettings = Seq(
@@ -134,7 +138,7 @@ lazy val testingJS = testing.js
 lazy val testingJVM = testing.jvm
 
 lazy val tests =
-  module("tests", sourceConfig = Test)
+  module("tests")
     .settings(noPublishSettings)
     .settings(testsSettings: _*)
     .dependsOn(testing)
@@ -143,31 +147,26 @@ lazy val testsJS = tests.js
 lazy val testsJVM = tests.jvm
 
 lazy val testsTypesafeJVM =
-  module("tests-config-typesafe", sourceConfig = Test).jvm
+  module("tests-config-typesafe", hideFolder = true).jvm
     .settings(noPublishSettings)
     .settings(testsSettings: _*)
     .dependsOn(testingJVM)
     .dependsOn(coreJVM, genericJVM)
     .dependsOn(typesafeJVM)
-    .settings(yax(file("modules/tests-config"), Test, "typesafe"))
+    .settings(yax(file("modules/tests-config"), Test, "typesafe" :: Nil))
 
 lazy val testsShocon =
-  module("tests-config-shocon", sourceConfig = Test)
+  module("tests-config-shocon", hideFolder = true)
     .settings(noPublishSettings)
     .settings(testsSettings: _*)
     .dependsOn(testing)
     .dependsOn(core, generic)
     .dependsOn(shocon)
-    .settings(yax(file("modules/tests-config"), Test, "shocon"))
+    .settings(yax(file("modules/tests-config"), Test, "shocon" :: Nil))
 lazy val testsShoconJS = testsShocon.js
 lazy val testsShoconJVM = testsShocon.jvm
 
-lazy val unidocMisc =
-  (project in file("modules/unidoc"))
-    .dependsOn(coreJVM, catsJVM, typesafeJVM)
-    .settings(noPublishSettings)
-
-lazy val docs =
+lazy val docs: Project =
   (project in file("modules/docs"))
     .enablePlugins(MicrositesPlugin)
     .dependsOn(coreJVM)
@@ -187,7 +186,7 @@ lazy val docs =
       micrositeName := "Case Classy",
       micrositeAuthor := "the contributors",
       micrositeHighlightTheme := "atom-one-light",
-      micrositeBaseUrl := "/case-classy",
+      //micrositeBaseUrl := "/case-classy",
       micrositeGithubRepo := "case-classy",
       micrositePalette := Map(
         "brand-primary"   -> "#27607D",
@@ -199,7 +198,7 @@ lazy val docs =
         "gray-lighter"    -> "#F4F5F9",
         "white-color"     -> "#FFFFFF"),
       unidocProjectFilter in (ScalaUnidoc, unidoc) :=
-        inProjects(coreJVM, genericJVM, catsJVM, typesafeJVM, unidocMisc),
+        inProjects(coreJVM, genericJVM, catsJVM, typesafeJVM, docs),
       autoAPIMappings := true,
       docsMappingsAPIDir := "api",
       addMappingsToSiteDir(mappings in (ScalaUnidoc, packageDoc), docsMappingsAPIDir),
@@ -229,11 +228,7 @@ import org.scalajs.sbtplugin.cross.{ CrossProject, CrossType }
 
 def module(
   modName: String,
-  sourceConfig: Configuration = Compile
+  hideFolder: Boolean = false
 ): CrossProject =
-  CrossProject(modName, file(s"modules/.$modName"), CrossType.Dummy)
+  CrossProject(modName, file(s"""modules/${if (hideFolder) "." else ""}$modName"""), CrossType.Pure)
     .settings(name := s"classy-$modName")
-    .settings(scalaSource in sourceConfig := baseDirectory.value.getParentFile.getParentFile / modName)
-    .settings(unmanagedSourceDirectories in Compile      := Nil)
-    .settings(unmanagedSourceDirectories in Test         := Nil)
-    .settings(unmanagedSourceDirectories in sourceConfig := Seq((scalaSource in sourceConfig).value))

@@ -12,15 +12,15 @@ has _zero_ external dependencies.
 
 ```scala
 // required
-libraryDependencies += "com.fortysevendeg" %% "classy-core"            % "0.3.0"
+libraryDependencies += "com.fortysevendeg" %% "classy-core"            % "0.4.0"
 
 // at least one required
-libraryDependencies += "com.fortysevendeg" %% "classy-config-typesafe" % "0.3.0"
-libraryDependencies += "com.fortysevendeg" %% "classy-config-shocon"   % "0.3.0"
+libraryDependencies += "com.fortysevendeg" %% "classy-config-typesafe" % "0.4.0"
+libraryDependencies += "com.fortysevendeg" %% "classy-config-shocon"   % "0.4.0"
 
 // optional
-libraryDependencies += "com.fortysevendeg" %% "classy-generic"         % "0.3.0"
-libraryDependencies += "com.fortysevendeg" %% "classy-cats"            % "0.3.0"
+libraryDependencies += "com.fortysevendeg" %% "classy-generic"         % "0.4.0"
+libraryDependencies += "com.fortysevendeg" %% "classy-cats"            % "0.4.0"
 ```
 
 The modules provide the following support:
@@ -64,16 +64,22 @@ decoder1.fromString("""
   someString = "hello"
   shapes     = []""")
 
-decoder1.fromString("""shapes = [{
-  circle   : { radius: 200.0 },
-  rectangle: { length: 10.0, width: 20.0 }
-}]""")
+decoder1.fromString("""shapes = [
+  { circle    { radius: 200.0 } },
+  { rectangle { length: 10.0, width: 20.0 } }
+]""")
 
 // mismatched config
-decoder1.fromString("""shapes = [{
-  rectangle: { radius: 200.0 },
-  circle   : { length: 10.0, width: 20.0 }
-}]""")
+val res = decoder1.fromString("""shapes = [
+  { rectangle { radius: 200.0 } },
+  { circle    { length: 10.0, width: 20.0 } }
+]""")
+
+// error pretty printing
+res.fold(
+  error => error.toPrettyString,
+  conf  => s"success: $conf")
+
 ```
 
 ### License

@@ -60,7 +60,7 @@ val derivedDecoder = deriveDecoder[Config, MyConfig]
 // decoding the configuration
 
 import com.typesafe.config.ConfigFactory
-import classy.core.DecodeError
+import classy.DecodeError
 
 val rawConfig = ConfigFactory.parseString(configString)
 ```
@@ -120,6 +120,7 @@ object QuickApplication {
         case Sing(song)   => s"sings $song"
         case Shout(word)  => s"shouts $word at the top of his/her lungs"
       }
+
     } yield s"$person $text"
 
     // end of the world: print
