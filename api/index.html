@@ -1,72 +1,160 @@
 <!DOCTYPE html >
 <html>
         <head>
+          <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
           <title></title>
           <meta name="description" content="" />
           <meta name="keywords" content="" />
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
       <link href="lib/index.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
       <script type="text/javascript" src="lib/jquery.js"></script>
-      <script type="text/javascript" src="lib/jquery-ui.js"></script>
-      <script type="text/javascript" src="lib/jquery.layout.js"></script>
+      <script type="text/javascript" src="lib/jquery.panzoom.min.js"></script>
+      <script type="text/javascript" src="lib/jquery.mousewheel.min.js"></script>
       <script type="text/javascript" src="lib/index.js"></script>
+      <script type="text/javascript" src="index.js"></script>
       <script type="text/javascript" src="lib/scheduler.js"></script>
+      <script type="text/javascript" src="lib/template.js"></script>
+      <script type="text/javascript" src="lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+        /* this variable can be used by the JS to determine the path to the root document */
+        var toRoot = '';
+      </script>
     
         </head>
         <body>
-      <div id="library">
-        <img class="class icon" alt="class icon" src="lib/class.png" />
-        <img class="trait icon" alt="trait icon" src="lib/trait.png" />
-        <img class="object icon" alt="trait icon" src="lib/object.png" />
-        <img class="package icon" alt="trait icon" src="lib/package.png" />
-      </div>
-      <div id="browser" class="ui-layout-west">
-      <div class="ui-west-center">
-      <div id="filter">
-          <div id="textfilter"></div>
-          <div id="letters"><a target="template" href="index/index-_.html">#</a><a target="template" href="index/index-a.html">A</a><a target="template" href="index/index-b.html">B</a><a target="template" href="index/index-c.html">C</a><a target="template" href="index/index-d.html">D</a><a target="template" href="index/index-e.html">E</a><a target="template" href="index/index-f.html">F</a><a target="template" href="index/index-g.html">G</a><a target="template" href="index/index-h.html">H</a><a target="template" href="index/index-i.html">I</a><a target="template" href="index/index-j.html">J</a><a target="template" href="index/index-k.html">K</a><a target="template" href="index/index-l.html">L</a><a target="template" href="index/index-m.html">M</a><a target="template" href="index/index-n.html">N</a><a target="template" href="index/index-o.html">O</a><a target="template" href="index/index-p.html">P</a><span>Q</span><a target="template" href="index/index-r.html">R</a><a target="template" href="index/index-s.html">S</a><a target="template" href="index/index-t.html">T</a><a target="template" href="index/index-u.html">U</a><a target="template" href="index/index-v.html">V</a><a target="template" href="index/index-w.html">W</a><span>X</span><span>Y</span><span>Z</span> – <span>deprecated</span></div>
-      </div>
-      <div class="pack" id="tpl">
-            
-            <ol class="templates"></ol>
-            <ol class="packages"> <li class="pack" title="classy">
-            <a class="tplshow" href="classy/package.html" target="template">classy</a>
-            <ol class="templates"><li title="classy.DecodeError"><a class="tplshow" href="classy/DecodeError$.html" target="template"><span class="object">(object)</span></a><a class="tplshow" href="classy/DecodeError.html" target="template"><span class="class">(class)</span><span class="tplLink">DecodeError</span></a></li><li title="classy.Decoder"><a class="tplshow" href="classy/Decoder$.html" target="template"><span class="object">(object)</span></a><a class="tplshow" href="classy/Decoder.html" target="template"><span class="trait">(trait)</span><span class="tplLink">Decoder</span></a></li><li title="classy.Read"><a class="tplshow" href="classy/Read$.html" target="template"><span class="object">(object)</span></a><a class="tplshow" href="classy/Read.html" target="template"><span class="trait">(trait)</span><span class="tplLink">Read</span></a></li></ol>
-            <ol class="packages"> <li class="pack" title="classy.cats">
-            <a class="tplshow" href="classy/cats/package.html" target="template">classy.cats</a>
-            <ol class="templates"><li title="classy.cats.DecodeErrorMonoid"><a class="tplshow" href="classy/cats/package$$DecodeErrorMonoid$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">DecodeErrorMonoid</span></a></li><li title="classy.cats.DecoderCatsOps"><div class="placeholder"></div><a class="tplshow" href="classy/cats/package$$DecoderCatsOps.html" target="template"><span class="class">(class)</span><span class="tplLink">DecoderCatsOps</span></a></li></ol>
-            <ol class="packages"> </ol>
-          </li><li class="pack" title="classy.config">
-            <a class="tplshow" href="classy/config/package.html" target="template">classy.config</a>
-            <ol class="templates"><li title="classy.config.ConfigDecoder"><a class="tplshow" href="classy/config/package$$ConfigDecoder$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">ConfigDecoder</span></a></li><li title="classy.config.ConfigDecoderOps"><div class="placeholder"></div><a class="tplshow" href="classy/config/package$$ConfigDecoderOps.html" target="template"><span class="class">(class)</span><span class="tplLink">ConfigDecoderOps</span></a></li><li title="classy.config.ConfigDecoders"><a class="tplshow" href="classy/config/ConfigDecoders$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">ConfigDecoders</span></a></li></ol>
-            <ol class="packages"> </ol>
-          </li><li class="pack" title="classy.generic">
-            <a class="tplshow" href="classy/generic/package.html" target="template">classy.generic</a>
-            <ol class="templates"></ol>
-            <ol class="packages"> <li class="pack" title="classy.generic.derive">
-            <a class="tplshow" href="classy/generic/derive/package.html" target="template">classy.generic.derive</a>
-            <ol class="templates"><li title="classy.generic.derive.CharCat"><a class="tplshow" href="classy/generic/derive/CharCat$.html" target="template"><span class="object">(object)</span></a><a class="tplshow" href="classy/generic/derive/CharCat.html" target="template"><span class="class">(class)</span><span class="tplLink">CharCat</span></a></li><li title="classy.generic.derive.CoproductStrategy"><a class="tplshow" href="classy/generic/derive/CoproductStrategy$.html" target="template"><span class="object">(object)</span></a><a class="tplshow" href="classy/generic/derive/CoproductStrategy.html" target="template"><span class="trait">(trait)</span><span class="tplLink">CoproductStrategy</span></a></li><li title="classy.generic.derive.MkDecoder"><a class="tplshow" href="classy/generic/derive/MkDecoder$.html" target="template"><span class="object">(object)</span></a><a class="tplshow" href="classy/generic/derive/MkDecoder.html" target="template"><span class="case class">(case class)</span><span class="tplLink">MkDecoder</span></a></li><li title="classy.generic.derive.MkDecoderWithOptions"><div class="placeholder"></div><a class="tplshow" href="classy/generic/derive/MkDecoderWithOptions.html" target="template"><span class="case class">(case class)</span><span class="tplLink">MkDecoderWithOptions</span></a></li><li title="classy.generic.derive.MkRead"><a class="tplshow" href="classy/generic/derive/MkRead$.html" target="template"><span class="object">(object)</span></a><a class="tplshow" href="classy/generic/derive/MkRead.html" target="template"><span class="case class">(case class)</span><span class="tplLink">MkRead</span></a></li><li title="classy.generic.derive.NamingStrategy"><a class="tplshow" href="classy/generic/derive/NamingStrategy$.html" target="template"><span class="object">(object)</span></a><a class="tplshow" href="classy/generic/derive/NamingStrategy.html" target="template"><span class="trait">(trait)</span><span class="tplLink">NamingStrategy</span></a></li><li title="classy.generic.derive.Options"><a class="tplshow" href="classy/generic/derive/Options$.html" target="template"><span class="object">(object)</span></a><a class="tplshow" href="classy/generic/derive/Options.html" target="template"><span class="case class">(case class)</span><span class="tplLink">Options</span></a></li><li title="classy.generic.derive.StringSplitter"><a class="tplshow" href="classy/generic/derive/StringSplitter$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">StringSplitter</span></a></li></ol>
-            <ol class="packages"> </ol>
-          </li></ol>
-          </li><li class="pack" title="classy.misc">
-            <a class="tplshow" href="classy/misc/package.html" target="template">classy.misc</a>
-            <ol class="templates"></ol>
-            <ol class="packages"> <li class="pack" title="classy.misc.wheel">
-            <a class="tplshow" href="classy/misc/wheel/package.html" target="template">classy.misc.wheel</a>
-            <ol class="templates"><li title="classy.misc.wheel.Applicative"><a class="tplshow" href="classy/misc/wheel/Applicative$.html" target="template"><span class="object">(object)</span></a><a class="tplshow" href="classy/misc/wheel/Applicative.html" target="template"><span class="trait">(trait)</span><span class="tplLink">Applicative</span></a></li><li title="classy.misc.wheel.Functor"><a class="tplshow" href="classy/misc/wheel/Functor$.html" target="template"><span class="object">(object)</span></a><a class="tplshow" href="classy/misc/wheel/Functor.html" target="template"><span class="trait">(trait)</span><span class="tplLink">Functor</span></a></li><li title="classy.misc.wheel.Indexed"><a class="tplshow" href="classy/misc/wheel/Indexed$.html" target="template"><span class="object">(object)</span></a><a class="tplshow" href="classy/misc/wheel/Indexed.html" target="template"><span class="trait">(trait)</span><span class="tplLink">Indexed</span></a></li><li title="classy.misc.wheel.Traversable"><a class="tplshow" href="classy/misc/wheel/Traversable$.html" target="template"><span class="object">(object)</span></a><a class="tplshow" href="classy/misc/wheel/Traversable.html" target="template"><span class="trait">(trait)</span><span class="tplLink">Traversable</span></a></li></ol>
-            <ol class="packages"> </ol>
-          </li></ol>
-          </li><li class="pack" title="classy.stringMap">
-            <a class="tplshow" href="classy/stringMap/package.html" target="template">classy.stringMap</a>
-            <ol class="templates"><li title="classy.stringMap.PropertiesDecoderOps"><div class="placeholder"></div><a class="tplshow" href="classy/stringMap/package$$PropertiesDecoderOps.html" target="template"><span class="class">(class)</span><span class="tplLink">PropertiesDecoderOps</span></a></li><li title="classy.stringMap.StringMapDecoder"><a class="tplshow" href="classy/stringMap/package$$StringMapDecoder$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">StringMapDecoder</span></a></li><li title="classy.stringMap.StringMapDecoderOps"><div class="placeholder"></div><a class="tplshow" href="classy/stringMap/package$$StringMapDecoderOps.html" target="template"><span class="class">(class)</span><span class="tplLink">StringMapDecoderOps</span></a></li></ol>
-            <ol class="packages"> </ol>
-          </li></ol>
-          </li></ol>
-          </div></div><script src="index.js"></script>
+      <div id="search">
+        <span id="doc-title"><span id="doc-version"></span></span>
+        <span class="close-results"><span class="left">&lt;</span> Back</span>
+        <div id="textfilter">
+          <span class="input">
+            <input autocapitalize="none" placeholder="Search" id="index-input" type="text" accesskey="/" />
+            <i class="clear material-icons"></i>
+            <i id="search-icon" class="material-icons"></i>
+          </span>
+        </div>
     </div>
-      <div id="content" class="ui-layout-center">
-        <iframe id="template" name="template" src="package.html"></iframe>
+      <div id="search-results">
+        <div id="search-progress">
+          <div id="progress-fill"></div>
+        </div>
+        <div id="results-content">
+          <div id="entity-results"></div>
+          <div id="member-results"></div>
+        </div>
+      </div>
+      <div id="content-scroll-container" style="-webkit-overflow-scrolling: touch;">
+        <div id="content-container" style="-webkit-overflow-scrolling: touch;">
+          <div id="subpackage-spacer">
+            <div id="packages">
+              <h1>Packages</h1>
+              <ul>
+                <li name="_root_.root" visbl="pub" class="indented0 current" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="_root_"></a><a id="root:_root_"></a>
+      <span class="permalink">
+      <a href="index.html#_root_" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <span class="name">root</span>
+      </span>
+      
+      
+    </li><li name="_root_.classy" visbl="pub" class="indented1 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="classy"></a><a id="classy:classy"></a>
+      <span class="permalink">
+      <a href="index.html#classy" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a title="" href="classy/index.html">
+              <span class="name">classy</span>
+            </a>
+      </span>
+      
+      
+    </li>
+              </ul>
+            </div>
+          </div>
+          <div id="content">
+            <body class="package value">
+      <div id="definition">
+        <div class="big-circle package">p</div>
+        
+        <h1>root package<span class="permalink">
+      <a href="index.html" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span></h1>
+        
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <span class="name">root</span>
+      </span>
+      </h4>
+
+      
+          <div id="comment" class="fullcommenttop"></div>
+        
+
+      
+
+      <div id="template">
+        <div id="allMembers">
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+    </body>
+          </div>
+        </div>
       </div>
     </body>
       </html>
