@@ -1,0 +1,369 @@
+<!DOCTYPE html >
+<html>
+        <head>
+          <title>classy - classy</title>
+          <meta name="description" content="classy - classy" />
+          <meta name="keywords" content="classy classy" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../lib/jquery.js" id="jquery-js"></script>
+      <script type="text/javascript" src="../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../lib/template.js"></script>
+      <script type="text/javascript" src="../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+         if(top === self) {
+            var url = '../index.html';
+            var hash = 'classy.package';
+            var anchor = window.location.hash;
+            var anchor_opt = '';
+            if (anchor.length >= 1)
+              anchor_opt = '@' + anchor.substring(1);
+            window.location.href = url + '#' + hash + anchor_opt;
+         }
+   	  </script>
+    
+        </head>
+        <body class="value">
+      <div id="definition">
+        <img alt="Package" src="../lib/package_big.png" />
+        
+        <h1>classy</h1><span class="permalink">
+      <a href="../index.html#classy.package" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <span class="name">classy</span>
+      </span>
+      </h4>
+      
+          <div id="comment" class="fullcommenttop"><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/47deg/case-classy/tree/master/modules/docs/src/main/scala/classy/package.scala" target="_blank">package.scala</a></dd></dl><div class="toggleContainer block">
+          <span class="toggle">Linear Supertypes</span>
+          <div class="superTypes hiddenContent"><span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+        </div></div>
+        
+
+      <div id="mbrsel">
+        <div id="textfilter"><span class="pre"></span><span class="input"><input id="mbrsel-input" type="text" accesskey="/" /></span><span class="post"></span></div>
+        <div id="order">
+              <span class="filtertype">Ordering</span>
+              <ol>
+                
+                <li class="alpha in"><span>Alphabetic</span></li>
+                <li class="inherit out"><span>By Inheritance</span></li>
+              </ol>
+            </div>
+        <div id="ancestors">
+                <span class="filtertype">Inherited<br />
+                </span>
+                <ol id="linearization">
+                  <li class="in" name="classy"><span>classy</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                </ol>
+              </div><div id="ancestors">
+            <span class="filtertype"></span>
+            <ol>
+              <li class="hideall out"><span>Hide All</span></li>
+              <li class="showall in"><span>Show All</span></li>
+            </ol>
+          </div>
+        <div id="visbl">
+            <span class="filtertype">Visibility</span>
+            <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+          </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        
+
+        <div id="types" class="types members">
+              <h3>Type Members</h3>
+              <ol><li name="classy.DecodeError" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="DecodeErrorextendsProductwithSerializable"></a>
+      <a id="DecodeError:DecodeError"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">sealed abstract </span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="DecodeError.html"><span class="name">DecodeError</span></a><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#classy.package@DecodeErrorextendsProductwithSerializable" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">An error that occurred while decoding data
+</p>
+    </li><li name="classy.Decoder" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="Decoder[A,B]extendsSerializable"></a>
+      <a id="Decoder[A,B]:Decoder[A,B]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a href="Decoder.html"><span class="name">Decoder</span></a><span class="tparams">[<span name="A">A</span>, <span name="B">B</span>]</span><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#classy.package@Decoder[A,B]extendsSerializable" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">A type class capturing the ability to decode data of type <code>A</code> to <code>B</code>.</p><div class="fullcomment"><div class="comment cmt"><p>A type class capturing the ability to decode data of type <code>A</code> to <code>B</code>.</p><p>To construct a new decoder, consider using <a href="Decoder$.html#instance[A,B](run:A=&gt;Either[classy.DecodeError,B]):classy.Decoder[A,B]" class="extmbr" name="classy.Decoder#instance">Decoder.instance</a>.
+</p></div></div>
+    </li><li name="classy.Read" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="Read[A,B]extendsSerializable"></a>
+      <a id="Read[A,B]:Read[A,B]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a href="Read.html"><span class="name">Read</span></a><span class="tparams">[<span name="A">A</span>, <span name="B">B</span>]</span><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#classy.package@Read[A,B]extendsSerializable" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Read captures the ability to create a <a href="Decoder.html" class="extype" name="classy.Decoder">Decoder</a> given a path string.</p><div class="fullcomment"><div class="comment cmt"><p>Read captures the ability to create a <a href="Decoder.html" class="extype" name="classy.Decoder">Decoder</a> given a path string.
+</p></div><dl class="paramcmts block"><dt class="tparam">A</dt><dd class="cmt"><p>type <code>A</code> of created decoders</p></dd><dt class="tparam">B</dt><dd class="cmt"><p>type <code>B</code> of created decoders</p></dd></dl></div>
+    </li></ol>
+            </div>
+
+        
+
+        <div id="values" class="values members">
+              <h3>Value Members</h3>
+              <ol><li name="classy.DecodeError" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="DecodeError"></a>
+      <a id="DecodeError:DecodeError"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="DecodeError$.html"><span class="name">DecodeError</span></a><span class="result"> extends <span class="extype" name="classy.DecodeErrorInstances">DecodeErrorInstances</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#classy.package@DecodeError" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="classy.Decoder" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Decoder"></a>
+      <a id="Decoder:Decoder"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="Decoder$.html"><span class="name">Decoder</span></a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#classy.package@Decoder" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="classy.Read" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Read"></a>
+      <a id="Read:Read"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="Read$.html"><span class="name">Read</span></a><span class="result"> extends <span class="extype" name="classy.ReadInstances0">ReadInstances0</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#classy.package@Read" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="classy.cats" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="cats"></a>
+      <a id="cats:cats"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a href="cats/package.html"><span class="name">cats</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#classy.package@cats" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="classy.config" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="config"></a>
+      <a id="config:config"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a href="config/package.html"><span class="name">config</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#classy.package@config" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Provides support for <a href="https://github.com/typesafehub/config" target="_blank">Typesafe Config</a>/<a href="https://github.com/unicredit/shocon" target="_blank">Shocon
+Config</a>.</p><div class="fullcomment"><div class="comment cmt"><p>Provides support for <a href="https://github.com/typesafehub/config" target="_blank">Typesafe Config</a>/<a href="https://github.com/unicredit/shocon" target="_blank">Shocon
+Config</a>.</p><p>Available with the <code>&quot;classy-config-typesafe&quot;</code> and
+<code>&quot;classy-config-shocon&quot;</code> modules. These modules and their
+dependencies share the same classpath and cannot be used
+simultaneously.</p><h4>Usage</h4><p>Read instances are available with a wildcard import:</p><pre><span class="kw">import</span> classy.config._</pre><p>This enables automatically derived decoders with
+<a href="generic/package.html" class="extype" name="classy.generic">classy.generic</a> as well as manual decoders:</p><pre><span class="cmt">// decode a String from a Config at path "foo"</span>
+<span class="kw">val</span> decodeFoo = readConfig[<span class="std">String</span>](<span class="lit">"foo"</span>)
+
+<span class="cmt">// decode a List[Int] from a Config path "bar"</span>
+<span class="kw">val</span> decodeBar = readConfig[<span class="std">List</span>[<span class="std">Int</span>]](<span class="lit">"bar"</span>)</pre></div></div>
+    </li><li name="classy.generic" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="generic"></a>
+      <a id="generic:generic"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a href="generic/package.html"><span class="name">generic</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#classy.package@generic" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Provides automatic derivation of decoders for case class hierarchies.</p><div class="fullcomment"><div class="comment cmt"><p>Provides automatic derivation of decoders for case class hierarchies.</p><p>Available with the <code>&quot;classy-generic&quot;</code> module.
+</p></div></div>
+    </li><li name="classy#implicit proxy for classy.cats" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="implicitproxyforclassy.cats[A,B](decoder:classy.Decoder[A,B]):classy.cats.DecoderCatsOps[A,B]"></a>
+      <a id="implicitproxyforclassy.cats[A,B](Decoder[A,B]):DecoderCatsOps[A,B]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">implicit </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: implicit$u0020proxy$u0020for$u0020classy$u002Ecats" class="name">implicit proxy for classy.cats</span><span class="tparams">[<span name="A">A</span>, <span name="B">B</span>]</span><span class="params">(<span name="decoder">decoder: <a href="Decoder.html" class="extype" name="classy.Decoder">Decoder</a>[<span class="extype" name="classy.implicit proxy for classy.cats.A">A</span>, <span class="extype" name="classy.implicit proxy for classy.cats.B">B</span>]</span>)</span><span class="result">: <a href="cats/package$$DecoderCatsOps.html" class="extype" name="classy.cats.DecoderCatsOps">DecoderCatsOps</a>[<span class="extype" name="classy.implicit proxy for classy.cats.A">A</span>, <span class="extype" name="classy.implicit proxy for classy.cats.B">B</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#classy.package@implicitproxyforclassy.cats[A,B](decoder:classy.Decoder[A,B]):classy.cats.DecoderCatsOps[A,B]" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">This implicit only exists to help generate better documentation for
+<a href="Decoder.html" class="extype" name="classy.Decoder">Decoder</a>
+</p>
+    </li><li name="classy#implicit proxy for classy.config" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="implicitproxyforclassy.config[A](decoder:classy.config.ConfigDecoder[A]):classy.config.ConfigDecoderOps[A]"></a>
+      <a id="implicitproxyforclassy.config[A](ConfigDecoder[A]):ConfigDecoderOps[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">implicit </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: implicit$u0020proxy$u0020for$u0020classy$u002Econfig" class="name">implicit proxy for classy.config</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="decoder">decoder: <a href="config/package.html#ConfigDecoder[A]=classy.Decoder[com.typesafe.config.Config,A]" class="extmbr" name="classy.config.ConfigDecoder">ConfigDecoder</a>[<span class="extype" name="classy.implicit proxy for classy.config.A">A</span>]</span>)</span><span class="result">: <a href="config/package$$ConfigDecoderOps.html" class="extype" name="classy.config.ConfigDecoderOps">ConfigDecoderOps</a>[<span class="extype" name="classy.implicit proxy for classy.config.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#classy.package@implicitproxyforclassy.config[A](decoder:classy.config.ConfigDecoder[A]):classy.config.ConfigDecoderOps[A]" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">This implicit only exists to help generate better documentation for
+<a href="Decoder.html" class="extype" name="classy.Decoder">Decoder</a>
+</p>
+    </li><li name="classy.misc" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="misc"></a>
+      <a id="misc:misc"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a href="misc/package.html"><span class="name">misc</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#classy.package@misc" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="classy.stringMap" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="stringMap"></a>
+      <a id="stringMap:stringMap"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a href="stringMap/package.html"><span class="name">stringMap</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../index.html#classy.package@stringMap" title="Permalink" target="_top">
+        <img src="../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li></ol>
+            </div>
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        <div class="parent" name="scala.AnyRef">
+              <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>
+            </div><div class="parent" name="scala.Any">
+              <h3>Inherited from <span class="extype" name="scala.Any">Any</span></h3>
+            </div>
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+
+
+    </body>
+      </html>
