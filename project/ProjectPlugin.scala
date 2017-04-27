@@ -87,10 +87,11 @@ object ProjectPlugin extends AutoPlugin {
   }
 
   lazy val commandAliases: Seq[Def.Setting[_]] =
-    addCommandAlias("validate", ";clean;validateJS;validateJVM") ++
+    addCommandAlias("validate", ";validateJS;validateJVM") ++
       addCommandAlias("validateDocs", List("docs/tut", "readme/tut", "project root").asCmd) ++
-      addCommandAlias("validateCoverage", ";coverage;validate;coverageReport;coverageAggregate;coverageOff") ++
+      addCommandAlias("validateCoverage", ";coverage;validateJVM;coverageReport;coverageAggregate;coverageOff") ++
       addCommandAlias("validateJVM", List(
+        "clean",
         "coreJVM/compile",
         "genericJVM/compile",
         "config-typesafeJVM/compile",
@@ -101,6 +102,7 @@ object ProjectPlugin extends AutoPlugin {
         "tests-config-shoconJVM/test",
         "project root").asCmd) ++
       addCommandAlias("validateJS", List(
+        "clean",
         "coreJS/compile",
         "genericJS/compile",
         "config-shoconJS/compile",
@@ -130,6 +132,7 @@ object ProjectPlugin extends AutoPlugin {
       orgValidateFiles.asRunnableItem,
       "root/unidoc".asRunnableItemFull,
       "validateDocs".asRunnableItemFull,
+      "validateJS".asRunnableItemFull,
       "validateCoverage".asRunnableItemFull
     ),
     orgUpdateDocFilesSetting +=
