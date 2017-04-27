@@ -14,6 +14,7 @@ before_install:
 - export PATH=${PATH}:./vendor/bundle
 
 install:
+- pip install --user codecov
 - rvm use 2.2.3 --install --fuzzy
 - gem update --system
 - gem install sass
@@ -23,7 +24,7 @@ script:
 - sbt ++$TRAVIS_SCALA_VERSION orgScriptCI
 
 after_success:
-- bash <(curl -s https://codecov.io/bash)
+- codecov
 - sbt ++$TRAVIS_SCALA_VERSION orgAfterCISuccess
 
 cache:
