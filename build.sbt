@@ -129,3 +129,7 @@ lazy val readme =
     .dependsOn(typesafeJVM)
     .settings(noPublishSettings)
     .settings(readmeSettings)
+
+pgpPassphrase := Some(getEnvVar("PGP_PASSPHRASE").getOrElse("").toCharArray)
+pgpPublicRing := file(s"$gpgFolder/pubring.asc")
+pgpSecretRing := file(s"$gpgFolder/secring.asc")

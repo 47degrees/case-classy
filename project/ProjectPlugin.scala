@@ -9,7 +9,7 @@ import sbt._
 import sbtorgpolicies.OrgPoliciesKeys.orgBadgeListSetting
 import sbtorgpolicies.OrgPoliciesPlugin
 import sbtorgpolicies.OrgPoliciesPlugin.autoImport._
-import sbtorgpolicies.model.Dev
+import sbtorgpolicies.model._
 import sbtorgpolicies.runnable.syntax._
 import sbtorgpolicies.templates._
 import sbtorgpolicies.templates.badges._
@@ -134,6 +134,7 @@ object ProjectPlugin extends AutoPlugin {
       "validateDocs".asRunnableItemFull,
       "validateCoverage".asRunnableItemFull
     ),
+    orgAfterCISuccessTaskListSetting += defaultPublishMicrosite,
     orgUpdateDocFilesSetting ++= List(
       (baseDirectory in LocalRootProject).value / "modules" / "docs" / "src" / "main" / "tut",
       (baseDirectory in LocalRootProject).value / "modules" / "readme" / "src" / "main" / "tut"
