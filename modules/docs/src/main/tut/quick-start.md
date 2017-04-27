@@ -70,4 +70,4 @@ val result3: Either[DecodeError, MyConfig] =
   decoder.fromString("<<your config text>>")
 ```
 
-***For a tiny example application, see the [tiny configured application](/examples.html#configured-app)***
+***For a tiny example application, see the [tiny configured application](/case-classy/examples.html#configured-app)***
