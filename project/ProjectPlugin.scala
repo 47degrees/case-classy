@@ -113,7 +113,7 @@ object ProjectPlugin extends AutoPlugin {
 
   override def projectSettings: Seq[Def.Setting[_]] = commandAliases ++ Seq(
 
-    name := "classy",
+    name := "case-classy",
     orgProjectName := "Case Classy",
     description := "configuration with less hassle",
     startYear := Option(2017),
@@ -121,7 +121,7 @@ object ProjectPlugin extends AutoPlugin {
     orgBadgeListSetting := List(
       TravisBadge.apply(_),
       CodecovBadge.apply(_),
-      MavenCentralBadge.apply(_),
+      { info => MavenCentralBadge.apply(info.copy(libName = "classy")) },
       LicenseBadge.apply(_),
       ScalaLangBadge.apply(_),
       ScalaJSBadge.apply(_),
