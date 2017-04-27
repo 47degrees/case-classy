@@ -1,7 +1,7 @@
 
 [comment]: # (Start Badges)
 
-[![Build Status](https://travis-ci.org/47deg/case-classy.svg?branch=master)](https://travis-ci.org/47deg/case-classy) [![codecov.io](http://codecov.io/github/47deg/case-classy/coverage.svg?branch=master)](http://codecov.io/github/47deg/case-classy?branch=master) [![Maven Central](https://img.shields.io/badge/maven%20central-0.4.0-green.svg)](https://maven-badges.herokuapp.com/maven-central/com.47deg/case-classy_2.12) [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/47deg/case-classy/master/LICENSE) [![Latest version](https://index.scala-lang.org/47deg/case-classy/case-classy_2.12/latest.svg)](https://index.scala-lang.org/47deg/case-classy/case-classy_2.12) [![Scala.js](http://scala-js.org/assets/badges/scalajs-0.6.15.svg)](http://scala-js.org) [![GitHub Issues](https://img.shields.io/github/issues/47deg/case-classy.svg)](https://github.com/47deg/case-classy/issues)
+[![Build Status](https://travis-ci.org/47deg/case-classy.svg?branch=master)](https://travis-ci.org/47deg/case-classy) [![codecov.io](http://codecov.io/github/47deg/case-classy/coverage.svg?branch=master)](http://codecov.io/github/47deg/case-classy?branch=master) [![Maven Central](https://img.shields.io/badge/maven%20central-0.4.1-green.svg)](https://maven-badges.herokuapp.com/maven-central/com.47deg/case-classy_2.12) [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/47deg/case-classy/master/LICENSE) [![Latest version](https://index.scala-lang.org/47deg/case-classy/case-classy_2.12/latest.svg)](https://index.scala-lang.org/47deg/case-classy/case-classy_2.12) [![Scala.js](http://scala-js.org/assets/badges/scalajs-0.6.15.svg)](http://scala-js.org) [![GitHub Issues](https://img.shields.io/github/issues/47deg/case-classy.svg)](https://github.com/47deg/case-classy/issues)
 
 [comment]: # (End Badges)
 
@@ -17,18 +17,22 @@ completely modular, support Scala 2.11 and
 2.12, [ScalaJS](https://www.scala-js.org) ready, and the core module
 has _zero_ external dependencies.
 
+[comment]: # (Start Replace)
+
 ```scala
 // required
-libraryDependencies += "com.fortysevendeg" %% "classy-core"            % "0.4.0"
+libraryDependencies += "com.47deg" %% "classy-core"            % "0.4.1"
 
 // at least one required
-libraryDependencies += "com.fortysevendeg" %% "classy-config-typesafe" % "0.4.0"
-libraryDependencies += "com.fortysevendeg" %% "classy-config-shocon"   % "0.4.0"
+libraryDependencies += "com.47deg" %% "classy-config-typesafe" % "0.4.1"
+libraryDependencies += "com.47deg" %% "classy-config-shocon"   % "0.4.1"
 
 // optional
-libraryDependencies += "com.fortysevendeg" %% "classy-generic"         % "0.4.0"
-libraryDependencies += "com.fortysevendeg" %% "classy-cats"            % "0.4.0"
+libraryDependencies += "com.47deg" %% "classy-generic"         % "0.4.1"
+libraryDependencies += "com.47deg" %% "classy-cats"            % "0.4.1"
 ```
+
+[comment]: # (End Replace)
 
 The modules provide the following support:
 

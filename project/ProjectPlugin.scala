@@ -1,6 +1,6 @@
 import com.typesafe.sbt.GitPlugin.autoImport._
 import com.typesafe.sbt.site.SitePlugin.autoImport._
-import de.heikoseeberger.sbtheader.{AutomateHeaderPlugin, HeaderPlugin}
+import de.heikoseeberger.sbtheader.AutomateHeaderPlugin
 import microsites.MicrositesPlugin.autoImport._
 import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
 import org.scalajs.sbtplugin.cross.{CrossProject, CrossType}
@@ -21,7 +21,7 @@ object ProjectPlugin extends AutoPlugin {
 
   override def trigger: PluginTrigger = allRequirements
 
-  override def requires: Plugins = OrgPoliciesPlugin && HeaderPlugin
+  override def requires: Plugins = OrgPoliciesPlugin
 
   object autoImport {
 
@@ -88,7 +88,7 @@ object ProjectPlugin extends AutoPlugin {
 
   lazy val commandAliases: Seq[Def.Setting[_]] =
     addCommandAlias("validate", ";clean;validateJS;validateJVM") ++
-      addCommandAlias("validateDocs", List("docs/tut", "readme/tut").asCmd) ++
+      addCommandAlias("validateDocs", List("docs/tut", "readme/tut", "project root").asCmd) ++
       addCommandAlias("validateCoverage", ";coverage;validate;coverageReport;coverageAggregate;coverageOff") ++
       addCommandAlias("validateJVM", List(
         "coreJVM/compile",

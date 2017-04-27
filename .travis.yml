@@ -1,15 +1,16 @@
 language: scala
-
 dist: precise
-
 sudo: required
-
 jdk:
 - oraclejdk8
-
 scala:
 - 2.11.8
 - 2.12.1
+
+before_install:
+- if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then
+    openssl aes-256-cbc -K $encrypted_bbaf6dd8eaff_key -iv $encrypted_bbaf6dd8eaff_iv -in secring.asc.enc -out secring.asc -d;
+  fi
 
 script:
 - sbt ++$TRAVIS_SCALA_VERSION orgScriptCI
