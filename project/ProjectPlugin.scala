@@ -35,7 +35,7 @@ object ProjectPlugin extends AutoPlugin {
       hideFolder: Boolean = false
     ): CrossProject =
       CrossProject(modName, file(s"""modules/${if (hideFolder) "." else ""}$modName"""), CrossType.Pure)
-        .settings(name := s"classy-$modName")
+        .settings(moduleName := s"classy-$modName")
 
     def jvmModule(modName: String): Project =
       Project(modName, file(s"""modules/$modName"""))
@@ -111,7 +111,7 @@ object ProjectPlugin extends AutoPlugin {
 
   override def projectSettings: Seq[Def.Setting[_]] = commandAliases ++ Seq(
 
-    name := "case-classy",
+    name := "classy",
     orgProjectName := "Case Classy",
     description := "configuration with less hassle",
     startYear := Option(2017),
