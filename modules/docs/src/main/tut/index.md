@@ -15,19 +15,23 @@ completely modular, support Scala 2.11 and
 2.12, [ScalaJS](https://www.scala-js.org) ready, and the core module
 has _zero_ external dependencies.
 
+[comment]: # (Start Replace)
+
 <a name="modules"></a>
 ```scala
 // required
-libraryDependencies += "com.fortysevendeg" %% "classy-core"            % "0.4.0"
+libraryDependencies += "com.47deg" %% "classy-core"            % "0.4.0"
 
 // at least one required
-libraryDependencies += "com.fortysevendeg" %% "classy-config-typesafe" % "0.4.0"
-libraryDependencies += "com.fortysevendeg" %% "classy-config-shocon"   % "0.4.0"
+libraryDependencies += "com.47deg" %% "classy-config-typesafe" % "0.4.0"
+libraryDependencies += "com.47deg" %% "classy-config-shocon"   % "0.4.0"
 
 // optional
-libraryDependencies += "com.fortysevendeg" %% "classy-generic"         % "0.4.0"
-libraryDependencies += "com.fortysevendeg" %% "classy-cats"            % "0.4.0"
+libraryDependencies += "com.47deg" %% "classy-generic"         % "0.4.0"
+libraryDependencies += "com.47deg" %% "classy-cats"            % "0.4.0"
 ```
+
+[comment]: # (End Replace)
 
 The modules provide the following support:
 
@@ -40,11 +44,11 @@ The modules provide the following support:
 
 All module support ScalaJS except `classy-config-typesafe`.
 
-### License
-The license can be found in [COPYING].
+[comment]: # (Start Copyright)
+# Copyright
 
-[config tests]: /modules/tests-config/
-[COPYING]: COPYING
+Case Classy is designed and developed by 47 Degrees
 
-[config tests]: https://github.com/47deg/case-classy/blob/master/modules/tests-config/
-[COPYING]: https://github.com/47deg/case-classy/blob/master/COPYING
+Copyright (C) 2017 47 Degrees. <http://47deg.com>
+
+[comment]: # (End Copyright)

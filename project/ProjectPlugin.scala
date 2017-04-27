@@ -134,8 +134,10 @@ object ProjectPlugin extends AutoPlugin {
       "validateDocs".asRunnableItemFull,
       "validateCoverage".asRunnableItemFull
     ),
-    orgUpdateDocFilesSetting +=
-      (baseDirectory in LocalRootProject).value / "modules" / "readme" / "src" / "main" / "tut",
+    orgUpdateDocFilesSetting ++= List(
+      (baseDirectory in LocalRootProject).value / "modules" / "docs" / "src" / "main" / "tut",
+      (baseDirectory in LocalRootProject).value / "modules" / "readme" / "src" / "main" / "tut"
+    ),
     orgEnforcedFilesSetting ~= (_ filterNot (_ == ScalafmtFileType)),
     orgMaintainersSetting += Dev("andyscott",
       Some("Andy Scott (twitter: [@andygscott](https://twitter.com/andygscott))"),
