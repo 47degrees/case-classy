@@ -1,0 +1,13 @@
+name: Case Classy
+baseurl: /case-classy
+description: configuration with less hassle
+highlighter: rouge
+docs: true
+collections:
+  tut:
+    output: true
+gems:
+- jekyll-redirect-from
+version: 0.4.1-SNAPSHOT
+org: 47 Degrees
+markdown: kramdown
