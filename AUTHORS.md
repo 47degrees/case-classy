@@ -11,3 +11,6 @@ The maintainers of the project are:
 
 These are the people that have contributed to the Case Classy project:
 
+* Ana Mª Marquez <[anamariamv](https://github.com/anamariamv)>
+* Francisco Diaz <[franciscodr](https://github.com/franciscodr)>
+* Peter Neyens <[peterneyens](https://github.com/peterneyens)>
