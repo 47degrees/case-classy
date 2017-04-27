@@ -1,21 +1,21 @@
 language: scala
-jdk:
-- oraclejdk8
-scala:
-- 2.12.0
-- 2.11.8
+
+dist: precise
 
 sudo: required
 
-install:
-- pip install --user codecov
+jdk:
+- oraclejdk8
+
+scala:
+- 2.11.8
+- 2.12.1
 
 script:
-- sbt ++$TRAVIS_SCALA_VERSION validateJS
-- sbt ++$TRAVIS_SCALA_VERSION tut
-- sbt ++$TRAVIS_SCALA_VERSION unidoc
-- sbt ++$TRAVIS_SCALA_VERSION coverage validateJVM coverageReport
-- codecov
+- sbt ++$TRAVIS_SCALA_VERSION orgScriptCI
+
+after_success:
+- sbt ++$TRAVIS_SCALA_VERSION orgAfterCISuccess
 
 cache:
   directories:
@@ -25,6 +25,7 @@ cache:
   - $HOME/.sbt/launchers
   - $HOME/.ivy2
   - $HOME/.coursier
+
 before_cache:
 - du -h -d 1 $HOME/.ivy2/
 - du -h -d 2 $HOME/.sbt/
@@ -32,7 +33,3 @@ before_cache:
 - find $HOME/.sbt -name "*.lock" -type f -delete
 - find $HOME/.ivy2/cache -name "ivydata-*.properties" -type f -delete
 - find $HOME/.coursier/cache -name "*.lock" -type f -delete
-
-env:
-  global:
-    secure: 0cb3zTIaqr/YH2k8p2UiD6gbU1xi/qZ+zOwnymSKKwvu6JNH3lKxmEoqFA+OMDgMDZp0yUjpzBHyRCU/UKtOeLBPXw+qQh/MVwUrjoWMjVSD2ZgO3MhFn6lZe/HigfWsOEP+4ajvziamaOQCIsgw+6ScYTFWERXpguMISLXcMWVJqmUkStHuCN1G0YkKogy8aoPNkhFyTxCLh3cPGwUZYoL16AqXRwbUIpYbCHaQUBNVGfpqEkC7aciLGbuff3EDDCboNJ3qJ5dSNbRWHEvchhTD2Yzv7Gif32h3usCjCfnZEZBYTNYqM/H4rAPwZ2P/qa/DgcEEbw0VUV1YgtKIIGrjdRzsp8p86bflg0BwRfompvosfRMIlvH9+7yT1k5CYGXqOZE2kfoMGSM6Q+3VufC9No9yBgTRrPDS9gOrhsz1CsfAUDl5aS06fmvMIWz3iRgXsFQxghdsN/0tIiZWFw0DJbj5aZId10hqGgnIGcMSh7rrOck02ybsfpdq1mHm02wqScH9SBKa1PPmHC1IR0s9PkeWrCa4q1jmKMxEz+V0TgoQpxcgmBgQIgJSsHeNLHB0PyXh3de8mnnUmx8gabno3AMQ3JcFeDzu0uVHYwb0+bx8f9iOUzGC7msqXafrwBC6YJ1Pyhul5PgQyaI7MpavvGx6sruX8Vkccu9+xHI=
