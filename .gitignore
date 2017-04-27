@@ -24,3 +24,6 @@ checkpoint/
 testData/
 modules/.*
 *.gpg
+
+# PGP keys
+secring.asc
