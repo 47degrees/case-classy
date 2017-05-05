@@ -1,6 +1,6 @@
 language: scala
-dist: precise
 sudo: required
+dist: trusty
 jdk:
 - oraclejdk8
 scala:
