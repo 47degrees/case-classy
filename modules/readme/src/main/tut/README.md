@@ -95,6 +95,10 @@ res.fold(
 
 If you wish to add your library here please consider a PR to include it in the list below.
 
+## Commercial Support
+
+47 Degrees offers commercial support for the Case Classy library and associated technologies. To find out more, visit [47 Degrees' Open Source Support](https://www.47deg.com/services/open-source-support/).
+
 [comment]: # (Start Copyright)
 # Copyright
 
