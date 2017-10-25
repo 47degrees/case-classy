@@ -310,6 +310,24 @@ object NamingStrategy {
   object LowerSnakeCase extends SplitJoinNamingStrategy(StringSplitter.split)(
     _.map(_.toLowerCase).mkString("_"))
 
+  /** A basic kebab case (`Kebab_case`) naming strategy that preserves
+    * character case
+    */
+  object KebabCase extends SplitJoinNamingStrategy(StringSplitter.split)(
+    _.mkString("-"))
+
+  /** A basic kebab case (`KEBAB_CASE`) naming strategy that maps all
+    * characters to uppercase
+    */
+  object UpperKebabCase extends SplitJoinNamingStrategy(StringSplitter.split)(
+    _.map(_.toUpperCase).mkString("-"))
+
+  /** A basic kebab case (`kebab_case`) naming strategy that maps all
+    * characters to lowercase
+    */
+  object LowerKebabCase extends SplitJoinNamingStrategy(StringSplitter.split)(
+    _.map(_.toLowerCase).mkString("-"))
+
   private[this] def cap(input: String): String = {
     var chars = input.toCharArray()
     chars(0) = Character.toUpperCase(chars(0))
