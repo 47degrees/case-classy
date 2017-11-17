@@ -75,4 +75,30 @@ class NamingStrategyTests extends Properties("NamingStrategyTests") {
       Entry("Helloworld", "helloworld")
     ))
 
+  property("KebabCase") = check(
+    KebabCase,
+    List(
+      Entry("hello", "hello"),
+      Entry("HelloWorld", "Hello-World"),
+      Entry("helloWorld", "hello-World"),
+      Entry("Helloworld", "Helloworld")
+    ))
+
+  property("UpperKebabCase") = check(
+    UpperKebabCase,
+    List(
+      Entry("hello", "HELLO"),
+      Entry("HelloWorld", "HELLO-WORLD"),
+      Entry("helloWorld", "HELLO-WORLD"),
+      Entry("Helloworld", "HELLOWORLD")
+    ))
+
+  property("LowerKebabCase") = check(
+    LowerKebabCase,
+    List(
+      Entry("hello", "hello"),
+      Entry("HelloWorld", "hello-world"),
+      Entry("helloWorld", "hello-world"),
+      Entry("Helloworld", "helloworld")
+    ))
 }
