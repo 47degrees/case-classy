@@ -5,7 +5,13 @@
 
 [comment]: # (End Badges)
 
-## Case Classy
+## Case Classy (ABANDONED)
+
+### DEPRECATION NOTICE
+
+The `case-classy` was a small Scala library, written in a functional style, to handle loading configurations. It was developed between August 2016 and April 2017. At that time, there was not any great Scala-FP alternative for loading configuration from HOCON `.conf` files. However, since then new alternative libraries like [`pureconfig`](https://pureconfig.github.io) or [`ciris`](https://cir.is) have appeared, which provide more features and have received wider adoption. We recommend using those. 
+
+47 Degrees hasf therefore discontinued development and maintenance of this library. The source code is left here for those interesting in studying it.
 
 ### Introduction
 
